@@ -26,16 +26,16 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 
 ;; Banner apenas para exibição. 
                                        
-.versaoAndromeda: db "1.15.1 [Gargantua]", 0 
+.versaoAndromeda: db "1.15.2 [Gargantua]", 0 
 
 ;; Para tratamento, usar opções abaixo, em inteiro e string
 
 .versao:     db 1
 .subversao:  db 15
-.revisao:    db 1
+.revisao:    db 2
 .lancamento: db 0
 .codenome:   db "Gargantua",0
-.montagem:   dw 0052
+.montagem:   dw 0054
 
 ;; Informações do pacote de atualizações de construção do Sistema
 
@@ -45,8 +45,8 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 
 .ano:     db "2021", 0
 .mes:     db "12", 0
-.dia:     db "12", 0
-.hora:    db "17", 0
+.dia:     db "16", 0
+.hora:    db "01", 0
 .minutos: db "00", 0
 
 ;; Forma de ler o código da construção:
@@ -63,4 +63,4 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 ;; 1)   2)     3)    4)     5)
 ;; RC S1.10 , 1.5 , 195 , Aurora
 
-.build:  db "OFS2@.12,1.15,0052.GT,Gargantua", 0
+.build:  db "OFS2@.12,1.15,0054.GT,Gargantua", 0
