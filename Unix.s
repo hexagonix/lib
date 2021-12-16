@@ -21,6 +21,7 @@
 ;;
 ;;************************************************************************************
 
+versaoARCH      equ "1.0"
 versaoATOP      equ "1.0 BETA"
 versaoCAT       equ "1.0 " 
 versaoCLEAR     equ "1.0 "
@@ -32,6 +33,7 @@ versaoENERGIA   equ "0.8"
 versaoFILE      equ "1.6"
 versaoFREE      equ "0.1"
 versaoHASH      equ "1.0"
+versaoHOSTNAME  equ "1.0"
 versaoINIT      equ "1.1"
 versaoLOG       equ "1.0"
 versaoLOGIN     equ "2.5"
