@@ -5,7 +5,7 @@
 ;;        #$@$@$@#@#@#@$
 ;;        @#@$%    %#$#%
 ;;        @#$@$    #@#$@
-;;        #@#$$    !@#@#     Copyright © 2016-2021 Felipe Miguel Nery Lunkes
+;;        #@#$$    !@#@#     Copyright © 2016-2022 Felipe Miguel Nery Lunkes
 ;;        @#@%!$&%$&$#@#             Todos os direitos reservados
 ;;        !@$%#%&#&@&$%#
 ;;        @$#!%&@&@#&*@&
@@ -43,7 +43,7 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 
 ;; Informações gerais da construção do Sistema
 
-.ano:     db "2021", 0
+.ano:     db "2022", 0
 .mes:     db "12", 0
 .dia:     db "16", 0
 .hora:    db "01", 0

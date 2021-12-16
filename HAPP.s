@@ -5,7 +5,7 @@
 ;;        #$@$@$@#@#@#@$
 ;;        @#@$%    %#$#%
 ;;        @#$@$    #@#$@
-;;        #@#$$    !@#@#     Copyright © 2016-2021 Felipe Miguel Nery Lunkes
+;;        #@#$$    !@#@#     Copyright © 2016-2022 Felipe Miguel Nery Lunkes
 ;;        @#@%!$&%$&$#@#             Todos os direitos reservados
 ;;        !@$%#%&#&@&$%#
 ;;        @$#!%&@&@#&*@&
@@ -17,7 +17,7 @@
 ;;
 ;; Compatibilidade:   Sistema Operacional Andromeda® 1.14.3 (24/11/2020) ou superior
 ;;                    Hexagon® 8.40 ou superior
-;; Versão:            1.0 rev 1 02/10/2021
+;; Versão:            1.0 rev 1 02/10/2022
 ;; Autor:             Felipe Miguel Nery Lunkes
 ;;
 ;;************************************************************************************
