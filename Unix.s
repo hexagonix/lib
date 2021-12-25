@@ -15,7 +15,7 @@
 ;;
 ;; Controle de versão dos aplicativos (utilitários) base Unix do Hexagonix®
 ;;
-;; Última atualização: 02/10/2021 
+;; Última atualização: 02/10/2022 
 ;;
 ;;************************************************************************************
 
