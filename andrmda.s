@@ -1,23 +1,21 @@
 ;;************************************************************************************
 ;;
 ;;    
-;;        %#@$%&@$%&@$%$             Sistema Operacional Andromeda®
-;;        #$@$@$@#@#@#@$
-;;        @#@$%    %#$#%
-;;        @#$@$    #@#$@
-;;        #@#$$    !@#@#     Copyright © 2016-2022 Felipe Miguel Nery Lunkes
-;;        @#@%!$&%$&$#@#             Todos os direitos reservados
-;;        !@$%#%&#&@&$%#
-;;        @$#!%&@&@#&*@&
-;;        $#$#%    &%$#@
-;;        @#!$$    !#@#@
+;; ┌┐ ┌┐                                 Sistema Operacional Hexagonix®
+;; ││ ││
+;; │└─┘├──┬┐┌┬──┬──┬──┬─┐┌┬┐┌┐    Copyright © 2016-2022 Felipe Miguel Nery Lunkes
+;; │┌─┐││─┼┼┼┤┌┐│┌┐│┌┐│┌┐┼┼┼┼┘          Todos os direitos reservados
+;; ││ │││─┼┼┼┤┌┐│└┘│└┘││││├┼┼┐
+;; └┘ └┴──┴┘└┴┘└┴─┐├──┴┘└┴┴┘└┘
+;;              ┌─┘│          
+;;              └──┘          
 ;;
 ;;
 ;;************************************************************************************
 ;;
-;; Cabeçalho de macros, funções e chamadas de sistema do Andromeda®
+;; Cabeçalho de macros, funções e chamadas de sistema do Hexagonix®
 ;;
-;; Compatibilidade:   Sistema Operacional Andromeda® 1.14.3 (24/11/2020) ou superior
+;; Compatibilidade:   Sistema Operacional Hexagonix®/Andromeda® 1.14.3 (24/11/2020) ou superior
 ;; Versão:            5.1 rev 3 24/11/2020
 ;; Autor:             Felipe Miguel Nery Lunkes
 ;;
@@ -25,13 +23,13 @@
 ;;
 ;;************************************************************************************
 ;;
-;;          Funções de manipulação de vídeo oferecidas pelo Andromeda®
+;;          Funções de manipulação de vídeo oferecidas pelo Hexagonix®
 ;;
 ;;************************************************************************************
 
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento de memória e processos do Andromeda®
+;; Serviços de gerenciamento de memória e processos do Hexagonix®
 ;;
 ;;************************************************************************************
 
@@ -69,7 +67,7 @@ obterCodigoErro =              8       ;; Obtém o código retornado pelo últim
 
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento de arquivos e dispositivos do Andromeda®
+;; Serviços de gerenciamento de arquivos e dispositivos do Hexagonix®
 ;;
 ;;************************************************************************************
 
@@ -86,7 +84,7 @@ fechar =                       11 ;; Fecha o último dispositivo aberto
 
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Andromeda®
+;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagonix®
 ;;
 ;;************************************************************************************
 
@@ -113,13 +111,13 @@ obterDisco =                   17  ;; Obtêm o disco utilizado pelo sistema
 
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento de usuários do Andromeda®
+;; Serviços de gerenciamento de usuários do Hexagonix®
 ;;
 ;;************************************************************************************
 
 travar       =                 18  ;; Bloqueia o processo em primeiro plano, impedindo que o mesmo seja terminado
                                    ;; pelo usuário utilizando uma tecla especial ou combinação.
-                                   ;; A tecla F1 é no Andromeda® a tecla "Matar processo".
+                                   ;; A tecla F1 é no Hexagonix® a tecla "Matar processo".
 								   ;; Esta tecla pode ter sua função removida com o tempo.
 
 destravar    =                 19  ;; Habilita que o usuário mate o processo em execução pressionando uma tecla especial
@@ -134,7 +132,7 @@ obterUsuario =                 21  ;; Obtêm dados do usuário logado na sessão
 
 ;;************************************************************************************
 ;;
-;; Serviços oferecidos pelo Andromeda®
+;; Serviços oferecidos pelo Hexagonix®
 ;;
 ;;************************************************************************************
 
@@ -161,17 +159,17 @@ instalarISR	 =	               26  ;; Instalar rotina de serviço de interrupçã
 
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento de energia do Andromeda®
+;; Serviços de gerenciamento de energia do Hexagonix®
 ;;
 ;;************************************************************************************
 
 reiniciarPC  =	               27  ;; Reiniciar o computador
 					
-desligarPC  =                  28  ;; Chama rotina da implementação APM do Andromeda® para desligar o computador
+desligarPC  =                  28  ;; Chama rotina da implementação APM do Hexagonix® para desligar o computador
 
 ;;************************************************************************************
 ;;
-;; Serviços de saída em vídeo e gráficos do Andromeda®
+;; Serviços de saída em vídeo e gráficos do Hexagonix®
 ;;
 ;;************************************************************************************
 
@@ -249,7 +247,7 @@ obterCursor	=	               44  ;; Obter posição do cursor
 
 ;;************************************************************************************
 ;;
-;; Serviços de manipulação de teclado PS/2 do Andromeda®
+;; Serviços de manipulação de teclado PS/2 do Hexagonix®
 ;;
 ;;************************************************************************************
 
@@ -273,7 +271,7 @@ obterEstadoTeclas	=	       47  ;; Obter status das teclas especiais
 
 alterarFonte =                 48  ;; Altera a fonte padrão de exibição do sistema
                                    ;; Entrada: ESI - Ponteiro para o buffer contendo o nome do arquivo
-								   ;; que contêm a fonte compatível com o Sistema Operacional Andromeda®
+								   ;; que contêm a fonte compatível com o Sistema Operacional Hexagonix®
                                    ;; Saída: CF definido em caso de arquivo não encontrado	                                        							  
 
 alterarLeiaute =               49  ;; Altera o leiaute do teclado
@@ -281,7 +279,7 @@ alterarLeiaute =               49  ;; Altera o leiaute do teclado
 
 ;;************************************************************************************
 ;;
-;; Serviços de manipulação de mouse PS/2 do Andromeda®
+;; Serviços de manipulação de mouse PS/2 do Hexagonix®
 ;;
 ;;************************************************************************************
 
@@ -296,7 +294,7 @@ definirMouse	=	           52 ;; Definir nova posição do mouse
 
 ;;************************************************************************************
 ;;
-;; Serviços de manipulação e conversão de dados do Andromeda®
+;; Serviços de manipulação e conversão de dados do Hexagonix®
 ;;
 ;;************************************************************************************
 
@@ -343,7 +341,7 @@ paraString =                   63  ;; Converte um número inteiro em uma string
 
 ;;************************************************************************************
 ;;
-;;  Serviços de saída por som do Andromeda®
+;;  Serviços de saída por som do Hexagonix®
 ;;
 ;;************************************************************************************	
 
@@ -355,7 +353,7 @@ desligarSom  =                 65 ;; Desliga o alto-falante interno do computado
 
 ;;************************************************************************************
 ;;
-;;  Serviços de mensagens do Andromeda®
+;;  Serviços de mensagens do Hexagonix®
 ;;
 ;;************************************************************************************	
 
@@ -387,7 +385,7 @@ retornarHora =                 68 ;; Retorna informações de relógio em tempo 
 
 ;;************************************************************************************
 ;;
-;;                   Chamar Interrupção de Software Andromeda®
+;;                   Chamar Interrupção de Software Hexagonix®
 ;;               Aliases de nome de função para padronização futura
 ;;    Estes aliases servem para implementar mudanças na padronização sem quebrar as 
 ;;     chamadas em código que ainda não teve a nomenclatura de chamada atualizada
@@ -422,7 +420,7 @@ macro Andromeda chamadaAndromeda ;; Macro utilizado para solicitar um serviço d
 	
 }
 
-macro kHexagon chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon®
+macro Hexagonix chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon®
 {
 
 	push chamadaHexagon	

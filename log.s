@@ -1,23 +1,21 @@
 ;;************************************************************************************
 ;;
 ;;    
-;;        %#@$%&@$%&@$%$             Sistema Operacional Andromeda®
-;;        #$@$@$@#@#@#@$
-;;        @#@$%    %#$#%
-;;        @#$@$    #@#$@
-;;        #@#$$    !@#@#     Copyright © 2016-2022 Felipe Miguel Nery Lunkes
-;;        @#@%!$&%$&$#@#             Todos os direitos reservados
-;;        !@$%#%&#&@&$%#
-;;        @$#!%&@&@#&*@&
-;;        $#$#%    &%$#@       Lista de dispositivos acessíveis ao usuário
-;;        @#!$$    !#@#@
+;; ┌┐ ┌┐                                 Sistema Operacional Hexagonix®
+;; ││ ││
+;; │└─┘├──┬┐┌┬──┬──┬──┬─┐┌┬┐┌┐    Copyright © 2016-2022 Felipe Miguel Nery Lunkes
+;; │┌─┐││─┼┼┼┤┌┐│┌┐│┌┐│┌┐┼┼┼┼┘          Todos os direitos reservados
+;; ││ │││─┼┼┼┤┌┐│└┘│└┘││││├┼┼┐
+;; └┘ └┴──┴┘└┴┘└┴─┐├──┴┘└┴┴┘└┘
+;;              ┌─┘│          
+;;              └──┘          
 ;;
 ;;
 ;;************************************************************************************
 ;;
 ;; Lista de prioridades para mensagens do Sistema
 ;;
-;; Compatibilidade:   Sistema Operacional Andromeda® 1.11 (09/06/2019) ou superior
+;; Compatibilidade:   Sistema Operacional Hexagonix®/Andromeda® 1.11 (09/06/2019) ou superior
 ;; Versão:            1.0 rev 09/06/2019
 ;; Autor:             Felipe Miguel Nery Lunkes
 ;;
