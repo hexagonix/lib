@@ -33,7 +33,7 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 .revisao:    db 4
 .lancamento: db 0
 .codenome:   db "Gargantua",0
-.montagem:   dw 0070
+.montagem:   dw 0080
 
 ;; Informações do pacote de atualizações de construção do Sistema
 
@@ -42,9 +42,9 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 ;; Informações gerais da construção do Sistema
 
 .ano:     db "2022", 0
-.mes:     db "12", 0
-.dia:     db "28", 0
-.hora:    db "17", 0
+.mes:     db "01", 0
+.dia:     db "21", 0
+.hora:    db "01", 0
 .minutos: db "00", 0
 
 ;; Forma de ler o código da construção:
@@ -61,4 +61,4 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 ;; 1)   2)     3)    4)     5)
 ;; RC S1.10 , 1.5 , 195 , Aurora
 
-.build:  db "OFS4@.12,1.15,0070.GX,Gargantua", 0
+.build:  db "OFS3@.01,1.15,0080.GX,Gargantua", 0
