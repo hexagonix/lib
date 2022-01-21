@@ -24,27 +24,27 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 
 ;; Banner apenas para exibição. 
                                        
-.versaoAndromeda: db "1.15.4 [Gargantua]", 0 
+.versaoAndromeda: db "1.16 [Thena]", 0 
 
 ;; Para tratamento, usar opções abaixo, em inteiro e string
 
 .versao:     db 1
-.subversao:  db 15
-.revisao:    db 4
+.subversao:  db 16
+.revisao:    db 0
 .lancamento: db 0
-.codenome:   db "Gargantua",0
-.montagem:   dw 0080
+.codenome:   db "Thena",0
+.montagem:   dw 100
 
 ;; Informações do pacote de atualizações de construção do Sistema
 
-.pacoteAtualizacoes: db "Gargantua.PE 04.12 Patch", 0
+.pacoteAtualizacoes: db "Thena.PE 03.01 hint", 0
 
 ;; Informações gerais da construção do Sistema
 
 .ano:     db "2022", 0
 .mes:     db "01", 0
 .dia:     db "21", 0
-.hora:    db "01", 0
+.hora:    db "14", 0
 .minutos: db "00", 0
 
 ;; Forma de ler o código da construção:
@@ -61,4 +61,4 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 ;; 1)   2)     3)    4)     5)
 ;; RC S1.10 , 1.5 , 195 , Aurora
 
-.build:  db "OFS3@.01,1.15,0080.GX,Gargantua", 0
+.build:  db "OFS3@.01,1.16,0100.GX,Thena", 0
