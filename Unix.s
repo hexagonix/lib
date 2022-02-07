@@ -49,5 +49,5 @@ versaoTOP       equ "1.1"
 versaoUNAME     equ "1.7"
 versaoWHOAMI    equ "1.0"
 
-versaoCoreUtils equ "1.3.0 BETA" 
-versaoUnixUtils equ "3.25.0 BETA"
+versaoCoreUtils equ "2.0.0 BETA" 
+versaoUnixUtils equ "3.30.0 BETA"
