@@ -24,16 +24,16 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 
 ;; Banner apenas para exibição. 
                                        
-.versaoAndromeda: db "1.16 [Thena]", 0 
+.versaoAndromeda: db "0.50 [Thena]", 0 
 
 ;; Para tratamento, usar opções abaixo, em inteiro e string
 
-.versao:     db 1
-.subversao:  db 16
+.versao:     db 0
+.subversao:  db 50
 .revisao:    db 0
 .lancamento: db 0
 .codenome:   db "Thena",0
-.montagem:   dw 104
+.montagem:   dw 105
 
 ;; Informações do pacote de atualizações de construção do Sistema
 
@@ -43,7 +43,7 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 
 .ano:     db "2022", 0
 .mes:     db "02", 0
-.dia:     db "06", 0
+.dia:     db "08", 0
 .hora:    db "20", 0
 .minutos: db "00", 0
 
@@ -61,4 +61,4 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 ;; 1)   2)     3)    4)     5)
 ;; RC S1.10 , 1.5 , 195 , Aurora
 
-.build:  db "OFS1@.02,1.16,0104.Arishem,Thena", 0
+.build:  db "OFS1@.02,0.50,0105.Arishem,Thena", 0
