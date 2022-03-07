@@ -33,18 +33,18 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 .revisao:    db 2
 .lancamento: db 0
 .codenome:   db "Thena",0
-.montagem:   dw 107
+.montagem:   dw 108
 
 ;; Informações do pacote de atualizações de construção do Sistema
 
-.pacoteAtualizacoes: db "Thena.PE 02.02 Arishem", 0
+.pacoteAtualizacoes: db "Thena.PE 01.03 Arishem", 0
 
 ;; Informações gerais da construção do Sistema
 
 .ano:     db "2022", 0
-.mes:     db "02", 0
-.dia:     db "13", 0
-.hora:    db "15", 0
+.mes:     db "03", 0
+.dia:     db "06", 0
+.hora:    db "22", 0
 .minutos: db "00", 0
 
 ;; Forma de ler o código da construção:
@@ -61,4 +61,4 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 ;; 1)   2)     3)    4)     5)
 ;; RC S1.10 , 1.5 , 195 , Aurora
 
-.build:  db "OFS2@.02,1.0.2,0107.Arishem,Thena", 0
+.build:  db "OFS1@.03,1.0.2,0108.Arishem,Thena", 0
