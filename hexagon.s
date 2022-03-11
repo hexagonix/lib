@@ -15,7 +15,8 @@
 ;;
 ;; Cabeçalho de macros, funções e chamadas de sistema do Hexagonix®
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix®1.14.3 (24/11/2020) ou superior
+;; Compatibilidade:   Sistema Operacional Hexagonix® 1.14.3 (24/11/2020) ou superior
+;;                    Hexagon® 8.58b ou mais recente (versão do kernel necessária)
 ;; Versão:            5.1 rev 3 24/11/2020
 ;; Autor:             Felipe Miguel Nery Lunkes
 ;;
@@ -71,7 +72,10 @@ obterCodigoErro = 8    ;; Obtém o código retornado pelo último processo em ex
 ;;
 ;;************************************************************************************
 
-abrir = 9              ;; Abre um canal de leitura/escrita com determinado dispositivo solicitado ou                                                                                           ;; abre um determinado arquivo em endereço especificado
+abrir = 9              ;; Abre um canal de leitura/escrita com determinado dispositivo solicitado ou 
+                       ;; arquivo comum presente no disco (dispositivos e discos são tratados como
+                       ;; arquivos). Em caso de arquivo no disco, um endereço de carregamento deve ser 
+                       ;; fornecido.                                                    
                        ;; Entrada: ESI - Ponteiro para o buffer que contêm o nome convencionado
                        ;; EDI - Endereço de carregamento, em caso de arquivo
                        ;; CF definido quando o nome do dispositivo for inválido ou arquivo não existir
@@ -79,6 +83,7 @@ abrir = 9              ;; Abre um canal de leitura/escrita com determinado dispo
 escrever = 10          ;; Envia dados para o dispositivo aberto
                        ;; Entrada: SI - Ponteiro com o buffer contendo os dados
                        ;; Saída: CF definido em caso de erro ou nenhum dispositivo aberto
+                       ;; Aviso! Futuramente, será utilizada para salvar arquivos.
 
 fechar = 11            ;; Fecha o último dispositivo aberto
 
