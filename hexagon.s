@@ -416,15 +416,6 @@ fork  = 3
 ;;
 ;;************************************************************************************
 
-macro Andromeda chamadaAndromeda ;; Macro utilizado para solicitar um serviço do Hexagon®
-{
-
-	push chamadaAndromeda	
-	
-	int 69h		
-	
-}
-
 macro Hexagonix chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon®
 {
 
@@ -445,7 +436,7 @@ macro novaLinha
 	
 	pop ebx
 	
-	Andromeda imprimirCaractere
+	Hexagonix imprimirCaractere
 	
 }
 
@@ -454,7 +445,7 @@ macro imprimirInteiro
 
 	mov ebx, 01h
 	
-	Andromeda imprimir
+	Hexagonix imprimir
 
 }
 
@@ -463,7 +454,7 @@ macro imprimirHexadecimal
 
 	mov ebx, 02h
 	
-	Andromeda imprimir
+	Hexagonix imprimir
 	
 }
 
@@ -472,7 +463,7 @@ macro imprimirBinario
 
 	mov ebx, 03h
 	
-	Andromeda imprimir
+	Hexagonix imprimir
 
 }
 
@@ -481,7 +472,7 @@ macro imprimirString
 
 	mov ebx, 04h
 	
-	Andromeda imprimir
+	Hexagonix imprimir
 
 }
 

@@ -44,7 +44,7 @@ obterVersaoDistribuicao:
 	mov esi, arquivoVersao
 	mov edi, enderecoCarregamento
 	
-	Andromeda abrir
+	Hexagonix abrir
 	
 	jc .erro
 	
@@ -132,7 +132,7 @@ obterCodigoDistribuicao:
 	mov esi, arquivoVersao
 	mov edi, enderecoCarregamento
 	
-	Andromeda abrir
+	Hexagonix abrir
 	
 	jc .erro
 	
@@ -223,7 +223,7 @@ obterPacoteDistribuicao:
 	mov esi, arquivoVersao
 	mov edi, enderecoCarregamento
 	
-	Andromeda abrir
+	Hexagonix abrir
 	
 	jc .erro
 	
@@ -312,7 +312,7 @@ obterDataHora:
 	mov esi, arquivoVersao
 	mov edi, enderecoCarregamento
 	
-	Andromeda abrir
+	Hexagonix abrir
 	
 	jc .erro
 	
@@ -403,7 +403,7 @@ obterBuildDistribuicao:
 	mov esi, arquivoVersao
 	mov edi, enderecoCarregamento
 	
-	Andromeda abrir
+	Hexagonix abrir
 	
 	jc .erro
 	

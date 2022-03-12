@@ -78,16 +78,16 @@ Andromeda.Estelar.Tema.Fonte: ;; Definições padrão de cores de plano de fundo
 macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, corTextoTitulo, corTextoRodape, corTexto, corFundo
 {
 
-	Andromeda limparTela
+	Hexagonix limparTela
 
 	mov eax, corTextoTitulo
 	mov ebx, corTitulo
 	
-	Andromeda definirCor
+	Hexagonix definirCor
 	
 	mov al, 0
 	
-	Andromeda limparLinha
+	Hexagonix limparLinha
 	
 	mov esi, titulo
 	
@@ -96,13 +96,13 @@ macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, cor
     mov eax, corTextoRodape
 	mov ebx, corRodape
 	
-	Andromeda definirCor
+	Hexagonix definirCor
 
 	mov al, byte[Andromeda.Interface.numLinhas] ;; Última linha
 	
 	dec al
 	
-	Andromeda limparLinha
+	Hexagonix limparLinha
 	
 	mov esi, rodape
 	
@@ -111,24 +111,24 @@ macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, cor
 	mov eax, corTexto
 	mov ebx, corFundo
 	
-	Andromeda definirCor
+	Hexagonix definirCor
 	
 	mov dl, 2
 	mov dh, 1
 	
-	Andromeda definirCursor
+	Hexagonix definirCursor
 
 }
 
 macro Andromeda.Estelar.atualizarResolucao
 {
 
-	Andromeda obterCor
+	Hexagonix obterCor
 
 	mov dword[Andromeda.Interface.corFonte], eax
 	mov dword[Andromeda.Interface.corFundo], ebx
 
-	Andromeda obterResolucao
+	Hexagonix obterResolucao
 
 	cmp eax, 1
     je .resolucao800x600
@@ -194,16 +194,16 @@ macro Andromeda.Estelar.criarBarraCarregamento posicaoY, corBarra, corFundo
 	mov eax, BRANCO_ANDROMEDA
 	mov ebx, dword[Andromeda.Interface.barraCarregamentoCorFundo]
 	
-	Andromeda definirCor
+	Hexagonix definirCor
 	
 	mov al, byte[Andromeda.Interface.barraCarregamentoY]
 	
-	Andromeda limparLinha
+	Hexagonix limparLinha
 
 	mov eax, dword[Andromeda.Interface.corFonte]
 	mov ebx, dword[Andromeda.Interface.corFundo]
 	
-	Andromeda definirCor
+	Hexagonix definirCor
 
 	Andromeda.Estelar.atualizarBarracarregamento 1
 
@@ -249,7 +249,7 @@ macro Andromeda.Estelar.atualizarBarracarregamento porcentagem
     mov edi, 16 ;; Altura
     mov edx, dword[Andromeda.Interface.barraCarregamentoCor] ;; Cor
     
-    Andromeda desenharBloco
+    Hexagonix desenharBloco
 
 	mov eax, dword[Andromeda.Interface.barraCarregamentoAdd]
 	add dword[Andromeda.Interface.barraCarregamentoPorcentagem], eax
@@ -266,7 +266,7 @@ macro Andromeda.Estelar.excluirBarraCarregamento ;; Não necessita de parâmetro
 
 	mov al, byte[Andromeda.Interface.barraCarregamentoY]
 
-	Andromeda limparLinha
+	Hexagonix limparLinha
 
 }
 
@@ -297,7 +297,7 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
     mov edi, 150          ;; Altura
     mov edx, corLogotipo  ;; Cor
     
-    Andromeda desenharBloco
+    Hexagonix desenharBloco
  
 .segundaLinha:
 
@@ -307,7 +307,7 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
     mov edi, 150          ;; Altura
     mov edx, corLogotipo  ;; Cor
     
-    Andromeda desenharBloco
+    Hexagonix desenharBloco
 
 .terceiraLinha:
 
@@ -317,7 +317,7 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
     mov edi, 20           ;; Altura
     mov edx, corLogotipo  ;; Cor
     
-    Andromeda desenharBloco
+    Hexagonix desenharBloco
     
 .quartaLinha:
 
@@ -327,49 +327,49 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
     mov edi, 20           ;; Altura
     mov edx, corLogotipo  ;; Cor
     
-    Andromeda desenharBloco    
+    Hexagonix desenharBloco    
 
 	mov dh, 02
 	mov dl, 14
 	
-	Andromeda definirCursor
+	Hexagonix definirCursor
 
     mov eax, corLogotipo
 	mov ebx, corFundoAposLogotipo
 
-	Andromeda definirCor
+	Hexagonix definirCor
 
     mov al, 't'
 
-    Andromeda imprimirCaractere
+    Hexagonix imprimirCaractere
 
     mov al, 'm'
 
-    Andromeda imprimirCaractere
+    Hexagonix imprimirCaractere
 
     mov eax, corTextoAposLogotipo
 	mov ebx, corFundoAposLogotipo
 
-	Andromeda definirCor
+	Hexagonix definirCor
 
 }
 
 macro Andromeda.Estelar.finalizarProcessoGrafico codigoErroGrafico, tipoSaidaGrafico
 {
 
-    Andromeda limparTela
+    Hexagonix limparTela
 
     mov eax, codigoErroGrafico
     mov ebx, tipoSaidaGrafico
 
-    Andromeda encerrarProcesso
+    Hexagonix encerrarProcesso
 
 }
 
 macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
 {
 
-	Andromeda obterInfoTela
+	Hexagonix obterInfoTela
 
 ;; BL - Número de colunas
 ;; BH - Número de linhas
@@ -380,7 +380,7 @@ macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
 
 	mov esi, mensagem
 
-	Andromeda tamanhoString
+	Hexagonix tamanhoString
 
 ;; Em AX, o tamanho da String
 
@@ -393,7 +393,7 @@ macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
 	mov dl, ah
 	mov dh, linha
 
-	Andromeda definirCursor
+	Hexagonix definirCursor
 
 	mov esi, mensagem
 

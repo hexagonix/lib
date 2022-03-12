@@ -33,7 +33,7 @@ macro tocarNota frequencia
     mov ax, frequencia
     mov bx, 00h
 
-    Andromeda emitirSom
+    Hexagonix emitirSom
 
 }
 
@@ -43,13 +43,13 @@ macro tocarNotaT frequencia, temporizador
     mov ax, frequencia
     mov bx, 00h
 
-    Andromeda emitirSom
+    Hexagonix emitirSom
 
     mov ecx, temporizador
 
-    Andromeda causarAtraso
+    Hexagonix causarAtraso
 
-    Andromeda desligarSom
+    Hexagonix desligarSom
 
 }
 
@@ -58,13 +58,13 @@ macro pausar tempo
 
     mov ecx, tempo 
     
-    Andromeda causarAtraso
+    Hexagonix causarAtraso
 
 }
 
 macro finalizarNota
 {
 
-    Andromeda desligarSom
+    Hexagonix desligarSom
     
 }

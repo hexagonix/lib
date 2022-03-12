@@ -36,7 +36,7 @@ macro Abrir nome, endereco
     mov esi, nome
     mov edi, endereco
 
-    Andromeda abrir
+    Hexagonix abrir
 
 }
 
@@ -46,14 +46,14 @@ macro finalizarProcesso codigoErro, tipoSaida
     mov eax, codigoErro
     mov ebx, tipoSaida
 
-    Andromeda encerrarProcesso
+    Hexagonix encerrarProcesso
 
 }
 
 macro finalizarProcessoGrafico codigoErroGrafico, tipoSaidaGrafico
 {
 
-    Andromeda limparTela
+    Hexagonix limparTela
 
     finalizarProcesso codigoErroGrafico, tipoSaidaGrafico
 
@@ -65,7 +65,7 @@ macro tocarNota frequencia
     mov ax, frequencia
     mov bx, 00h
 
-    Andromeda emitirSom
+    Hexagonix emitirSom
 
 }
 
@@ -75,13 +75,13 @@ macro tocarNotaT frequencia, temporizador
     mov ax, frequencia
     mov bx, 00h
 
-    Andromeda emitirSom
+    Hexagonix emitirSom
 
     mov ecx, temporizador
 
-    Andromeda causarAtraso
+    Hexagonix causarAtraso
 
-    Andromeda desligarSom
+    Hexagonix desligarSom
 
 }
 
@@ -90,14 +90,14 @@ macro pausar tempo
 
     mov ecx, tempo 
     
-    Andromeda causarAtraso
+    Hexagonix causarAtraso
 
 }
 
 macro finalizarNota
 {
 
-    Andromeda desligarSom
+    Hexagonix desligarSom
     
 }
 
@@ -107,6 +107,6 @@ macro cursorPara posicaoX, posicaoY
     mov dl, posicaoX
 	mov dh, posicaoY
 
-	Andromeda definirCursor
+	Hexagonix definirCursor
 
 }

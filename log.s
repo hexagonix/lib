@@ -51,6 +51,6 @@ macro logSistema mensagem, codigoErro, prioridade
     mov eax, codigoErro ;; Código de erro
     mov ebx, prioridade ;; Importante!
 
-    Andromeda enviarMensagemHexagon
+    Hexagonix enviarMensagemHexagon
 
 }
