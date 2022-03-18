@@ -20,7 +20,7 @@
 ;;************************************************************************************
 
 versaoARCH      equ "1.0"
-versaoATOP      equ "1.0 BETA"
+versaoATOP      equ "1.0-beta"
 versaoCAT       equ "1.0 " 
 versaoCLEAR     equ "1.0 "
 versaoCOWSAY    equ "2.0"
@@ -44,10 +44,10 @@ versaoMOUNT     equ "2.1"
 versaoPS        equ "1.0"
 versaoRM        equ "1.0"
 versaoSH        equ "1.02"
-versaoSU        equ "2.0 BUG"
+versaoSU        equ "2.0-bug"
 versaoTOP       equ "1.1"
-versaoUNAME     equ "1.7"
+versaoUNAME     equ "2.0"
 versaoWHOAMI    equ "1.0"
 
-versaoCoreUtils equ "2.0.0 BETA" 
-versaoUnixUtils equ "3.30.0 BETA"
+versaoCoreUtils equ "2.1-beta" 
+versaoUnixUtils equ "3.30-beta"
