@@ -24,14 +24,14 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 
 ;; Banner apenas para exibição. 
                                        
-.versaoAndromeda: db "1.0.3 [Thena]", 0 
+.versaoAndromeda: db "1.0.4-beta [Thena]", 0 
 
 ;; Para tratamento, usar opções abaixo, em inteiro e string
 
 .versao:     db 1
 .subversao:  db 0
-.revisao:    db 3
-.lancamento: db 0
+.revisao:    db 4
+.lancamento: db "b"
 .codenome:   db "Thena",0
 .montagem:   dw 214
 
@@ -61,4 +61,4 @@ sistemaBase: ;; Dados de desenvolvimento OEM
 ;; 1)   2)     3)    4)     5)
 ;; RC S1.10 , 1.5 , 195 , Aurora
 
-.build:  db "OFS4@.03,1.0.3,0214.Arishem,Thena", 0
+.build:  db "OFS4@.03,1.0.4-beta,0214.Arishem,Thena", 0
