@@ -19,5 +19,5 @@
 ;;
 ;;************************************************************************************
 
-versaoCoreUtils equ "2.2-rOS" 
+versaoCoreUtils equ "2.5-rOS" 
 versaoUnixUtils equ "3.30-rOS"
