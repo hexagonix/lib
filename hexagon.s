@@ -15,9 +15,9 @@
 ;;
 ;; Cabeçalho de macros, funções e chamadas de sistema do Hexagonix®
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix® 1.14.3 (24/11/2020) ou superior
-;;                    Hexagon® 8.58b ou mais recente (versão do kernel necessária)
-;; Versão:            5.1 rev 3 24/11/2020
+;; Compatibilidade:   Sistema Operacional Hexagonix® H1 R1.2 (05/06/2022) ou superior
+;;                    Hexagon® 9.3B ou mais recente (versão do kernel necessária)
+;; Versão:            5.2 rev 0 05/06/2022
 ;; Autor:             Felipe Miguel Nery Lunkes
 ;;
 ;; Total de chamadas: 68 (26/04/2020) - Este número não é final e pode diminuir (ou aumentar)
@@ -196,8 +196,8 @@ limparTela = 30        ;; Limpa a tela
 limparLinha	= 31       ;; Limpa uma linha específica na tela
                        ;; Entrada: AL - Número da linha 
 						
-definirModoGrafico = 32 ;; Definir modo gráfico 
-                        ;; Saída: ESI - Ponteiro para a memória de vídeo
+NULA  = 32             ;; Função nula, sem retorno ou função
+                       ;; Mantida para compatibilidade
 
 rolarTela = 33         ;; Rola a tela para baixo uma linha
 
@@ -238,7 +238,8 @@ atualizarTela = 41     ;; Atualizar a memória de vídeo com o conteúdo do Buff
 definirResolucao = 42  ;; Utilizado para definir a resolução à ser utilizada no vídeo
                        ;; Entrada: EAX - Número relativo a resolução à ser utilizada
                        ;;       1 - Resolução de 800x600 pixels
-                       ;;       2 - Resolução de 1024x768 pixels 		
+                       ;;       2 - Resolução de 1024x768 pixels 	
+                       ;;       3 - Alterar para modo texto	
 
 obterResolucao = 43    ;; Utilizado para obter o código relativo à resolução utilizada 
                        ;; no vídeo padrão
