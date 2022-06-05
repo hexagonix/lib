@@ -400,9 +400,9 @@ retornarHora = 68      ;; Retorna informações de relógio em tempo real em for
 ;;
 ;;************************************************************************************
 
-maloc = 1
-mfree = 2
-fork  = 3
+malloc = 1
+mfree  = 2
+fork   = 3
 
 ;; Histórico de funções com nome substituído
 
