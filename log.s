@@ -41,6 +41,7 @@ Log.Prioridades:
 .p4 = 4
 .p5 = 5
 .pa = 10
+.syslogd: db "syslogd.app", 0
 
 ;; Um macro simples para enviar mensagens para o log do Sistema
 
@@ -52,5 +53,26 @@ macro logSistema mensagem, codigoErro, prioridade
     mov ebx, prioridade ;; Importante!
 
     Hexagonix enviarMensagemHexagon
+
+}
+
+;; Syslogd deverá ser o mecanismo padrão para envio de mensagens de log quando
+;; possível, por utilitários do sistema que não são críticos (como exemplo de 
+;; utilitários críticos, temos init, login, energia, etc). Os utilitários 
+;; de ambiente Andromeda deverão usar preferencialmente o syslogd, para evitar
+;; acesso direto a interfaces expostas pelo Hexagon, impedindo também o mau
+;; uso da interface, uma vez que as mensagens são tratadas previamente pelo syslogd.
+;; Para utilitários críticos envolvidos diretamente na inicialização e manutenção do
+;; sistema, o acesso direto ainda pode ser executado, uma vez que o nível de prioridade
+;; pode mudar de acordo com a aplicação. 
+
+macro syslogdX mensagem, codigoErro, prioridade
+{
+
+    mov esi, Log.Prioridades.syslogd
+    mov edi, mensagem
+    mov eax, 01h ;; Não deixar em branco
+
+    Hexagonix iniciarProcesso
 
 }
