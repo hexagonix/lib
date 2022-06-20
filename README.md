@@ -4,7 +4,7 @@ Este repositório contém bibliotecas e macros importantes para o desenvolviment
 
 ## Aviso de direitos autorais
 
-Veja a (Licença)[LICENSE] para mais informações.
+Veja a [Licença](LICENSE) para mais informações.
 
 ## Bibliotecas Andromeda
 
