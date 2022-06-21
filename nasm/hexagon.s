@@ -15,8 +15,9 @@
 ;;
 ;; Cabeçalho de macros, funções e chamadas de sistema do Hexagonix®
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix®/Andromeda® 1.14.3 (24/11/2020) ou superior
-;; Versão:            5.1 rev 3 24/11/2020
+;; Compatibilidade:   Sistema Operacional Hexagonix® H1 R1.2 (05/06/2022) ou superior
+;;                    Hexagon® 9.3B ou mais recente (versão do kernel necessária)
+;; Versão:            5.2 rev 0 05/06/2022
 ;; Autor:             Felipe Miguel Nery Lunkes
 ;;
 ;; Total de chamadas: 68 (26/04/2020) - Este número não é final e pode diminuir (ou aumentar)
@@ -190,8 +191,9 @@ limparTela equ 30        ;; Limpa a tela
 limparLinha	equ 31       ;; Limpa uma linha específica na tela
                          ;; Entrada: AL - Número da linha 
 						
-definirModoGrafico equ 32 ;; Definir modo gráfico 
-                          ;; Saída: ESI - Ponteiro para a memória de vídeo
+NULA equ 32              ;; Função nula, sem retorno ou função
+                         ;; Mantida para compatibilidade
+
 
 rolarTela equ 33         ;; Rola a tela para baixo uma linha
 
