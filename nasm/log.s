@@ -34,23 +34,22 @@
 
 Log.Prioridades:
 
-.p0 = 0
-.p1 = 1
-.p2 = 2
-.p3 = 3
-.p4 = 4
-.p5 = 5
-.pa = 10
+.p0 equ 0
+.p1 equ 1
+.p2 equ 2
+.p3 equ 3
+.p4 equ 4
+.p5 equ 5
+.pa equ 10
 
 ;; Um macro simples para enviar mensagens para o log do Sistema
 
-macro logSistema mensagem, codigoErro, prioridade
-{
+%macro logSistema 3
 
-    mov esi, mensagem   ;; Mensagem a ser enviada
-    mov eax, codigoErro ;; Código de erro
-    mov ebx, prioridade ;; Importante!
+    mov esi, [%1]   ;; Mensagem a ser enviada
+    mov eax, [%2] ;; Código de erro
+    mov ebx, [%3] ;; Importante!
 
     Hexagonix enviarMensagemHexagon
 
-}
+%endmacro
