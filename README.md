@@ -34,7 +34,7 @@ As bibliotecas Hexagon compreendem vários componentes que permitem ao aplicativ
 
 This repository contains libraries and macros for developing utilities for Hexagonix and Andromeda.
 
-## Copyright notice
+### Copyright notice
 
 See [License](LICENSE) for more information.
 
