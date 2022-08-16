@@ -141,6 +141,7 @@ retornarVersao equ 22    ;; Retorna a versão do Sistema para os aplicativos
                          ;; Saída: EAX - Número da versão; EBX - Número da subversão 
                          ;; CH - Caractere de revisão; EDX - Arquitetura
                          ;; ESI - Nome do Kernel 
+                         ;; EDI - Build do Kernel
 
 obterAleatorio equ 23    ;; Obtêr um número aleatório
                          ;; Entrada: EAX - Máximo
