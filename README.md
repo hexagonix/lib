@@ -1,3 +1,22 @@
+<p align="center">
+<img src="https://github.com/hexagonix/Doc/blob/main/Img/Hexagonix.png" width="150" height="150">
+</p>
+
+<div align="center">
+
+![](https://img.shields.io/github/license/hexagonix/lib.svg)
+![](https://img.shields.io/github/stars/hexagonix/lib.svg)
+![](https://img.shields.io/github/issues/hexagonix/lib.svg)
+![](https://img.shields.io/github/issues-closed/hexagonix/lib.svg)
+![](https://img.shields.io/github/issues-pr/hexagonix/lib.svg)
+![](https://img.shields.io/github/issues-pr-closed/hexagonix/lib.svg)
+![](https://img.shields.io/github/downloads/hexagonix/lib/total.svg)
+![](https://img.shields.io/github/release/hexagonix/lib.svg)
+
+</div>
+
+<hr>
+
 # Português
 
 ## Bibliotecas para o desenvolvimento de aplicativos e utilitários
