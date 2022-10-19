@@ -25,7 +25,7 @@
 ;; Este arquivo contém definições úteis para o uso em todo o sistema
 ;;
 ;; Essas definições incluem a versão do sistema, assim como dados úteis a todos
-;; os aplicativos Core do Hexagonix®
+;; os aplicativos core do Hexagonix®
 
 ;; Definições importantes para o uso destas funções
 ;;

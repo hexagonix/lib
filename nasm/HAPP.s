@@ -7,12 +7,22 @@
 ;; │┌─┐││─┼┼┼┤┌┐│┌┐│┌┐│┌┐┼┼┼┼┘          Todos os direitos reservados
 ;; ││ │││─┼┼┼┤┌┐│└┘│└┘││││├┼┼┐
 ;; └┘ └┴──┴┘└┴┘└┴─┐├──┴┘└┴┴┘└┘
-;;              ┌─┘│          
+;;              ┌─┘│                 Licenciado sob licença BSD-3-Clause
 ;;              └──┘          
+;;
 ;;
 ;;************************************************************************************
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix®/Andromeda® 1.14.3 (24/11/2020) ou superior
+;; Este arquivo é licenciado sob licença BSD-3-Clause. Observe o arquivo de licença 
+;; disponível no repositório para mais informações sobre seus direitos e deveres ao 
+;; utilizar qualquer trecho deste arquivo.
+;;
+;; Copyright (C) 2016-2022 Felipe Miguel Nery Lunkes
+;; Todos os direitos reservados.
+
+;;************************************************************************************
+;;
+;; Compatibilidade:   Sistema Operacional Hexagonix® 1.14.3 (24/11/2020) ou superior
 ;;                    Hexagon® 8.40 ou superior
 ;; Versão:            1.0 rev 1 02/10/2021
 ;; Autor:             Felipe Miguel Nery Lunkes
