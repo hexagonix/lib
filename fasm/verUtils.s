@@ -1,24 +1,31 @@
 ;;************************************************************************************
 ;;
 ;;    
-;;        %#@$%&@$%&@$%$             Sistema Operacional Andromeda®
-;;        #$@$@$@#@#@#@$
-;;        @#@$%    %#$#%
-;;        @#$@$    #@#$@
-;;        #@#$$    !@#@#     Copyright © 2016-2022 Felipe Miguel Nery Lunkes
-;;        @#@%!$&%$&$#@#             Todos os direitos reservados
-;;        !@$%#%&#&@&$%#
-;;        @$#!%&@&@#&*@&
-;;        $#$#%    &%$#@
-;;        @#!$$    !#@#@
+;; ┌┐ ┌┐                                 Sistema Operacional Hexagonix®
+;; ││ ││
+;; │└─┘├──┬┐┌┬──┬──┬──┬─┐┌┬┐┌┐    Copyright © 2016-2022 Felipe Miguel Nery Lunkes
+;; │┌─┐││─┼┼┼┤┌┐│┌┐│┌┐│┌┐┼┼┼┼┘          Todos os direitos reservados
+;; ││ │││─┼┼┼┤┌┐│└┘│└┘││││├┼┼┐
+;; └┘ └┴──┴┘└┴┘└┴─┐├──┴┘└┴┴┘└┘
+;;              ┌─┘│                 Licenciado sob licença BSD-3-Clause
+;;              └──┘          
 ;;
 ;;
 ;;************************************************************************************
 ;;
-;; Este arquivo contém definições úteis para o uso em todo o Sistema
+;; Este arquivo é licenciado sob licença BSD-3-Clause. Observe o arquivo de licença 
+;; disponível no repositório para mais informações sobre seus direitos e deveres ao 
+;; utilizar qualquer trecho deste arquivo.
 ;;
-;; Essas definições incluem a versão do Sistema, assim como dados úteis a todos
-;; os aplicativos Core do Andromeda®
+;; Copyright (C) 2016-2022 Felipe Miguel Nery Lunkes
+;; Todos os direitos reservados.
+
+;;************************************************************************************
+;;
+;; Este arquivo contém definições úteis para o uso em todo o sistema
+;;
+;; Essas definições incluem a versão do sistema, assim como dados úteis a todos
+;; os aplicativos Core do Hexagonix®
 
 ;; Definições importantes para o uso destas funções
 ;;
@@ -480,7 +487,7 @@ obterBuildDistribuicao:
 
 ;;************************************************************************************
 
-arquivoVersao:               db "ANDRMDA.OCL", 0
+arquivoVersao:               db "HEXGNIX.OCL", 0
 versaoObtida:       times 64 db 0
 codigoObtido:       times 64 db 0
 pacoteAtualizacoes: times 64 db 0
