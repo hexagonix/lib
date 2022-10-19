@@ -50,7 +50,7 @@ Log.Prioridades:
 .p4 = 4
 .p5 = 5
 .pa = 10
-.syslogd: db "syslogd.app", 0
+.syslogd: db "syslogd", 0
 
 ;; Um macro simples para enviar mensagens para o log do Sistema
 
