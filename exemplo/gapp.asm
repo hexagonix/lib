@@ -120,7 +120,7 @@ VERSAO equ "1.1" ;; Versao do aplicativo
 
 gapp:
 
-.mensagemOla: db 10, 10, "Este e um exemplo de aplicativo HAPP grafico do Andromeda(R)!", 10, 10
+.mensagemOla: db 10, 10, "Este e um exemplo de aplicativo HAPP grafico do Hexagonix(R)!", 10, 10
               db 10, 10, "Pressione qualquer tecla para finalizar este programa...", 10, 10, 0 
 
 .TITULO:      db "Seja bem-vindo!", 0
