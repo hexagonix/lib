@@ -113,7 +113,7 @@ As bibliotecas `Estelar` estão dentro do diretório Estelar, e são compostas p
 
 <div align="justify">
 
-Você pode encontrar exemplos de implementação de utilitários em [modo texto](exemplo/tapp.asm) e [gráfico](exemplo/gapp.asm) para analisar sua construção. Sinta-se a vontade de abrir uma `issue`para sanar qualquer dívida ou relatar algum errro.
+Você pode encontrar exemplos de implementação de utilitários em [modo texto](exemplo/tapp.asm) e [gráfico](exemplo/gapp.asm) para analisar sua construção. Sinta-se a vontade de abrir uma `issue` para sanar qualquer dívida ou relatar algum errro.
 
 </div>
 
