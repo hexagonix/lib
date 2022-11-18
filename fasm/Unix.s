@@ -57,5 +57,5 @@
 ;;
 ;;************************************************************************************
 
-versaoCoreUtils equ "3.0-r" 
-versaoUnixUtils equ "4.0-r"
+versaoCoreUtils equ "H2-dev-4.0" 
+versaoUnixUtils equ "H2-dev-5.0"
