@@ -192,7 +192,6 @@ obterAleatorio = 23    ;; Obtêr um número aleatório
 alimentarAleatorio = 24 ;; Alimentar o gerador do números
                         ;; Entrada: EAX - Número
 
-
 causarAtraso = 25      ;; Utilizada para causar um atraso (delay), utilizado para adaptar operações
                        ;; de memória, operações de disco e possibilitar leitura da tela por parte
                        ;; do usuário.
