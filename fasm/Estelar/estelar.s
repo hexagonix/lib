@@ -109,64 +109,64 @@ Andromeda.Estelar.Tema.Fonte: ;; Definições padrão de cores de plano de fundo
 .fundoPadrao = PRETO
 .fontePadrao = BRANCO_ANDROMEDA
 .tamanho = 8
-.altura	 = 16
+.altura  = 16
 
 macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, corTextoTitulo, corTextoRodape, corTexto, corFundo
 {
 
-	Hexagonix limparTela
+    Hexagonix limparTela
 
-	mov eax, corTextoTitulo
-	mov ebx, corTitulo
-	
-	Hexagonix definirCor
-	
-	mov al, 0
-	
-	Hexagonix limparLinha
-	
-	mov esi, titulo
-	
-	imprimirString
-	
+    mov eax, corTextoTitulo
+    mov ebx, corTitulo
+    
+    Hexagonix definirCor
+    
+    mov al, 0
+    
+    Hexagonix limparLinha
+    
+    mov esi, titulo
+    
+    imprimirString
+    
     mov eax, corTextoRodape
-	mov ebx, corRodape
-	
-	Hexagonix definirCor
+    mov ebx, corRodape
+    
+    Hexagonix definirCor
 
-	mov al, byte[Andromeda.Interface.numLinhas] ;; Última linha
-	
-	dec al
-	
-	Hexagonix limparLinha
-	
-	mov esi, rodape
-	
-	imprimirString
-	
-	mov eax, corTexto
-	mov ebx, corFundo
-	
-	Hexagonix definirCor
-	
-	mov dl, 2
-	mov dh, 1
-	
-	Hexagonix definirCursor
+    mov al, byte[Andromeda.Interface.numLinhas] ;; Última linha
+    
+    dec al
+    
+    Hexagonix limparLinha
+    
+    mov esi, rodape
+    
+    imprimirString
+    
+    mov eax, corTexto
+    mov ebx, corFundo
+    
+    Hexagonix definirCor
+    
+    mov dl, 2
+    mov dh, 1
+    
+    Hexagonix definirCursor
 
 }
 
 macro Andromeda.Estelar.atualizarResolucao
 {
 
-	Hexagonix obterCor
+    Hexagonix obterCor
 
-	mov dword[Andromeda.Interface.corFonte], eax
-	mov dword[Andromeda.Interface.corFundo], ebx
+    mov dword[Andromeda.Interface.corFonte], eax
+    mov dword[Andromeda.Interface.corFundo], ebx
 
-	Hexagonix obterResolucao
+    Hexagonix obterResolucao
 
-	cmp eax, 1
+    cmp eax, 1
     je .resolucao800x600
 
     cmp eax, 2
@@ -174,15 +174,15 @@ macro Andromeda.Estelar.atualizarResolucao
 
 .resolucao800x600:
 
-	mov byte[Andromeda.Interface.resolucao], 01h
+    mov byte[Andromeda.Interface.resolucao], 01h
 
-	jmp .fim 
+    jmp .fim 
 
 .resolucao1024x768:
 
-	mov byte[Andromeda.Interface.resolucao], 02h
+    mov byte[Andromeda.Interface.resolucao], 02h
 
-	jmp .fim 
+    jmp .fim 
 
 .fim:
 
@@ -195,53 +195,53 @@ macro Andromeda.Estelar.criarBarraCarregamento posicaoY, corBarra, corFundo
 
 ;; Primeiramente, salvar a posição de Y 
 
-	mov dword[Andromeda.Interface.barraCarregamentoY], posicaoY
+    mov dword[Andromeda.Interface.barraCarregamentoY], posicaoY
 
 ;; Agora, salvar a cor da barra
 
-	mov dword[Andromeda.Interface.barraCarregamentoCor], corBarra
-	mov dword[Andromeda.Interface.barraCarregamentoCorFundo], corFundo
+    mov dword[Andromeda.Interface.barraCarregamentoCor], corBarra
+    mov dword[Andromeda.Interface.barraCarregamentoCorFundo], corFundo
 
-	Andromeda.Estelar.atualizarResolucao
+    Andromeda.Estelar.atualizarResolucao
 
-	cmp byte[Andromeda.Interface.resolucao], 01h
-	je .resolucao800x600
+    cmp byte[Andromeda.Interface.resolucao], 01h
+    je .resolucao800x600
 
-	cmp byte[Andromeda.Interface.resolucao], 02h
-	je .resolucao1024x768
+    cmp byte[Andromeda.Interface.resolucao], 02h
+    je .resolucao1024x768
 
 .resolucao800x600:
 
-	mov dword[Andromeda.Interface.barraCarregamentoFatorAdicao], 08
+    mov dword[Andromeda.Interface.barraCarregamentoFatorAdicao], 08
 
-	jmp .fatorDefinido
+    jmp .fatorDefinido
 
 .resolucao1024x768:
 
-	mov dword[Andromeda.Interface.barraCarregamentoFatorAdicao], 10.24
+    mov dword[Andromeda.Interface.barraCarregamentoFatorAdicao], 10.24
 
-	jmp .fatorDefinido
+    jmp .fatorDefinido
 
 .fatorDefinido:
 
 ;; Agora vamos criar um fundo que demarca a posição da barra de carregamento
 ;; na tela, com o preenchimento dela após cada atualização
 
-	mov eax, BRANCO_ANDROMEDA
-	mov ebx, dword[Andromeda.Interface.barraCarregamentoCorFundo]
-	
-	Hexagonix definirCor
-	
-	mov al, byte[Andromeda.Interface.barraCarregamentoY]
-	
-	Hexagonix limparLinha
+    mov eax, BRANCO_ANDROMEDA
+    mov ebx, dword[Andromeda.Interface.barraCarregamentoCorFundo]
+    
+    Hexagonix definirCor
+    
+    mov al, byte[Andromeda.Interface.barraCarregamentoY]
+    
+    Hexagonix limparLinha
 
-	mov eax, dword[Andromeda.Interface.corFonte]
-	mov ebx, dword[Andromeda.Interface.corFundo]
-	
-	Hexagonix definirCor
+    mov eax, dword[Andromeda.Interface.corFonte]
+    mov ebx, dword[Andromeda.Interface.corFundo]
+    
+    Hexagonix definirCor
 
-	Andromeda.Estelar.atualizarBarracarregamento 1
+    Andromeda.Estelar.atualizarBarracarregamento 1
 
 .fim:
 
@@ -258,10 +258,10 @@ macro Andromeda.Estelar.atualizarBarracarregamento porcentagem
 ;; Primeiro, devemos ver se a barra de carregamento já atingiu 100%. Em caso
 ;; afirmativo, não devemos continuar, uma vez que isso seria um estouro na barra
 
-	cmp dword[Andromeda.Interface.barraCarregamentoStatus], 100
-	jng .continuar
+    cmp dword[Andromeda.Interface.barraCarregamentoStatus], 100
+    jng .continuar
 
-	jmp .estouroFim
+    jmp .estouroFim
 
 ;; Caso seja menor que 100, podemos atualizar a barra
 
@@ -270,16 +270,16 @@ macro Andromeda.Estelar.atualizarBarracarregamento porcentagem
 ;; Agora devemos computar os dados de adição em porcentagem com base no fator de
 ;; resolução e o valor fornecido pelo aplicativo gráfico
 
-	mov eax, dword[Andromeda.Interface.barraCarregamentoFatorAdicao]
-	mov ebx, porcentagem
+    mov eax, dword[Andromeda.Interface.barraCarregamentoFatorAdicao]
+    mov ebx, porcentagem
 
-	mul ebx 
+    mul ebx 
 
-	add eax, dword[Andromeda.Interface.barraCarregamentoPorcentagem]
+    add eax, dword[Andromeda.Interface.barraCarregamentoPorcentagem]
 
-	mov dword[Andromeda.Interface.barraCarregamentoAdd], eax 
+    mov dword[Andromeda.Interface.barraCarregamentoAdd], eax 
 
-  	mov eax, dword[Andromeda.Interface.barraCarregamentoPorcentagem] ;; Posição X
+    mov eax, dword[Andromeda.Interface.barraCarregamentoPorcentagem] ;; Posição X
     mov ebx, dword[Andromeda.Interface.barraCarregamentoY] ;; Posição Y
     mov esi, dword[Andromeda.Interface.barraCarregamentoAdd] ;; Comprimento
     mov edi, 16 ;; Altura
@@ -287,22 +287,22 @@ macro Andromeda.Estelar.atualizarBarracarregamento porcentagem
     
     Hexagonix desenharBloco
 
-	mov eax, dword[Andromeda.Interface.barraCarregamentoAdd]
-	add dword[Andromeda.Interface.barraCarregamentoPorcentagem], eax
+    mov eax, dword[Andromeda.Interface.barraCarregamentoAdd]
+    add dword[Andromeda.Interface.barraCarregamentoPorcentagem], eax
 
 ;; Vamos também salvar a informação de porcentagem, para não estourar 100%
 
-	mov eax, porcentagem
-	add dword[Andromeda.Interface.barraCarregamentoStatus], eax
+    mov eax, porcentagem
+    add dword[Andromeda.Interface.barraCarregamentoStatus], eax
 
 }
 
 macro Andromeda.Estelar.excluirBarraCarregamento ;; Não necessita de parâmetros
 {
 
-	mov al, byte[Andromeda.Interface.barraCarregamentoY]
+    mov al, byte[Andromeda.Interface.barraCarregamentoY]
 
-	Hexagonix limparLinha
+    Hexagonix limparLinha
 
 }
 
@@ -326,7 +326,7 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
 ;; Entrada: EDI - Altura; EDX - Cor em hexadecimal
 
 .primeiraLinha:
-	
+    
     mov eax, 20           ;; Posição X
     mov ebx, 30           ;; Posição Y
     mov esi, 20           ;; Comprimento
@@ -337,7 +337,7 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
  
 .segundaLinha:
 
-	mov eax, 89           ;; Posição X
+    mov eax, 89           ;; Posição X
     mov ebx, 30           ;; Posição Y
     mov esi, 20           ;; Comprimento
     mov edi, 150          ;; Altura
@@ -347,7 +347,7 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
     
 .terceiraLinha:
 
-	mov eax, 39           ;; Posição X
+    mov eax, 39           ;; Posição X
     mov ebx, 90           ;; Posição Y
     mov esi, 50           ;; Comprimento
     mov edi, 30           ;; Altura
@@ -355,15 +355,15 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
     
     Hexagonix desenharBloco    
 
-	mov dh, 02
-	mov dl, 14
-	
-	Hexagonix definirCursor
+    mov dh, 02
+    mov dl, 14
+    
+    Hexagonix definirCursor
 
     mov eax, corLogotipo
-	mov ebx, corFundoAposLogotipo
+    mov ebx, corFundoAposLogotipo
 
-	Hexagonix definirCor
+    Hexagonix definirCor
 
     mov al, 't'
 
@@ -374,9 +374,9 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
     Hexagonix imprimirCaractere
 
     mov eax, corTextoAposLogotipo
-	mov ebx, corFundoAposLogotipo
+    mov ebx, corFundoAposLogotipo
 
-	Hexagonix definirCor
+    Hexagonix definirCor
 
 }
 
@@ -395,36 +395,36 @@ macro Andromeda.Estelar.finalizarProcessoGrafico codigoErroGrafico, tipoSaidaGra
 macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
 {
 
-	Hexagonix obterInfoTela
+    Hexagonix obterInfoTela
 
 ;; BL - Número de colunas
 ;; BH - Número de linhas
 
-	movxz bx, bl
+    movxz bx, bl
 
-	push ebx 
+    push ebx 
 
-	mov esi, mensagem
+    mov esi, mensagem
 
-	Hexagonix tamanhoString
+    Hexagonix tamanhoString
 
 ;; Em AX, o tamanho da String
 
-	pop ebx 
+    pop ebx 
 
-	div ax, bx
+    div ax, bx
 
-	div ax, 2
+    div ax, 2
 
-	mov dl, ah
-	mov dh, linha
+    mov dl, ah
+    mov dh, linha
 
-	Hexagonix definirCursor
+    Hexagonix definirCursor
 
-	mov esi, mensagem
+    mov esi, mensagem
 
-	imprimirString
-	
+    imprimirString
+    
 }
 
 ;;************************************************************************************
@@ -504,7 +504,7 @@ INDIGO = 0x4B0082
 VIOLETA = 0x8A2BE2
 VIOLETA_ESCURO = 0x9400D3
 MAGENTA = 0xFF00FF
-ROXO_ESCURO = 0x9932CC	
+ROXO_ESCURO = 0x9932CC  
 LAVANDA_SURPRESA = 0x4A235A
 
 ;; Escala do vermelho

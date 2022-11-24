@@ -131,22 +131,22 @@ salvarArquivo equ 13     ;; Salvar um arquivo no disco
                          ;; Entrada: ESI - Ponteiro para o nome do arquivo; EDI - Ponteiro para o conteúdo
                          ;; Entrada: EAX - Tamanho do arquivo
                          ;; Saída: CF definido em caso de erro ou arquivo já presente
-						 
+                         
 deletarArquivo equ 14    ;; Remover um arquivo do disco
                          ;; Entrada: ESI - Ponteiro para o nome do arquivo
                          ;; Saída: CF definido em caso de erro ou arquivo não existente
 
-listarArquivos equ 15    ;; Obter lista de arquivos		
+listarArquivos equ 15    ;; Obter lista de arquivos     
                          ;; Saída: ESI - Ponteiro para a lista de arquivos; EAX - Total de arquivos
-						          
+                                  
 arquivoExiste equ 16     ;; Checar se um arquivo existe no disco
                          ;; Entrada: ESI - Nome do arquivo para checar
                          ;; Saída: EAX - Tamanho do arquivo
-                         ;; CF definido se o arquivo não existir				
+                         ;; CF definido se o arquivo não existir               
 
 obterDisco equ 17        ;; Obtêm o disco utilizado pelo sistema
-                         ;; Saída: ESI - Nome do dispositivo	
-                         ;;        EDI - Rótulo do volume utilizado								  
+                         ;; Saída: ESI - Nome do dispositivo   
+                         ;;        EDI - Rótulo do volume utilizado                                  
 
 ;;************************************************************************************
 ;;
@@ -162,7 +162,7 @@ travar equ 18            ;; Bloqueia o processo em primeiro plano, impedindo que
 destravar equ 19         ;; Habilita que o usuário mate o processo em execução pressionando uma tecla especial
                          ;; ou combinação de teclas. A tecla "Matar processo" (F1) se torna habilitada.
                          ;; Esta tecla pode ter sua função removida com o tempo.
-								   
+                                   
 definirUsuario equ 20    ;; Define um usuário para a sessão.
                          ;; Entrada: EAX - ID do grupo; ESI - Nome do usuário
 
@@ -193,7 +193,7 @@ causarAtraso equ 25      ;; Utilizada para causar um atraso (delay), utilizado p
                          ;; do usuário.
                          ;; Entrada: ECX - Tempo em unidades de contagem para causar atraso
  
-instalarISR	equ 26       ;; Instalar rotina de serviço de interrupção
+instalarISR equ 26       ;; Instalar rotina de serviço de interrupção
                          ;; Entrada: EAX - Número da interrupção; ESI - Ponteiro para o manipulador
 
 ;;************************************************************************************
@@ -203,7 +203,7 @@ instalarISR	equ 26       ;; Instalar rotina de serviço de interrupção
 ;;************************************************************************************
 
 reiniciarPC equ 27       ;; Reiniciar o computador
-					
+                    
 desligarPC  equ 28       ;; Chama rotina da implementação APM do Hexagonix® para desligar o computador
 
 ;;************************************************************************************
@@ -217,19 +217,19 @@ imprimir equ 29          ;; Imprimir um conteúdo definido em um dispositivo de 
                          ;;
                          ;; EAX - Conteúdo numérico, se este for o caso, respeitando os
                          ;;       formatos abaixo designados. Os formatos devem ser informados!
-                         ;; ESI - Ponteiro para a string à ser impressa, se este for o caso.		
+                         ;; ESI - Ponteiro para a string à ser impressa, se este for o caso.       
                          ;; EBX - Tipo de entrada, que pode ser:
                          ;;       01h - Inteiro decimal
                          ;;       02h - Inteiro hexadecimal
                          ;;       03h - Inteiro binário
                          ;;       04h - String        
-                         ;; Dica! Utilize os macros no fim do arquivo para utilizar essa função                          							 	
+                         ;; Dica! Utilize os macros no fim do arquivo para utilizar essa função                                                       
 
-limparTela equ 30        ;; Limpa a tela		
-						
-limparLinha	equ 31       ;; Limpa uma linha específica na tela
+limparTela equ 30        ;; Limpa a tela        
+                        
+limparLinha equ 31       ;; Limpa uma linha específica na tela
                          ;; Entrada: AL - Número da linha 
-						
+                        
 NULA equ 32              ;; Função nula, sem retorno ou função
                          ;; Mantida para compatibilidade
 
@@ -247,14 +247,14 @@ desenharBloco equ 36     ;; Desenhar um bloco de cor específica
                          ;; Entrada: EDI - Altura; EDX - Cor em hexadecimal
 
 imprimirCaractere equ 37 ;; Imprimir caractere na posição do cursor 
-                         ;; Entrada: AL - Caractere; EBX - 01h para posicionar cursor					            
+                         ;; Entrada: AL - Caractere; EBX - 01h para posicionar cursor                               
 
 definirCor equ 38        ;; Definir cor de fundo e primeiro plano
                          ;; Entrada: EAX - Cor da fonte (RGB em hexadecimal)
                          ;; EBX - Cor do plano de fundo (RGB em hexadecimal)
                          ;; ECX - 1234h para alterar o tema padrão para os valores solicitados
                          ;; Em modo texto, apenas preto e branco são permitidos
-						 
+                         
 obterCor equ 39          ;; Obter cor de fundo e primeiro plano
                          ;; Saída: EAX - Plano de fundo (RGB em hexadecimal)
                          ;; EBX - Plano de fundo (RGB em hexadecimal)
@@ -267,23 +267,23 @@ obterInfoTela equ 40     ;; Obter informação da tela
                          ;; EBX - Colunas (bit 0..7), Linhas (8..15), Bits por pixel (16..23),
                          ;; EDX - Endereço do início do frame de vídeo
                          ;; CF definido em caso de modo texto
-										
+                                        
 atualizarTela equ 41     ;; Atualizar a memória de vídeo com o conteúdo do Buffer
-								
+                                
 definirResolucao equ 42  ;; Utilizado para definir a resolução à ser utilizada no vídeo
                          ;; Entrada: EAX - Número relativo a resolução à ser utilizada
                          ;;       1 - Resolução de 800x600 pixels
-                         ;;       2 - Resolução de 1024x768 pixels 		
+                         ;;       2 - Resolução de 1024x768 pixels        
 
 obterResolucao equ 43    ;; Utilizado para obter o código relativo à resolução utilizada 
                          ;; no vídeo padrão
                          ;; Saída: EAX - Número relativo a resolução atualmente utilizada
                          ;;       1 - Resolução de 800x600 pixels
                          ;;       2 - Resolução de 1024x768 pixels
-								   
-obterCursor	equ 44       ;; Obter posição do cursor
+                                   
+obterCursor equ 44       ;; Obter posição do cursor
                          ;; Saída: DL - X, DH - Y
-						            		
+                                            
 
 ;;************************************************************************************
 ;;
@@ -291,15 +291,15 @@ obterCursor	equ 44       ;; Obter posição do cursor
 ;;
 ;;************************************************************************************
 
-aguardarTeclado	equ 45   ;; Esperar pelo pressionamento de uma tecla no teclado
+aguardarTeclado equ 45   ;; Esperar pelo pressionamento de uma tecla no teclado
                          ;; Saída: AL - Caratere; AH - Scan code
-							  
-obterString	equ 46       ;; Obter string do teclado
+                              
+obterString equ 46       ;; Obter string do teclado
                          ;; Entrada: AL - Máximo de caracteres para receber
                          ;; EBX - Presença ou não de eco durante a digitação - 1234h
                          ;; para desativar o eco e <> 1234h para ativar
                          ;; Saída: ESI - String
-						 
+                         
 obterEstadoTeclas equ 47 ;; Obter status das teclas especiais
                          ;; Saída: EAX - Status das teclas especiais
                          ;; 
@@ -312,7 +312,7 @@ obterEstadoTeclas equ 47 ;; Obter status das teclas especiais
 alterarFonte equ 48      ;; Altera a fonte padrão de exibição do sistema
                          ;; Entrada: ESI - Ponteiro para o buffer contendo o nome do arquivo
                          ;; que contêm a fonte compatível com o Sistema Operacional Hexagonix®
-                         ;; Saída: CF definido em caso de arquivo não encontrado	                                        							  
+                         ;; Saída: CF definido em caso de arquivo não encontrado                                                                        
 
 alterarLeiaute equ 49    ;; Altera o leiaute do teclado
                          ;; Entrada: ESI - Arquivo contendo um leiaute de teclado válido
@@ -347,29 +347,29 @@ removerCaractereString equ 54 ;; Remover um caractere de uma posição específi
 
 inserirCaractere equ 55  ;; Inserir um caractere em posição específica da string
                          ;; Entrada: ESI - String; EDX - Caractere para inserir; AL - Caractere para inserir
-								  
+                                  
 tamanhoString equ 56     ;; Onter o tamanho de uma string 
                          ;; Entrada: ESI - String. 
                          ;; Saída: AX - Tamanho da string
 
-compararString	equ 57   ;; Comparar duas strings 
+compararString  equ 57   ;; Comparar duas strings 
                          ;; Entrada: ESI - Primeira string; EDI - Segunda string 
                          ;; Saída: CF definido se as duas forem iguais
 
 stringParaMaiusculo equ 58 ;; Converter string para maiúsculo
                            ;; Entrada: ESI - String
 
-stringParaMinusculo	equ 59 ;; Converter string para minúsculo 
+stringParaMinusculo equ 59 ;; Converter string para minúsculo 
                            ;; Entrada: ESI - String 
 
 cortarString equ 60      ;; Remover espaços em branco da string
                          ;; Entrada: ESI - String.
 
-encontrarCaractere	equ 61 ;; Encontrar caractere específico na string
+encontrarCaractere  equ 61 ;; Encontrar caractere específico na string
                            ;; Entrada: ESI - String, AL - caractere para encontrar
                            ;; Saída: EAX - Número de ocorrências do caractere
                            ;; CF definido se caractere não encontrado
-							  
+                              
 stringParaInt equ 62     ;; Converter um número string para número inteiro
                          ;; Entrada: ESI - String
                          ;; Saída: EAX - Inteiro
@@ -377,38 +377,38 @@ stringParaInt equ 62     ;; Converter um número string para número inteiro
 
 paraString equ 63        ;; Converte um número inteiro em uma string
                          ;; Entrada: EAX - Inteiro à ser convertido
-                         ;; Saída: ESI - Ponteiro para o buffer contendo o conteúdo	
+                         ;; Saída: ESI - Ponteiro para o buffer contendo o conteúdo   
 
 ;;************************************************************************************
 ;;
 ;;  Serviços de saída por som do Hexagonix®
 ;;
-;;************************************************************************************	
+;;************************************************************************************  
 
 emitirSom equ 64         ;; Toca um tom no alto-falante interno do computador
                          ;; Entrada: AX - Frequência à ser reproduzida
 
 desligarSom equ 65       ;; Desliga o alto-falante interno do computador, interrompendo
-                         ;; qualquer emissão de som em progresso								  
+                         ;; qualquer emissão de som em progresso                                 
 
 ;;************************************************************************************
 ;;
 ;;  Serviços de mensagens do Hexagonix®
 ;;
-;;************************************************************************************	
+;;************************************************************************************  
 
 enviarMensagemHexagon equ 66 ;; Envia uma mensagem de alta prioridade do Hexagon
                              ;; Entrada: ESI - Mensagem
                              ;;          EAX - Código de erro, se houver
                              ;;          EBX - Prioridade 
 
-;;************************************************************************************						
+;;************************************************************************************                      
 
 ;;************************************************************************************
 ;;
 ;;  Serviço de relógio em tempo real do Hexagon®
 ;;
-;;************************************************************************************	
+;;************************************************************************************  
 
 retornarData equ 67      ;; Retorna informações de relógio em tempo real em formato
                          ;; ASCII (String). Conversão para número pode ser necessária
@@ -453,62 +453,62 @@ fork equ 3
 
 %macro Hexagonix 1 ;; Macro utilizado para solicitar um serviço do Hexagon®
 
-	push [%1]	
-	
-	int 69h		
+    push [%1]   
+    
+    int 69h     
 
 %endmacro
 
 %macro novaLinha 0
-	
-	push ebx
-	
-	xor ebx, ebx
-	
-	mov al, 10				;; 10 é o caractere de nova linha
-	
-	pop ebx
-	
-	Hexagonix imprimirCaractere
-	
+    
+    push ebx
+    
+    xor ebx, ebx
+    
+    mov al, 10              ;; 10 é o caractere de nova linha
+    
+    pop ebx
+    
+    Hexagonix imprimirCaractere
+    
 %endmacro
 
 %macro imprimirInteiro 0
 
-	mov ebx, 01h
-	
-	Hexagonix imprimir
+    mov ebx, 01h
+    
+    Hexagonix imprimir
 
 %endmacro
 
 %macro imprimirHexadecimal 0
 
-	mov ebx, 02h
-	
-	Hexagonix imprimir
+    mov ebx, 02h
+    
+    Hexagonix imprimir
 
 %endmacro
 
 %macro imprimirBinario 0
 
-	mov ebx, 03h
-	
-	Hexagonix imprimir
+    mov ebx, 03h
+    
+    Hexagonix imprimir
 
 %endmacro
 
 %macro imprimirString 0
 
-	mov ebx, 04h
-	
-	Hexagonix imprimir
+    mov ebx, 04h
+    
+    Hexagonix imprimir
 
 %endmacro
 
 %macro imprimir 1     ;; Macro utilizado para imprimir determinado conteúdo na tela para o usuário
 
     mov esi, [%1]
-	
-	imprimirString
-	
+    
+    imprimirString
+    
 %endmacro
