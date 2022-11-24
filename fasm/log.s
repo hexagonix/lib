@@ -94,7 +94,7 @@ macro logSistema mensagem, codigoErro, prioridade
 
 }
 
-;; Syslogd deverá ser o mecanismo padrão para envio de mensagens de log quando
+;; syslogd deverá ser o mecanismo padrão para envio de mensagens de log quando
 ;; possível, por utilitários do sistema que não são críticos (como exemplo de 
 ;; utilitários críticos, temos init, login, energia, etc). Os utilitários 
 ;; de ambiente Andromeda deverão usar preferencialmente o syslogd, para evitar

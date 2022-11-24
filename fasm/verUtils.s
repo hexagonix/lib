@@ -67,178 +67,178 @@
 use32
 
 limiteBusca = 8192
-	
+    
 obterVersaoDistribuicao:
 
-	pusha
-	
-	push es
+    pusha
+    
+    push es
 
-	push ds
-	pop es
-	
-	mov esi, arquivoVersao
-	mov edi, enderecoCarregamento
-	
-	Hexagonix abrir
-	
-	jc .erro
-	
-	mov si, enderecoCarregamento    ;; Aponta para o buffer com o conteúdo do arquivo
-	mov bx, 0FFFFh                  ;; Inicia na posição -1, para que se possa encontrar os delimitadores
-	
+    push ds
+    pop es
+    
+    mov esi, arquivoVersao
+    mov edi, enderecoCarregamento
+    
+    Hexagonix abrir
+    
+    jc .erro
+    
+    mov si, enderecoCarregamento    ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, 0FFFFh                  ;; Inicia na posição -1, para que se possa encontrar os delimitadores
+    
 .procurarEntreDelimitadores:
 
-	inc bx
-	
-	mov word[posicaoBXVerUtils], bx
-	
-	cmp bx, limiteBusca
-	je .erro         ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
-	
-	mov al, [ds:si+bx]
-	
-	cmp al, '['
-	jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
-	
+    inc bx
+    
+    mov word[posicaoBXVerUtils], bx
+    
+    cmp bx, limiteBusca
+    je .erro         ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    
+    mov al, [ds:si+bx]
+    
+    cmp al, '['
+    jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
+    
 ;; BX agora aponta para o primeiro caractere da versão do Sistema
-	
-	push ds
-	pop es
-	
-	mov di, versaoObtida            ;; A versão será copiado para ES:DI
-	
-	mov si, enderecoCarregamento
-	
-	add si, bx				        ;; Mover SI para aonde BX aponta
-	
-	mov bx, 0				        ;; Iniciar em 0
-	
+    
+    push ds
+    pop es
+    
+    mov di, versaoObtida            ;; A versão será copiado para ES:DI
+    
+    mov si, enderecoCarregamento
+    
+    add si, bx                      ;; Mover SI para aonde BX aponta
+    
+    mov bx, 0                       ;; Iniciar em 0
+    
 .obterVersao:
 
-	inc bx
-	
-	cmp bx, 64				
-	je .erro                        ;; Se versão maior que 64 caracteres, a mesma é inválida     
-	
-	mov al, [ds:si+bx]
-	
-	cmp al, ']'					    ;; Se encontrar outro delimitador, a versão foi recuperada
-	je .versaoObtida
-	
+    inc bx
+    
+    cmp bx, 64              
+    je .erro                        ;; Se versão maior que 64 caracteres, a mesma é inválida     
+    
+    mov al, [ds:si+bx]
+    
+    cmp al, ']'                     ;; Se encontrar outro delimitador, a versão foi recuperada
+    je .versaoObtida
+    
 ;; Se não estiver pronto, armazenar o caractere obtido
 
-	stosb
-	
-	jmp .obterVersao
+    stosb
+    
+    jmp .obterVersao
 
 .versaoObtida:
 
-	pop es
-	
-	popa
+    pop es
+    
+    popa
 
     jmp obterCodigoDistribuicao
     
-	ret
+    ret
 
 .erro:
 
     pop es
-	
-	popa
-	
-	mov eax, 01h
+    
+    popa
+    
+    mov eax, 01h
 
     stc
 
     ret
 
 ;;************************************************************************************
-	
+    
 obterCodigoDistribuicao:
 
-	pusha
-	
-	push es
+    pusha
+    
+    push es
 
-	push ds
-	pop es
-	
-	mov esi, arquivoVersao
-	mov edi, enderecoCarregamento
-	
-	Hexagonix abrir
-	
-	jc .erro
-	
-	mov si, enderecoCarregamento           ;; Aponta para o buffer com o conteúdo do arquivo
-	mov bx, word [posicaoBXVerUtils]        ;; Continua de onde a opção anterior parou
-	
-	dec bx
-	
+    push ds
+    pop es
+    
+    mov esi, arquivoVersao
+    mov edi, enderecoCarregamento
+    
+    Hexagonix abrir
+    
+    jc .erro
+    
+    mov si, enderecoCarregamento           ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [posicaoBXVerUtils]        ;; Continua de onde a opção anterior parou
+    
+    dec bx
+    
 .procurarEntreDelimitadores:
 
-	inc bx
-	
-	mov word[posicaoBXVerUtils], bx
-	
-	cmp bx, limiteBusca
-	
-	je .erro        ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
-	
-	mov al, [ds:si+bx]
-	
-	cmp al, ']'
-	jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
-	
+    inc bx
+    
+    mov word[posicaoBXVerUtils], bx
+    
+    cmp bx, limiteBusca
+    
+    je .erro        ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    
+    mov al, [ds:si+bx]
+    
+    cmp al, ']'
+    jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
+    
 ;; BX agora aponta para o primeiro caractere do nome de código recuperado do arquivo
-	
-	push ds
-	pop es
-	
-	mov di, codigoObtido            ;; O nome de código será copiado para ES:DI
-	
-	mov si, enderecoCarregamento
-	
-	add si, bx				        ;; Mover SI para onde BX aponta
-	
-	mov bx, 0				        ;; Iniciar em 0
-	
+    
+    push ds
+    pop es
+    
+    mov di, codigoObtido            ;; O nome de código será copiado para ES:DI
+    
+    mov si, enderecoCarregamento
+    
+    add si, bx                      ;; Mover SI para onde BX aponta
+    
+    mov bx, 0                       ;; Iniciar em 0
+    
 .obterCodigo:
 
-	inc bx
-	
-	cmp bx, 64				
-	je .erro                        ;; Se maior que 64, o mesmo é inválida    
-	
-	mov al, [ds:si+bx]
-	
-	cmp al, '"'					    ;; Se encontrar outro delimitador,o nome de código 	                                
-	je .codigoObtido                ;; foi completamente recuperado
-	
+    inc bx
+    
+    cmp bx, 64              
+    je .erro                        ;; Se maior que 64, o mesmo é inválida    
+    
+    mov al, [ds:si+bx]
+    
+    cmp al, '"'                     ;; Se encontrar outro delimitador,o nome de código                                     
+    je .codigoObtido                ;; foi completamente recuperado
+    
 ;; Se não estiver pronto, armazenar o caractere obtido
 
-	stosb
-	
-	jmp .obterCodigo
+    stosb
+    
+    jmp .obterCodigo
 
 .codigoObtido:
 
-	pop es
-	
-	popa
+    pop es
+    
+    popa
 
     jmp obterPacoteDistribuicao
 
-	ret
+    ret
 
 .erro:
 
     pop es
-	
-	popa
-	
+    
+    popa
+    
     mov eax, 02h
 
     stc
@@ -249,85 +249,85 @@ obterCodigoDistribuicao:
  
 obterPacoteDistribuicao:
 
-	pusha
-	
-	push es
+    pusha
+    
+    push es
 
-	push ds
-	pop es
-	
-	mov esi, arquivoVersao
-	mov edi, enderecoCarregamento
-	
-	Hexagonix abrir
-	
-	jc .erro
-	
-	mov si, enderecoCarregamento            ;; Aponta para o buffer com o conteúdo do arquivo
-	mov bx, word [posicaoBXVerUtils]        ;; Continua de onde a opção anterior parou
-	
-	dec bx
-	
+    push ds
+    pop es
+    
+    mov esi, arquivoVersao
+    mov edi, enderecoCarregamento
+    
+    Hexagonix abrir
+    
+    jc .erro
+    
+    mov si, enderecoCarregamento            ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [posicaoBXVerUtils]        ;; Continua de onde a opção anterior parou
+    
+    dec bx
+    
 .procurarEntreDelimitadores:
 
-	inc bx
-	
-	mov word[posicaoBXVerUtils], bx
-	
-	cmp bx, limiteBusca
-	
-	je .erro  ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
-	
-	mov al, [ds:si+bx]
-	
-	cmp al, '"'
-	jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
-	
+    inc bx
+    
+    mov word[posicaoBXVerUtils], bx
+    
+    cmp bx, limiteBusca
+    
+    je .erro  ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    
+    mov al, [ds:si+bx]
+    
+    cmp al, '"'
+    jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
+    
 ;; BX agora aponta para o primeiro caractere do pacote de atualizações do Sistema
-	
-	push ds
-	pop es
-	
-	mov di, pacoteAtualizacoes          ;; O pacote será copiado para ES:DI
-	
-	mov si, enderecoCarregamento
-	
-	add si, bx				        ;; Mover SI para aonde BX aponta
-	
-	mov bx, 0				        ;; Iniciar em 0
-	
+    
+    push ds
+    pop es
+    
+    mov di, pacoteAtualizacoes          ;; O pacote será copiado para ES:DI
+    
+    mov si, enderecoCarregamento
+    
+    add si, bx                      ;; Mover SI para aonde BX aponta
+    
+    mov bx, 0                       ;; Iniciar em 0
+    
 .obterPacote:
 
-	inc bx
-	
-	cmp bx, 64				
-	je .erro           ;; Se maior que 64, é inválido     
-	
-	mov al, [ds:si+bx]
-	
-	cmp al, '#'					    ;; Se encontrar outro delimitador, foi carregado com sucesso
-	je .pacoteObtido
-	
+    inc bx
+    
+    cmp bx, 64              
+    je .erro           ;; Se maior que 64, é inválido     
+    
+    mov al, [ds:si+bx]
+    
+    cmp al, '#'                     ;; Se encontrar outro delimitador, foi carregado com sucesso
+    je .pacoteObtido
+    
 ;; Se não estiver pronto, armazenar o caractere obtido
 
-	stosb
-	
-	jmp .obterPacote
+    stosb
+    
+    jmp .obterPacote
 
 .pacoteObtido:
 
-	pop es
-	
-	popa
+    pop es
+    
+    popa
 
     jmp obterDataHora
-	
+    
 .erro:
 
-	pop es
-	
-	popa
-	
+    pop es
+    
+    popa
+    
     mov eax, 03h
 
     stc
@@ -338,87 +338,87 @@ obterPacoteDistribuicao:
  
 obterDataHora:
 
-	pusha
-	
-	push es
+    pusha
+    
+    push es
 
-	push ds
-	pop es
-	
-	mov esi, arquivoVersao
-	mov edi, enderecoCarregamento
-	
-	Hexagonix abrir
-	
-	jc .erro
-	
-	mov si, enderecoCarregamento            ;; Aponta para o buffer com o conteúdo do arquivo
-	mov bx, word [posicaoBXVerUtils]        ;; Continua de onde a opção anterior parou
-	
-	dec bx
-	
+    push ds
+    pop es
+    
+    mov esi, arquivoVersao
+    mov edi, enderecoCarregamento
+    
+    Hexagonix abrir
+    
+    jc .erro
+    
+    mov si, enderecoCarregamento            ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [posicaoBXVerUtils]        ;; Continua de onde a opção anterior parou
+    
+    dec bx
+    
 .procurarEntreDelimitadores:
 
-	inc bx
-	
-	mov word[posicaoBXVerUtils], bx
-	
-	cmp bx, limiteBusca
-	
-	je .erro  ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
-	
-	mov al, [ds:si+bx]
-	
-	cmp al, '#'
-	jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
-	
+    inc bx
+    
+    mov word[posicaoBXVerUtils], bx
+    
+    cmp bx, limiteBusca
+    
+    je .erro  ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    
+    mov al, [ds:si+bx]
+    
+    cmp al, '#'
+    jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
+    
 ;; BX agora aponta para o primeiro caractere da data e hora de lançamento
-	
-	push ds
-	pop es
-	
-	mov di, dataHora                ;; Será copiado para ES:DI
-	
-	mov si, enderecoCarregamento
-	
-	add si, bx				        ;; Mover SI para aonde BX aponta
-	
-	mov bx, 0				        ;; Iniciar em 0
-	
+    
+    push ds
+    pop es
+    
+    mov di, dataHora                ;; Será copiado para ES:DI
+    
+    mov si, enderecoCarregamento
+    
+    add si, bx                      ;; Mover SI para aonde BX aponta
+    
+    mov bx, 0                       ;; Iniciar em 0
+    
 .recuperarDataHora:
 
-	inc bx
-	
-	cmp bx, 64				
-	je .erro           ;; Se maior que 64, é inválido     
-	
-	mov al, [ds:si+bx]
-	
-	cmp al, '!'					    ;; Se encontrar outro delimitador, foi carregado com sucesso
-	je .dataHoraObtida
-	
+    inc bx
+    
+    cmp bx, 64              
+    je .erro           ;; Se maior que 64, é inválido     
+    
+    mov al, [ds:si+bx]
+    
+    cmp al, '!'                     ;; Se encontrar outro delimitador, foi carregado com sucesso
+    je .dataHoraObtida
+    
 ;; Se não estiver pronto, armazenar o caractere obtido
 
-	stosb
-	
-	jmp .recuperarDataHora
+    stosb
+    
+    jmp .recuperarDataHora
 
 .dataHoraObtida:
 
-	pop es
-	
-	popa
+    pop es
+    
+    popa
 
     jmp obterBuildDistribuicao
 
-	ret
-	
+    ret
+    
 .erro:
 
-	pop es
-	
-	popa
-	
+    pop es
+    
+    popa
+    
     mov eax, 04h
 
     stc
@@ -429,85 +429,85 @@ obterDataHora:
 
 obterBuildDistribuicao:
 
-	pusha
-	
-	push es
+    pusha
+    
+    push es
 
-	push ds
-	pop es
-	
-	mov esi, arquivoVersao
-	mov edi, enderecoCarregamento
-	
-	Hexagonix abrir
-	
-	jc .erro
-	
-	mov si, enderecoCarregamento            ;; Aponta para o buffer com o conteúdo do arquivo
-	mov bx, word [posicaoBXVerUtils]        ;; Continua de onde a opção anterior parou
-	
-	dec bx
-	
+    push ds
+    pop es
+    
+    mov esi, arquivoVersao
+    mov edi, enderecoCarregamento
+    
+    Hexagonix abrir
+    
+    jc .erro
+    
+    mov si, enderecoCarregamento            ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [posicaoBXVerUtils]        ;; Continua de onde a opção anterior parou
+    
+    dec bx
+    
 .procurarEntreDelimitadores:
 
-	inc bx
-	
-	mov word[posicaoBXVerUtils], bx
-	
-	cmp bx, limiteBusca
-	
-	je .erro  ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
-	
-	mov al, [ds:si+bx]
-	
-	cmp al, '!'
-	jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
-	
+    inc bx
+    
+    mov word[posicaoBXVerUtils], bx
+    
+    cmp bx, limiteBusca
+    
+    je .erro  ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    
+    mov al, [ds:si+bx]
+    
+    cmp al, '!'
+    jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
+    
 ;; BX agora aponta para o primeiro caractere da build do Sistema
-	
-	push ds
-	pop es
-	
-	mov di, buildObtida             ;; Será copiado ES:DI 
-	
-	mov si, enderecoCarregamento
-	
-	add si, bx				        ;; Mover SI para aonde BX aponta
-	
-	mov bx, 0				        ;; Iniciar em 0
-	
+    
+    push ds
+    pop es
+    
+    mov di, buildObtida             ;; Será copiado ES:DI 
+    
+    mov si, enderecoCarregamento
+    
+    add si, bx                      ;; Mover SI para aonde BX aponta
+    
+    mov bx, 0                       ;; Iniciar em 0
+    
 .recuperarDataHora:
 
-	inc bx
-	
-	cmp bx, 64				
-	je .erro                        ;; Se nome de arquivo maior que 64, é inválido     
-	
-	mov al, [ds:si+bx]
-	
-	cmp al, '>'					    ;; Se encontrar outro delimitador, foi carregado com sucesso
-	je .buildObtida
-	
+    inc bx
+    
+    cmp bx, 64              
+    je .erro                        ;; Se nome de arquivo maior que 64, é inválido     
+    
+    mov al, [ds:si+bx]
+    
+    cmp al, '>'                     ;; Se encontrar outro delimitador, foi carregado com sucesso
+    je .buildObtida
+    
 ;; Se não estiver pronto, armazenar o caractere obtido
 
-	stosb
-	
-	jmp .recuperarDataHora
+    stosb
+    
+    jmp .recuperarDataHora
 
 .buildObtida:
 
-	pop es
-	
-	popa
+    pop es
+    
+    popa
 
-	ret
-	
+    ret
+    
 .erro:
 
-	pop es
-	
-	popa
-	
+    pop es
+    
+    popa
+    
     mov eax, 04h
 
     stc

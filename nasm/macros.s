@@ -129,8 +129,8 @@
 %macro cursorPara 2
 
     mov dl, [%1]
-	mov dh, [%2]
+    mov dh, [%2]
 
-	Hexagonix definirCursor
+    Hexagonix definirCursor
 
 %endmacro
