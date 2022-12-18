@@ -80,11 +80,11 @@ Log.Prioridades:
 .p5 equ 5
 .pa equ 10
 
-;; Um macro simples para enviar mensagens para o log do Sistema
+;; Um macro simples para enviar mensagens para o log do sistema
 
 %macro logSistema 3
 
-    mov esi, [%1]   ;; Mensagem a ser enviada
+    mov esi, [%1] ;; Mensagem a ser enviada
     mov eax, [%2] ;; Código de erro
     mov ebx, [%3] ;; Importante!
 

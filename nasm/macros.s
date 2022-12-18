@@ -112,7 +112,6 @@
 %endmacro
 
 %macro pausar 1 
-{
 
     mov ecx, [%1] 
     

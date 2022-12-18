@@ -91,7 +91,7 @@ encerrarProcesso equ 4   ;; Terminar o processo atualmente em execução
 obterPID equ 5           ;; Retorna o indentificador do processo em execução
                          ;; Saída: EAX - PID do processo
 
-usoMemoria equ 6         ;; Retorna estatísticas de uso deste recurso, calculados pelo Sistema                                       
+usoMemoria equ 6         ;; Retorna estatísticas de uso deste recurso, calculados pelo sistema                                       
                          ;; Saída: EAX - Memória utilizada, em bytes
                          ;; EBX - Memória total disponível para uso, em bytes                        
                          ;; ECX - Memória total disponível para uso, em Mbytes (menos preciso)
@@ -175,7 +175,7 @@ obterUsuario equ 21      ;; Obtêm dados do usuário logado na sessão
 ;;
 ;;************************************************************************************
 
-retornarVersao equ 22    ;; Retorna a versão do Sistema para os aplicativos
+retornarVersao equ 22    ;; Retorna a versão do sistema para os aplicativos
                          ;; Saída: EAX - Número da versão; EBX - Número da subversão 
                          ;; CH - Caractere de revisão; EDX - Arquitetura
                          ;; ESI - Nome do Kernel 
@@ -446,7 +446,7 @@ fork equ 3
 
 ;;************************************************************************************
 ;;
-;;                   Chamar Interrupção de Software Andromeda®
+;;                   Chamar Interrupção de Software Hexagonix®
 ;;                                    Macros
 ;;
 ;;************************************************************************************

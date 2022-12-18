@@ -100,7 +100,7 @@ struc Andromeda.Estelar.Interface
 
 ;;************************************************************************************
 ;;
-;;            Definições de tamanho de fonte utilizada pelo Andromeda®
+;;            Definições de tamanho de fonte utilizada pelo Hexagonix®
 ;;
 ;;************************************************************************************
 
@@ -434,7 +434,7 @@ macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
 ;;     Cores e definições para uso na montagem de interfaces em modo gráfico
 ;;
 ;;   Aviso! Estas são apenas algumas cores recomendadas para utilização na montagem
-;;                     de interfaces gráficas para o Andromeda®
+;;                     de interfaces gráficas para o Hexagonix®
 ;;
 ;;************************************************************************************
 
@@ -522,7 +522,7 @@ VERMELHO_GABRIEL = 0xD4553A
 ;; Escala do laranja
 
 LARANJA = 0xFFA500
-LARANJA_ESCURO = 0xFF8C00 ;; Cor padrão do Andromeda®
+LARANJA_ESCURO = 0xFF8C00 ;; Cor padrão do Hexagonix®
 LARANJA_VERMELHO = 0xFF4500
 
 ;; Escala do amarelo

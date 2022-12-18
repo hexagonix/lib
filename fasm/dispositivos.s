@@ -92,8 +92,8 @@ video:
 
 ;; Dispositivos de saída
 
-.vd0: db "vd0", 0 ;; Dispositivo de saída padrão
-.vd1: db "vd1", 0 ;; Dispositivo de saída secundário em memória (Buffer)
+.vd0: db "vd0", 0 ;; Console padrão
+.vd1: db "vd1", 0 ;; Primeiro console virtual
 .vd2: db "vd2", 0 ;; Despejo de dados do Kernel
 
 audio:

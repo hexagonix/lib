@@ -51,7 +51,7 @@
 
 ;;************************************************************************************
 ;;
-;; Cabeçalho de macros, funções e chamadas de sistema do Hexagonix®
+;; Cabeçalho de macros, funções e chamadas de Sistema do Hexagonix®
 ;;
 ;; Compatibilidade:   Sistema Operacional Hexagonix® H1 R1.2 (05/06/2022) ou superior
 ;;                    Hexagon® 9.3B ou mais recente (versão do kernel necessária)
@@ -91,7 +91,7 @@ encerrarProcesso = 4   ;; Terminar o processo atualmente em execução
 obterPID = 5           ;; Retorna o indentificador do processo em execução
                        ;; Saída: EAX - PID do processo
 
-usoMemoria = 6         ;; Retorna estatísticas de uso deste recurso, calculados pelo Sistema                                       
+usoMemoria = 6         ;; Retorna estatísticas de uso deste recurso, calculados pelo sistema                                       
                        ;; Saída: EAX - Memória utilizada, em bytes
                        ;; EBX - Memória total disponível para uso, em bytes                        
                        ;; ECX - Memória total disponível para uso, em Mbytes (menos preciso)
@@ -179,7 +179,7 @@ obterUsuario = 21      ;; Obtêm dados do usuário logado na sessão
 ;;
 ;;************************************************************************************
 
-retornarVersao = 22    ;; Retorna a versão do Sistema para os aplicativos
+retornarVersao = 22    ;; Retorna a versão do sistema para os aplicativos
                        ;; Saída: EAX - Número da versão; EBX - Número da subversão 
                        ;; CH - Caractere de revisão; EDX - Arquitetura
                        ;; ESI - Nome do Kernel 

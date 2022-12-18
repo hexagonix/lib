@@ -101,7 +101,7 @@ obterVersaoDistribuicao:
     cmp al, '['
     jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
     
-;; BX agora aponta para o primeiro caractere da versão do Sistema
+;; BX agora aponta para o primeiro caractere da versão do sistema
     
     push ds
     pop es
@@ -172,8 +172,8 @@ obterCodigoDistribuicao:
     
     jc .erro
     
-    mov si, enderecoCarregamento           ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [posicaoBXVerUtils]        ;; Continua de onde a opção anterior parou
+    mov si, enderecoCarregamento      ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [posicaoBXVerUtils]  ;; Continua de onde a opção anterior parou
     
     dec bx
     
@@ -283,12 +283,12 @@ obterPacoteDistribuicao:
     cmp al, '"'
     jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
     
-;; BX agora aponta para o primeiro caractere do pacote de atualizações do Sistema
+;; BX agora aponta para o primeiro caractere do pacote de atualizações do sistema
     
     push ds
     pop es
     
-    mov di, pacoteAtualizacoes          ;; O pacote será copiado para ES:DI
+    mov di, pacoteAtualizacoes      ;; O pacote será copiado para ES:DI
     
     mov si, enderecoCarregamento
     
@@ -305,7 +305,7 @@ obterPacoteDistribuicao:
     
     mov al, [ds:si+bx]
     
-    cmp al, '#'                     ;; Se encontrar outro delimitador, foi carregado com sucesso
+    cmp al, '#'        ;; Se encontrar outro delimitador, foi carregado com sucesso
     je .pacoteObtido
     
 ;; Se não estiver pronto, armazenar o caractere obtido
@@ -463,7 +463,7 @@ obterBuildDistribuicao:
     cmp al, '!'
     jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
     
-;; BX agora aponta para o primeiro caractere da build do Sistema
+;; BX agora aponta para o primeiro caractere da build do sistema
     
     push ds
     pop es

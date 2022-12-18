@@ -51,7 +51,7 @@
 
 ;;************************************************************************************
 ;;
-;; Lista de prioridades para mensagens do Sistema
+;; Lista de prioridades para mensagens do sistema
 ;;
 ;; Compatibilidade:   Sistema Operacional Hexagonix® 1.11 (09/06/2019) ou superior
 ;; Versão:            1.0 rev 09/06/2019
@@ -81,7 +81,7 @@ Log.Prioridades:
 .pa = 10
 .syslogd: db "syslogd", 0
 
-;; Um macro simples para enviar mensagens para o log do Sistema
+;; Um macro simples para enviar mensagens para o log do sistema
 
 macro logSistema mensagem, codigoErro, prioridade
 {
