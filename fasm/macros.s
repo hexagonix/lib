@@ -138,7 +138,7 @@ macro cursorPara posicaoX, posicaoY
 {
 
     mov dl, posicaoX
-      mov dh, posicaoY
+    mov dh, posicaoY
 
     Hexagonix definirCursor
 

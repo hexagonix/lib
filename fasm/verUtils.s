@@ -55,7 +55,7 @@
 ;;
 ;; Essas definições incluem a versão do sistema, assim como dados úteis a todos
 ;; os aplicativos core do Hexagonix®
-
+;;
 ;; Definições importantes para o uso destas funções
 ;;
 ;; enderecoCarregamento: fim do código do programa
