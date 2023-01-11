@@ -20,60 +20,8 @@
 
 <img src="https://github.com/hexagonix/Doc/blob/main/Img/hr.png" width="100%" height="2px" />
 
-<details title="English" align='left'>
-<br>
-<summary align='left'><strong>English</strong></summary>
-
-# libasm - Libraries for Hexagonix Assembly Development
-
-<div align="justify">
-
-This repository contains important libraries and macros for developing utilities for Hexagonix.
-
-Libasm libraries are classified into `Hexagonix` libraries and `Estelar` libraries (formerly Andromeda libraries). The `Hexagonix` libraries are responsible for allowing utilities and applications access to the API exposed by the system, either Hexagon system calls (kernel) or other functions in the user environment. The `Estelar` libraries are responsible for exposing useful functions for the development of text-based graphical interfaces (TUI) and graphical interfaces (GUI) on top of Hexagonix. The graphics libraries consist of core-mode functions exposed by Hexagon, as well as user-mode functions implemented in the libraries themselves. Libraries may be available for compatible assemblers (flat assembler and NASM).
-
-</div>
-
-### Hexagonix Libraries
-
-<div align="justify">
-
-The `Hexagonix` libraries comprise several components that allow the application to interact with Hexagon, other applications and standard devices. So far, Hexagonix libraries consist of the following files:
-
-* `hexagon.s`: library that allows the application to make system calls to Hexagon, using the API exposed by the kernel;
-* `devices.s`: provides device names and data used in system calls;
-* `errors.s`: functions and code for error handling, as well as standard error definitions;
-* `HAPP.s`: functions for creating HAPP headers on demand and manipulating HAPP images in user mode;
-* `log.s`: macros and data for sending messages through the Hexagon messaging system;
-* `macros.s`: useful macros for global use when making assembly system calls, such as open();
-* `verUtils.s`: functions to process files in OCL format and dynamically obtain system version and update data from supported utilities.
-
-</div>
-
-### Estelar Libraries
-
-<div align="justify">
-
-The `Estelar` libraries are inside the Estelar directory, and are composed of the following files, so far:
-
-* `estelar.s`: standard library for rendering and graphical manipulation;
-* `bigbang.s`: standard library for handling compatible sound devices.
-
-</div>
-
-### Utility implementation example
-
-<div align="justify">
-
-You can find utility implementation examples in [text mode](example/tapp.asm) and [graphic](example/gapp.asm) to analyze their construction. Feel free to open an `issue` to settle any debt or report any errors.
-
-</div>
-
-</details>
-
 <details title="Português (Brasil)" align='left'>
-<br>
-<summary align='left'><strong>Português (Brasil)</strong></summary>
+<summary align='left'><strong>:brazil: Português (Brasil)</strong></summary>
 
 # libasm - Bibliotecas para desenvolvimento em Assembly do Hexagonix
 
@@ -117,6 +65,56 @@ As bibliotecas `Estelar` estão dentro do diretório Estelar, e são compostas p
 <div align="justify">
 
 Você pode encontrar exemplos de implementação de utilitários em [modo texto](exemplo/tapp.asm) e [gráfico](exemplo/gapp.asm) para analisar sua construção. Sinta-se a vontade de abrir uma `issue` para sanar qualquer dívida ou relatar algum errro.
+
+</div>
+
+</details>
+
+<details title="English" align='left'>
+<summary align='left'><strong>:uk: English</strong></summary>
+
+# libasm - Libraries for Hexagonix Assembly Development
+
+<div align="justify">
+
+This repository contains important libraries and macros for developing utilities for Hexagonix.
+
+Libasm libraries are classified into `Hexagonix` libraries and `Estelar` libraries (formerly Andromeda libraries). The `Hexagonix` libraries are responsible for allowing utilities and applications access to the API exposed by the system, either Hexagon system calls (kernel) or other functions in the user environment. The `Estelar` libraries are responsible for exposing useful functions for the development of text-based graphical interfaces (TUI) and graphical interfaces (GUI) on top of Hexagonix. The graphics libraries consist of core-mode functions exposed by Hexagon, as well as user-mode functions implemented in the libraries themselves. Libraries may be available for compatible assemblers (flat assembler and NASM).
+
+</div>
+
+### Hexagonix Libraries
+
+<div align="justify">
+
+The `Hexagonix` libraries comprise several components that allow the application to interact with Hexagon, other applications and standard devices. So far, Hexagonix libraries consist of the following files:
+
+* `hexagon.s`: library that allows the application to make system calls to Hexagon, using the API exposed by the kernel;
+* `devices.s`: provides device names and data used in system calls;
+* `errors.s`: functions and code for error handling, as well as standard error definitions;
+* `HAPP.s`: functions for creating HAPP headers on demand and manipulating HAPP images in user mode;
+* `log.s`: macros and data for sending messages through the Hexagon messaging system;
+* `macros.s`: useful macros for global use when making assembly system calls, such as open();
+* `verUtils.s`: functions to process files in OCL format and dynamically obtain system version and update data from supported utilities.
+
+</div>
+
+### Estelar Libraries
+
+<div align="justify">
+
+The `Estelar` libraries are inside the Estelar directory, and are composed of the following files, so far:
+
+* `estelar.s`: standard library for rendering and graphical manipulation;
+* `bigbang.s`: standard library for handling compatible sound devices.
+
+</div>
+
+### Utility implementation example
+
+<div align="justify">
+
+You can find utility implementation examples in [text mode](example/tapp.asm) and [graphic](example/gapp.asm) to analyze their construction. Feel free to open an `issue` to settle any debt or report any errors.
 
 </div>
 
