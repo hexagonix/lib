@@ -4,14 +4,14 @@
 
 <div align="center">
 
-![](https://img.shields.io/github/license/hexagonix/lib.svg)
-![](https://img.shields.io/github/stars/hexagonix/lib.svg)
-![](https://img.shields.io/github/issues/hexagonix/lib.svg)
-![](https://img.shields.io/github/issues-closed/hexagonix/lib.svg)
-![](https://img.shields.io/github/issues-pr/hexagonix/lib.svg)
-![](https://img.shields.io/github/issues-pr-closed/hexagonix/lib.svg)
-![](https://img.shields.io/github/downloads/hexagonix/lib/total.svg)
-![](https://img.shields.io/github/release/hexagonix/lib.svg)
+![](https://img.shields.io/github/license/hexagonix/Hexagon.svg)
+![](https://img.shields.io/github/stars/hexagonix/Hexagon.svg)
+![](https://img.shields.io/github/issues/hexagonix/Hexagon.svg)
+![](https://img.shields.io/github/issues-closed/hexagonix/Hexagon.svg)
+![](https://img.shields.io/github/issues-pr/hexagonix/Hexagon.svg)
+![](https://img.shields.io/github/issues-pr-closed/hexagonix/Hexagon.svg)
+![](https://img.shields.io/github/downloads/hexagonix/Hexagon/total.svg)
+![](https://img.shields.io/github/release/hexagonix/Hexagon.svg)
 [![](https://img.shields.io/twitter/follow/hexagonixOS.svg?style=social&label=Follow%20%40HexagonixOS)](https://twitter.com/hexagonixOS)
 
 </div>
@@ -27,7 +27,29 @@
 
 # Chamadas de sistema do Hexagon
 
-As chamadas de sistema do Hexagon podem ser acessadoas pela interrupção 69h.
+O Hexagon fornece uma série de chamadas de sistema bem documentadas para o desenvolvimento de utilitários e aplicativos. As chamadas de sistema podem ser acessadas por meio da interrupção de software de número `69h`. Ao solicitar uma chamada de sistema, você também deve fornecer parâmetros que identifiquem a função escolhida, bem como os parâmetros exigidos para ela. Você pode encontrar os parâmetros exigidos ara elas na tabela abaixo.
+
+Um exemplo de como solicitar uma chamada de sistema:
+
+```assembly
+
+    push numero_função
+
+    mov eax, parâmetro1
+    mov ebx, parâmetro2
+    mov ecx, parâmetro3
+    mov edx, parâmetro4
+    mov esi, parâmetro5
+    mov edi, parâmetro6
+
+    int 69h 
+
+```
+
+Agora, uma tabela com as funções da chamada de sistema do Hexagonix. `A tabela está formatada como um arquivo contendo código Assembly`:
+
+> Vale lembrar que uma tabela de funções, padronizada segundo as funções disponíveis no Version 7 UNIX, está sendo desenvolvida. Nesse caso, não existe o objetivo de pareamento de número de função junto ao UNIX, mas conformidade no nome das funções. Por exemplo, `alocarMemoria` se tornaria `free`, e `retornarVersao`, `uname`. No futuro, ambas as nomenclaturas estarão disponíveis para permitir a migração de aplicativos e utilitários. Venha novamente nesse arquivo mais tarde para checar atualizações. 
+
 
 ```assembly
 ;;************************************************************************************
@@ -399,7 +421,28 @@ retornarHora = 68      ;; Retorna informações de relógio em tempo real em for
 
 # Hexagon system calls
 
-Hexagon system calls can be accessed through interrupt 69h.
+Hexagon provides a series of well-documented system calls for developing utilities and applications. System calls can be accessed through software interrupt number `69h`. When requesting a system call, you must also supply parameters that identify the chosen function, as well as the required parameters for it. You can find the required parameters for them in the table below.
+
+An example of how to request a system call:
+
+```assembly
+
+    push function_number
+
+    mov eax, parameter1
+    mov ebx, parameter2
+    mov ecx, parameter3
+    mov edx, parameter4
+    mov esi, parameter5
+    mov edi, parameter6
+
+    int 69h
+
+```
+
+Now, a table with the Hexagonix system call functions. `The table is formatted as a file containing assembly code`:
+
+> Remember that a table of functions, standardized according to the functions available in Version 7 UNIX, is being developed. In this case, there is no purpose of function number pairing with UNIX, but conformity in function names. For example, `allocateMemory` would become `free`, and `returnVersion`, `uname`. In the future, both nomenclatures will be available to allow migration of applications and utilities. Come back to this file later to check for updates.
 
 ```assembly
 
