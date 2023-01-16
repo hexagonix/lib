@@ -96,8 +96,8 @@ Libasm libraries are classified into `Hexagonix` libraries and `Estelar` librari
 The `Hexagonix` libraries comprise several components that allow the application to interact with Hexagon, other applications and standard devices. So far, Hexagonix libraries consist of the following files:
 
 * `hexagon.s`: library that allows the application to make system calls to Hexagon, using the API exposed by the kernel;
-* `devices.s`: provides device names and data used in system calls;
-* `errors.s`: functions and code for error handling, as well as standard error definitions;
+* `dispositivos.s`: provides device names and data used in system calls;
+* `erros.s`: functions and code for error handling, as well as standard error definitions;
 * `HAPP.s`: functions for creating HAPP headers on demand and manipulating HAPP images in user mode;
 * `log.s`: macros and data for sending messages through the Hexagon messaging system;
 * `macros.s`: useful macros for global use when making assembly system calls, such as open();
