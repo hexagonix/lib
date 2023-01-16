@@ -31,7 +31,7 @@ Este repositório contém bibliotecas e macros importantes para o desenvolviment
 
 As bibliotecas da libasm são classificadas em bibliotecas `Hexagonix` e bibliotecas `Estelar` (antigas bibliotecas Andromeda). As bibliotecas `Hexagonix` são responsáveis por permitir o acesso dos utilitários e aplicativos à API exposta pelo sistema, seja chamadas de sistema do Hexagon (kernel) ou outras funções em ambiente de usuário. Já as bibliotecas `Estelar` são responsáveis por expor funções úteis para o desenvolvimento de interfces gráficas baseadas em texto (TUI) e interfaces gráficas (GUI) sobre o Hexagonix. As bibliotecas gráficas consistem de funções em modo núcleo expostas pelo Hexagon, bem como funções em modo usuário implementadas nas próprias bibliotecas. As bibliotecas podem estar disponíveis para os montadores compatíveis (flat assembler e NASM).
 
-**Para obter mais informações sobre as chamadas de sistema do Hexagon, leia a documentação [aqui](https://github.com/hexagonix/Doc/blob/main/Hexagon/SYSCALL.md).**
+**Para obter mais informações sobre as chamadas de sistema do Hexagon, leia a documentação [aqui](https://github.com/hexagonix/Doc/blob/main/Hexagon/SYSCALL.pt.md).**
 
 </div>
 
@@ -49,7 +49,7 @@ As bibliotecas `Hexagonix` compreendem vários componentes que permitem ao aplic
 * `macros.s`: macros úteis para uso global ao realizar chamadas de sistema em assembly, como abrir();
 * `verUtils.s`: funções para processar arquivos no formato OCL e obter dados de versão e atualização do sistema de forma dinâmica pelos utilitários compatíveis.
 
-> Uma lista de chamadas de sistema disponíveis está disponível [aqui](https://github.com/hexagonix/Doc/blob/main/Hexagon/SYSCALL.md).
+> Uma lista de chamadas de sistema disponíveis está disponível [aqui](https://github.com/hexagonix/Doc/blob/main/Hexagon/SYSCALL.pt.md).
 
 </div>
 
@@ -85,7 +85,7 @@ This repository contains important libraries and macros for developing utilities
 
 Libasm libraries are classified into `Hexagonix` libraries and `Estelar` libraries (formerly Andromeda libraries). The `Hexagonix` libraries are responsible for allowing utilities and applications access to the API exposed by the system, either Hexagon system calls (kernel) or other functions in the user environment. The `Estelar` libraries are responsible for exposing useful functions for the development of text-based graphical interfaces (TUI) and graphical interfaces (GUI) on top of Hexagonix. The graphics libraries consist of core-mode functions exposed by Hexagon, as well as user-mode functions implemented in the libraries themselves. Libraries may be available for compatible assemblers (flat assembler and NASM).
 
-**For more information on Hexagon system calls, read the documentation [here](https://github.com/hexagonix/Doc/blob/main/Hexagon/SYSCALL.md).**
+**For more information on Hexagon system calls, read the documentation [here](https://github.com/hexagonix/Doc/blob/main/Hexagon/SYSCALL.en.md).**
 
 </div>
 
@@ -103,7 +103,7 @@ The `Hexagonix` libraries comprise several components that allow the application
 * `macros.s`: useful macros for global use when making assembly system calls, such as open();
 * `verUtils.s`: functions to process files in OCL format and dynamically obtain system version and update data from supported utilities.
 
-> A list of available system calls is available [here](https://github.com/hexagonix/Doc/blob/main/Hexagon/SYSCALL.md).
+> A list of available system calls is available [here](https://github.com/hexagonix/Doc/blob/main/Hexagon/SYSCALL.en.md).
 
 </div>
 
