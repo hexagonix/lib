@@ -50,25 +50,40 @@
 ;; $HexagonixOS$
 
 ;;************************************************************************************
+;; 
+;; $PORTUGUÊS$
 ;;
 ;; Cabeçalho de macros, funções e chamadas de Sistema do Hexagonix®
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix® H1 R1.2 (05/06/2022) ou superior
-;;                    Hexagon® 9.3B ou mais recente (versão do kernel necessária)
-;; Versão:            5.2 rev 0 05/06/2022
-;; Autor:             Felipe Miguel Nery Lunkes
+;; Compatibilidade: Sistema Operacional Hexagonix® H1 R1.2 (05/06/2022) ou superior
+;;                  Hexagon® 9.3B ou mais recente (versão do kernel necessária)
+;; Versão:          6.0 rev 0 17/01/2023
 ;;
 ;; Total de chamadas: 68 (26/04/2020) - Este número não é final e pode diminuir (ou aumentar)
 ;;
-;;************************************************************************************
+;; $ENGLISH$
 ;;
-;;          Funções de manipulação de vídeo oferecidas pelo Hexagonix®
+;; Header of Hexagonix® Macros, Functions and System Calls
+;;
+;; Compatibility: Hexagonix® H1 R1.2 (05/06/2022) or higher
+;;                Hexagon® 9.3B or newer (kernel version required)
+;;                Version: 6.0 rev 0 01/17/2023
+;;
+;; Total calls: 68 (04/26/2020) - This number is not final and may decrease (or increase)
 ;;
 ;;************************************************************************************
 
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento de memória e processos do Hexagonix®
+;; $PORTUGUÊS$ Tabela 1: Chamadas de sistema do Hexagon
+;; $ENGLISH$   Table 1: Hexagon System Calls
+;;
+;;************************************************************************************
+
+;;************************************************************************************
+;;
+;; $PORTUGUÊS$ Serviços de gerenciamento de memória e processos do Hexagon®
+;; $ENGLISH$   Hexagon® memory and process management services
 ;;
 ;;************************************************************************************
 
@@ -83,7 +98,8 @@ obterCodigoErro        = 8
 
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento de arquivos e dispositivos do Hexagonix®
+;; $PORTUGUÊS$ Serviços de gerenciamento de arquivos e dispositivos do Hexagon®
+;; $ENGLISH$   Hexagon® file and device management services
 ;;
 ;;************************************************************************************
 
@@ -93,7 +109,8 @@ fechar                 = 11
 
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagonix®
+;; $PORTUGUÊS$ Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon®
+;; $ENGLISH$   Hexagon® File System and volume management services
 ;;
 ;;************************************************************************************
 
@@ -105,7 +122,8 @@ obterDisco             = 17
 
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento de usuários do Hexagonix®
+;; $PORTUGUÊS$ Serviços de gerenciamento de usuários do Hexagon®
+;; $ENGLISH$   Hexagon® user management services
 ;;
 ;;************************************************************************************
 
@@ -116,7 +134,8 @@ obterUsuario           = 21
 
 ;;************************************************************************************
 ;;
-;; Serviços oferecidos pelo Hexagonix®
+;; $PORTUGUÊS$ Serviços oferecidos pelo Hexagon®
+;; $ENGLISH$   Services offered by Hexagon®
 ;;
 ;;************************************************************************************
 
@@ -128,7 +147,8 @@ instalarISR            = 26
 
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento de energia do Hexagonix®
+;; $PORTUGUÊS$ Serviços de gerenciamento de energia do Hexagon®
+;; $ENGLISH$   Hexagon® power management services 
 ;;
 ;;************************************************************************************
 
@@ -137,7 +157,8 @@ desligarPC             = 28
 
 ;;************************************************************************************
 ;;
-;; Serviços de saída em vídeo e gráficos do Hexagonix®
+;; $PORTUGUÊS$ Serviços de saída em vídeo e gráficos do Hexagon®
+;; $ENGLISH$   Hexagon® graphics and video output services
 ;;
 ;;************************************************************************************
 
@@ -160,7 +181,8 @@ obterCursor            = 44
                                             
 ;;************************************************************************************
 ;;
-;; Serviços de manipulação de teclado PS/2 do Hexagonix®
+;; $PORTUGUÊS$ Serviços de manipulação de teclado PS/2 do Hexagon®
+;; $ENGLISH$   Hexagon® PS/2 keyboard handling services
 ;;
 ;;************************************************************************************
 
@@ -172,7 +194,8 @@ alterarLeiaute         = 49
 
 ;;************************************************************************************
 ;;
-;; Serviços de manipulação de mouse PS/2 do Hexagonix®
+;; $PORTUGUÊS$ Serviços de manipulação de mouse PS/2 do Hexagon®
+;; $ENGLISH$   Hexagon® PS/2 mouse handling services
 ;;
 ;;************************************************************************************
 
@@ -182,7 +205,8 @@ definirMouse           = 52
 
 ;;************************************************************************************
 ;;
-;; Serviços de manipulação e conversão de dados do Hexagonix®
+;; $PORTUGUÊS$ Serviços de manipulação e conversão de dados do Hexagon®
+;; $ENGLISH$   Hexagon® data manipulation and conversion services
 ;;
 ;;************************************************************************************
 
@@ -200,7 +224,8 @@ paraString             = 63
 
 ;;************************************************************************************
 ;;
-;;  Serviços de saída por som do Hexagonix®
+;; $PORTUGUÊS$ Serviços de saída por som do Hexagon®
+;; $ENGLISH$   Hexagon® sound output services
 ;;
 ;;************************************************************************************  
 
@@ -209,7 +234,8 @@ desligarSom            = 65
 
 ;;************************************************************************************
 ;;
-;;  Serviços de mensagens do Hexagonix®
+;; $PORTUGUÊS$ Serviços de mensagens do Hexagon®
+;; $ENGLISH$   Hexagon® messaging services
 ;;
 ;;************************************************************************************  
 
@@ -219,7 +245,8 @@ enviarMensagemHexagon  = 66
 
 ;;************************************************************************************
 ;;
-;;  Serviço de relógio em tempo real do Hexagon®
+;; $PORTUGUÊS$ Serviço de relógio em tempo real do Hexagon®
+;; $ENGLISH$   Hexagon® real time clock service
 ;;
 ;;************************************************************************************  
 
@@ -230,20 +257,97 @@ retornarHora           = 68
 
 ;;************************************************************************************
 ;;
+;; $PORTUGUÊS$ Tabela 2: Padronização de nomes de função com Version 7 UNIX
+;; $ENGLISH$   Table 2: Function name standardization with Version 7 UNIX
+;;
+;;************************************************************************************
+;;
+;; $PORTUGUÊS$
+;;
 ;; Tabela de padronização de nomes de função com Version 7 UNIX
+;;
+;; Observações importantes sobre essa tabela:
+;;
+;; - O Hexagon expõe uma série de funções ao ambiente de usuário. Muitas dessas funções
+;; não estão disponíveis no Version 7 UNIX ou vice e versa. Muitas funções expostas pelo
+;; Version 7 UNIX não estarão disponíveis aqui, uma vez que o Hexagonix não busca
+;; compatibilidade com esse sistema, mas se inspira na arquitetura. Como exemplo, temos
+;; a ausência das funções mount() e unmount(). No Hexagon, a montagem e desmontagem de um
+;; volume se dá pelas funções open() e close(). Apesar de tentar ser um sistema Unix-like,
+;; a implementação é bem diferente. Além disso, a chamada uname() não está disponível no
+;; Version 7 UNIX, mas está disponível no Hexagonix. No mais, as chamadas de sistema 
+;; do Hexagon apresentam um comportamento totalmente diferente do Version 7 UNIX, embora
+;; o comportamento de algumas foi escrito para se assemelhar ao máximo.
+;;
+;; O Hexagon expõe uma série de funções para facilitar o desenvolvimento de utilitários.
+;; Junta-se a isso o fato do motor de renderização gráfica estar no kernel. Assim, funções
+;; para exibir caracteres e desenhar pixels na tela, presentes no kernel, foram adaptadas
+;; e expostas ao ambiente de usuário. A tabela acima (Tabela 1: Chamadas de sistema do Hexagon)
+;; contêm todas as chamadas disponíveis na versão atual do Hexagonix. Com a evolução do
+;; software, se espera que muitas delas sejam transferidas completamente para o ambiente
+;; de usuário.
+;;
+;; Para chamar a função, use:
+;; 
+;; hx hx.função
+;;     ou
+;; sys hx.função
+;;     ou
+;; Hexagonix hx.função
+;;
+;; $ENGLISH$
+;; 
+;; Table of function name standardization with Version 7 UNIX
+;;
+;; Important notes about this table:
+;;
+;; - Hexagon exposes a series of functions to the user environment. Many of these functions
+;; are not available on Version 7 UNIX or vice versa. Many functions exposed by
+;; Version 7 UNIX will not be available here, as Hexagonix does not aims compatibility
+;; with that system, but is inspired by the architecture. As an example, we have the absence of
+;; the mount() and unmount() functions. At Hexagon, mounting and dismounting a volume is given
+;; by the open() and close() functions. Despite trying to be a Unix-like system, the implementation 
+;; is quite different. Also, the uname() call is not available in Version 7 UNIX, but is available
+;; on Hexagonix. Furthermore, system calls of Hexagon behave completely different from Version 7
+;; UNIX, although the behavior of some was written to resemble as closely as possible.
+;;
+;; Hexagon exposes a number of functions to facilitate the development of utilities.
+;; Added to this is the fact that the graphics rendering engine is in the kernel. So, functions
+;; to display characters and draw pixels on the screen, present in the kernel, were adapted
+;; and exposed to the user environment. The table above (Table 1: Hexagon System Calls)
+;; contain all calls available in the current version of Hexagonix. With the evolution of
+;; software, it is expected that many of them will be transferred completely to the user
+;; environment.
+;;
+;; To call the function, use:
+;;
+;; hx hx.function
+;;       or
+;; sys hx.function
+;;       or
+;; Hexagonix hx.function
 ;;
 ;;************************************************************************************
 
-malloc = 1
-mfree  = 2
-fork   = 3
+hx.malloc             = 1
+hx.mfree              = 2
+hx.spawn              = 3
+hx.exit               = 4
+hx.getpid             = 5
+hx.open               = 9
+hx.write              = 10
+hx.close              = 11
+hx.link               = 13
+hx.unlink             = 14
+hx.indir              = 15
+hx.syslock            = 18
+hx.sysunlock          = 19
+hx.uname              = 22
+hx.sleep              = 25
+hx.date               = 67
+hx.time               = 68
 
 ;;************************************************************************************
-
-;; Histórico de funções com nome substituído
-
-;; encerrarProcesso             = 4 (Adaptação a partir de terminarPrograma completa em 06/11/2020)
-;; iniciarProcesso              = 3 (Adaptação a partir de carregarPrograma completa em 06/11/2020)
 
 ;;************************************************************************************
 ;;
@@ -253,6 +357,24 @@ fork   = 3
 ;;************************************************************************************
 
 macro Hexagonix chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon®
+{
+
+    push chamadaHexagon 
+    
+    int 69h     
+    
+}
+
+macro sys chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon®
+{
+
+    push chamadaHexagon 
+    
+    int 69h     
+    
+}
+
+macro hx chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon®
 {
 
     push chamadaHexagon 
