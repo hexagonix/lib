@@ -51,7 +51,7 @@
 
 ;;************************************************************************************
 ;;
-;; Cabeçalho de macros, estruturas, funções e chamadas para o desenvolvimento de 
+;; Cabeçalho de macros, estruturas, funções e chamadas para o desenvolvimento de 1.12+ (14/06/2019)
 ;; aplicativos e utilitários
 ;;
 ;;************************************************************************************
