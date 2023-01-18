@@ -56,7 +56,7 @@
 ;; Cabeçalho de macros, funções e chamadas de Sistema do Hexagonix®
 ;;
 ;; Compatibilidade: Sistema Operacional Hexagonix® H1 R1.2 (05/06/2022) ou superior
-;;                  Hexagon® 9.3B ou mais recente (versão do kernel necessária)
+;;                  Hexagon® 1.0 ou mais recente (versão do kernel necessária)
 ;; Versão:          6.0 rev 0 17/01/2023
 ;;
 ;; Total de chamadas: 68 (26/04/2020) - Este número não é final e pode diminuir (ou aumentar)
@@ -66,7 +66,7 @@
 ;; Header of Hexagonix® Macros, Functions and System Calls
 ;;
 ;; Compatibility: Hexagonix® H1 R1.2 (05/06/2022) or higher
-;;                Hexagon® 9.3B or newer (kernel version required)
+;;                Hexagon® 1 0 or newer (kernel version required)
 ;;                Version: 6.0 rev 0 01/17/2023
 ;;
 ;; Total calls: 68 (04/26/2020) - This number is not final and may decrease (or increase)
