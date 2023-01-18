@@ -53,8 +53,8 @@
 ;;
 ;; Lista de dispositivos que podem ser acessados pelo usuário
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix® 1.7 (26/11/2017) ou superior
-;; Versão:            1.0 rev 2 17/12/2020
+;; Compatibilidade:   Sistema Operacional Hexagonix® H1 ou superior
+;; Versão:            1.0 rev 3 18/01/2023
 ;; Autor:             Felipe Miguel Nery Lunkes
 ;;
 ;;************************************************************************************

@@ -53,8 +53,8 @@
 ;;
 ;;              Biblioteca de desenvolvimento Cosmos para Hexagonix®
 ;;
-;; Versão: 2.0 rev 0 (14/06/2019)
-;; Compatibilidade: Hexagonix® 1.12+ (14/06/2019)
+;; Versão: 2.0 rev 1 (18/01/2023)
+;; Compatibilidade: Hexagonix® H1 ou superior
 ;;
 ;;************************************************************************************
  

@@ -50,399 +50,302 @@
 ;; $HexagonixOS$
 
 ;;************************************************************************************
+;; 
+;; $PORTUGUÊS$
 ;;
-;; Cabeçalho de macros, funções e chamadas de sistema do Hexagonix®
+;; Cabeçalho de macros, funções e chamadas de Sistema do Hexagonix®
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix® H1 R1.2 (05/06/2022) ou superior
-;;                    Hexagon® 9.3B ou mais recente (versão do kernel necessária)
-;; Versão:            5.2 rev 0 05/06/2022
-;; Autor:             Felipe Miguel Nery Lunkes
+;; Compatibilidade: Sistema Operacional Hexagonix® H1 R1.2 (05/06/2022) ou superior
+;;                  Hexagon® 1.0 ou mais recente (versão do kernel necessária)
+;; Versão:          6.0 rev 0 17/01/2023
 ;;
 ;; Total de chamadas: 68 (26/04/2020) - Este número não é final e pode diminuir (ou aumentar)
 ;;
-;;************************************************************************************
+;; $ENGLISH$
 ;;
-;;          Funções de manipulação de vídeo oferecidas pelo Hexagonix®
+;; Header of Hexagonix® Macros, Functions and System Calls
 ;;
-;;************************************************************************************
-
-;;************************************************************************************
+;; Compatibility: Hexagonix® H1 R1.2 (05/06/2022) or higher
+;;                Hexagon® 1 0 or newer (kernel version required)
+;;                Version: 6.0 rev 0 01/17/2023
 ;;
-;; Serviços de gerenciamento de memória e processos do Hexagonix®
-;;
-;;************************************************************************************
-
-alocarMemoria equ 1      ;; Alocar memória
-                         ;; Entrada: EAX - Tamanho da memória solicitada, em bytes
-                         ;; Saída: EBX - Ponteiro para a memória alocada
-
-liberarMemoria equ 2     ;; Liberar memória
-                         ;; Entrada: EBX - Ponteiro para a memória alocada
-                         ;; ECX - Tamanho da memória alocada
-
-iniciarProcesso equ 3    ;; Carregar programa do disco e o executar
-                         ;; Entrada: ESI - Nome do programa; EDI - Argumentos; EAX = 0 se não forem passados argumentos
-                         ;; Saída: CF definido em caso de erro ou programa não encontrado
-
-encerrarProcesso equ 4   ;; Terminar o processo atualmente em execução
-                         ;; Entrada: EAX - Código de erro, caso exista
-                         ;; EBX = 0 se apenas terminar a execução; EBX = 0x1234 para manter residente
-
-obterPID equ 5           ;; Retorna o indentificador do processo em execução
-                         ;; Saída: EAX - PID do processo
-
-usoMemoria equ 6         ;; Retorna estatísticas de uso deste recurso, calculados pelo sistema                                       
-                         ;; Saída: EAX - Memória utilizada, em bytes
-                         ;; EBX - Memória total disponível para uso, em bytes                        
-                         ;; ECX - Memória total disponível para uso, em Mbytes (menos preciso)
-                         ;; EDX - Memória reservada para o Hexagon®, em bytes
-                         ;; ESI - Memória total alocada (resevada+processos), em kbytes
-                                  
-obterProcessos equ 7     ;; Obtêm os processos presentes na pilha de execução                                       
-                         ;; Saída: ESI - Lista de processos; EAX - Número de processos na pilha                                 
-
-obterCodigoErro equ 8    ;; Obtém o código retornado pelo último processo em execução.
-                         ;; Saída: EAX - Código de erro (0 para sem erro/saída normal)
-
-;;************************************************************************************
-;;
-;; Serviços de gerenciamento de arquivos e dispositivos do Hexagonix®
+;; Total calls: 68 (04/26/2020) - This number is not final and may decrease (or increase)
 ;;
 ;;************************************************************************************
 
-abrir equ 9              ;; Abre um canal de leitura/escrita com determinado dispositivo solicitado ou                                                                                           ;; abre um determinado arquivo em endereço especificado
-                         ;; Entrada: ESI - Ponteiro para o buffer que contêm o nome convencionado
-                         ;; EDI - Endereço de carregamento, em caso de arquivo
-                         ;; CF definido quando o nome do dispositivo for inválido ou arquivo não existir
-
-escrever equ 10          ;; Envia dados para o dispositivo aberto
-                         ;; Entrada: SI - Ponteiro com o buffer contendo os dados
-                         ;; Saída: CF definido em caso de erro ou nenhum dispositivo aberto
-
-fechar equ 11            ;; Fecha o último dispositivo aberto
-
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagonix®
+;; $PORTUGUÊS$ Tabela 1: Chamadas de sistema do Hexagon
+;; $ENGLISH$   Table 1: Hexagon System Calls
 ;;
 ;;************************************************************************************
 
-salvarArquivo equ 13     ;; Salvar um arquivo no disco
-                         ;; Entrada: ESI - Ponteiro para o nome do arquivo; EDI - Ponteiro para o conteúdo
-                         ;; Entrada: EAX - Tamanho do arquivo
-                         ;; Saída: CF definido em caso de erro ou arquivo já presente
-                         
-deletarArquivo equ 14    ;; Remover um arquivo do disco
-                         ;; Entrada: ESI - Ponteiro para o nome do arquivo
-                         ;; Saída: CF definido em caso de erro ou arquivo não existente
-
-listarArquivos equ 15    ;; Obter lista de arquivos     
-                         ;; Saída: ESI - Ponteiro para a lista de arquivos; EAX - Total de arquivos
-                                  
-arquivoExiste equ 16     ;; Checar se um arquivo existe no disco
-                         ;; Entrada: ESI - Nome do arquivo para checar
-                         ;; Saída: EAX - Tamanho do arquivo
-                         ;; CF definido se o arquivo não existir               
-
-obterDisco equ 17        ;; Obtêm o disco utilizado pelo sistema
-                         ;; Saída: ESI - Nome do dispositivo   
-                         ;;        EDI - Rótulo do volume utilizado                                  
-
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento de usuários do Hexagonix®
+;; $PORTUGUÊS$ Serviços de gerenciamento de memória e processos do Hexagon®
+;; $ENGLISH$   Hexagon® memory and process management services
 ;;
 ;;************************************************************************************
 
-travar equ 18            ;; Bloqueia o processo em primeiro plano, impedindo que o mesmo seja terminado
-                         ;; pelo usuário utilizando uma tecla especial ou combinação.
-                         ;; A tecla F1 é no Hexagonix® a tecla "Matar processo".
-                         ;; Esta tecla pode ter sua função removida com o tempo.
-
-destravar equ 19         ;; Habilita que o usuário mate o processo em execução pressionando uma tecla especial
-                         ;; ou combinação de teclas. A tecla "Matar processo" (F1) se torna habilitada.
-                         ;; Esta tecla pode ter sua função removida com o tempo.
-                                   
-definirUsuario equ 20    ;; Define um usuário para a sessão.
-                         ;; Entrada: EAX - ID do grupo; ESI - Nome do usuário
-
-obterUsuario equ 21      ;; Obtêm dados do usuário logado na sessão
-                         ;; Saída: EAX - ID do grupo; ESI - Nome do usuário
+alocarMemoria          equ 1      
+liberarMemoria         equ 2   
+iniciarProcesso        equ 3    
+encerrarProcesso       equ 4   
+obterPID               equ 5          
+usoMemoria             equ 6                                    
+obterProcessos         equ 7    
+obterCodigoErro        equ 8   
 
 ;;************************************************************************************
 ;;
-;; Serviços oferecidos pelo Hexagonix®
+;; $PORTUGUÊS$ Serviços de gerenciamento de arquivos e dispositivos do Hexagon®
+;; $ENGLISH$   Hexagon® file and device management services
 ;;
 ;;************************************************************************************
 
-retornarVersao equ 22    ;; Retorna a versão do sistema para os aplicativos
-                         ;; Saída: EAX - Número da versão; EBX - Número da subversão 
-                         ;; CH - Caractere de revisão; EDX - Arquitetura
-                         ;; ESI - Nome do Kernel 
-                         ;; EDI - Build do Kernel
-
-obterAleatorio equ 23    ;; Obtêr um número aleatório
-                         ;; Entrada: EAX - Máximo
-                         ;; Saída: EAX - Número
-
-alimentarAleatorio equ 24  ;; Alimentar o gerador do números
-                           ;; Entrada: EAX - Número
-
-causarAtraso equ 25      ;; Utilizada para causar um atraso (delay), utilizado para adaptar operações
-                         ;; de memória, operações de disco e possibilitar leitura da tela por parte
-                         ;; do usuário.
-                         ;; Entrada: ECX - Tempo em unidades de contagem para causar atraso
- 
-instalarISR equ 26       ;; Instalar rotina de serviço de interrupção
-                         ;; Entrada: EAX - Número da interrupção; ESI - Ponteiro para o manipulador
+abrir                  equ 9             
+escrever               equ 10         
+fechar                 equ 11          
 
 ;;************************************************************************************
 ;;
-;; Serviços de gerenciamento de energia do Hexagonix®
+;; $PORTUGUÊS$ Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon®
+;; $ENGLISH$   Hexagon® File System and volume management services
 ;;
 ;;************************************************************************************
 
-reiniciarPC equ 27       ;; Reiniciar o computador
-                    
-desligarPC  equ 28       ;; Chama rotina da implementação APM do Hexagonix® para desligar o computador
+salvarArquivo          equ 13    
+deletarArquivo         equ 14  
+listarArquivos         equ 15           
+arquivoExiste          equ 16     
+obterDisco             equ 17        
 
 ;;************************************************************************************
 ;;
-;; Serviços de saída em vídeo e gráficos do Hexagonix®
+;; $PORTUGUÊS$ Serviços de gerenciamento de usuários do Hexagon®
+;; $ENGLISH$   Hexagon® user management services
 ;;
 ;;************************************************************************************
 
-imprimir equ 29          ;; Imprimir um conteúdo definido em um dispositivo de saída
-                         ;; Entrada:
-                         ;;
-                         ;; EAX - Conteúdo numérico, se este for o caso, respeitando os
-                         ;;       formatos abaixo designados. Os formatos devem ser informados!
-                         ;; ESI - Ponteiro para a string à ser impressa, se este for o caso.       
-                         ;; EBX - Tipo de entrada, que pode ser:
-                         ;;       01h - Inteiro decimal
-                         ;;       02h - Inteiro hexadecimal
-                         ;;       03h - Inteiro binário
-                         ;;       04h - String        
-                         ;; Dica! Utilize os macros no fim do arquivo para utilizar essa função                                                       
+travar                 equ 18            
+destravar              equ 19        
+definirUsuario         equ 20   
+obterUsuario           equ 21     
 
-limparTela equ 30        ;; Limpa a tela        
-                        
-limparLinha equ 31       ;; Limpa uma linha específica na tela
-                         ;; Entrada: AL - Número da linha 
-                        
-NULA equ 32              ;; Função nula, sem retorno ou função
-                         ;; Mantida para compatibilidade
+;;************************************************************************************
+;;
+;; $PORTUGUÊS$ Serviços oferecidos pelo Hexagon®
+;; $ENGLISH$   Services offered by Hexagon®
+;;
+;;************************************************************************************
 
+retornarVersao         equ 22    
+obterAleatorio         equ 23   
+alimentarAleatorio     equ 24 
+causarAtraso           equ 25     
+instalarISR            equ 26       
 
-rolarTela equ 33         ;; Rola a tela para baixo uma linha
+;;************************************************************************************
+;;
+;; $PORTUGUÊS$ Serviços de gerenciamento de energia do Hexagon®
+;; $ENGLISH$   Hexagon® power management services 
+;;
+;;************************************************************************************
 
-definirCursor equ 34     ;; Definir cursor em uma posição específica
-                         ;; Entrada: DL - X; DH - Y
+reiniciarPC            equ 27                   
+desligarPC             equ 28      
 
-desenharCaractere equ 35 ;; Colocar um pixel na tela
-                         ;; Entrada: EAX - X; EBX - Y; EDX - Cor em hexadecimal
+;;************************************************************************************
+;;
+;; $PORTUGUÊS$ Serviços de saída em vídeo e gráficos do Hexagon®
+;; $ENGLISH$   Hexagon® graphics and video output services
+;;
+;;************************************************************************************
 
-desenharBloco equ 36     ;; Desenhar um bloco de cor específica
-                         ;; Entrada: EAX - X; EBX - Y; ESI - Comprimento
-                         ;; Entrada: EDI - Altura; EDX - Cor em hexadecimal
-
-imprimirCaractere equ 37 ;; Imprimir caractere na posição do cursor 
-                         ;; Entrada: AL - Caractere; EBX - 01h para posicionar cursor                               
-
-definirCor equ 38        ;; Definir cor de fundo e primeiro plano
-                         ;; Entrada: EAX - Cor da fonte (RGB em hexadecimal)
-                         ;; EBX - Cor do plano de fundo (RGB em hexadecimal)
-                         ;; ECX - 1234h para alterar o tema padrão para os valores solicitados
-                         ;; Em modo texto, apenas preto e branco são permitidos
-                         
-obterCor equ 39          ;; Obter cor de fundo e primeiro plano
-                         ;; Saída: EAX - Plano de fundo (RGB em hexadecimal)
-                         ;; EBX - Plano de fundo (RGB em hexadecimal)
-                         ;; ECX - Cor padrão da fonte, no tema atual
-                         ;; EDX - Cor padrão do plano de fundo, no tema atual
-                         ;; Em modo texto, apenas preto e branco são permitidos
-
-obterInfoTela equ 40     ;; Obter informação da tela
-                         ;; Saída: EAX - Resolução X (bits 0..15), Y (bits 16..31),
-                         ;; EBX - Colunas (bit 0..7), Linhas (8..15), Bits por pixel (16..23),
-                         ;; EDX - Endereço do início do frame de vídeo
-                         ;; CF definido em caso de modo texto
-                                        
-atualizarTela equ 41     ;; Atualizar a memória de vídeo com o conteúdo do Buffer
-                                
-definirResolucao equ 42  ;; Utilizado para definir a resolução à ser utilizada no vídeo
-                         ;; Entrada: EAX - Número relativo a resolução à ser utilizada
-                         ;;       1 - Resolução de 800x600 pixels
-                         ;;       2 - Resolução de 1024x768 pixels        
-
-obterResolucao equ 43    ;; Utilizado para obter o código relativo à resolução utilizada 
-                         ;; no vídeo padrão
-                         ;; Saída: EAX - Número relativo a resolução atualmente utilizada
-                         ;;       1 - Resolução de 800x600 pixels
-                         ;;       2 - Resolução de 1024x768 pixels
-                                   
-obterCursor equ 44       ;; Obter posição do cursor
-                         ;; Saída: DL - X, DH - Y
+imprimir               equ 29                                                          
+limparTela             equ 30                     
+limparLinha            equ 31      
+NULA                   equ 32            
+rolarTela              equ 33         
+definirCursor          equ 34     
+desenharCaractere      equ 35 
+desenharBloco          equ 36    
+imprimirCaractere      equ 37 
+definirCor             equ 38       
+obterCor               equ 39         
+obterInfoTela          equ 40        
+atualizarTela          equ 41                       
+definirResolucao       equ 42  
+obterResolucao         equ 43   
+obterCursor            equ 44      
                                             
-
 ;;************************************************************************************
 ;;
-;; Serviços de manipulação de teclado PS/2 do Hexagonix®
-;;
-;;************************************************************************************
-
-aguardarTeclado equ 45   ;; Esperar pelo pressionamento de uma tecla no teclado
-                         ;; Saída: AL - Caratere; AH - Scan code
-                              
-obterString equ 46       ;; Obter string do teclado
-                         ;; Entrada: AL - Máximo de caracteres para receber
-                         ;; EBX - Presença ou não de eco durante a digitação - 1234h
-                         ;; para desativar o eco e <> 1234h para ativar
-                         ;; Saída: ESI - String
-                         
-obterEstadoTeclas equ 47 ;; Obter status das teclas especiais
-                         ;; Saída: EAX - Status das teclas especiais
-                         ;; 
-                         ;; Formato:
-                         ;;
-                         ;; bit 0: Tecla Control
-                         ;; bit 1: Tecla Shift
-                         ;; bit 2-31: Reservado
-
-alterarFonte equ 48      ;; Altera a fonte padrão de exibição do sistema
-                         ;; Entrada: ESI - Ponteiro para o buffer contendo o nome do arquivo
-                         ;; que contêm a fonte compatível com o Sistema Operacional Hexagonix®
-                         ;; Saída: CF definido em caso de arquivo não encontrado                                                                        
-
-alterarLeiaute equ 49    ;; Altera o leiaute do teclado
-                         ;; Entrada: ESI - Arquivo contendo um leiaute de teclado válido
-
-;;************************************************************************************
-;;
-;; Serviços de manipulação de mouse PS/2 do Hexagonix®
+;; $PORTUGUÊS$ Serviços de manipulação de teclado PS/2 do Hexagon®
+;; $ENGLISH$   Hexagon® PS/2 keyboard handling services
 ;;
 ;;************************************************************************************
 
-aguardarMouse equ 50     ;; Aguardar por evento do mouse
-                         ;; Saída: EAX - X; EBX - Y; EDX - Botões
-
-obterMouse equ 51        ;; Obter posição atual do mouse e estado dos botões
-                         ;; Saída: EAX - X; EBX - Y; EDX - Botões
-
-definirMouse equ 52      ;; Definir nova posição do mouse
-                         ;; Entrada: EAX - X; EBX Y
+aguardarTeclado        equ 45   
+obterString            equ 46       
+obterEstadoTeclas      equ 47 
+alterarFonte           equ 48      
+alterarLeiaute         equ 49    
 
 ;;************************************************************************************
 ;;
-;; Serviços de manipulação e conversão de dados do Hexagonix®
+;; $PORTUGUÊS$ Serviços de manipulação de mouse PS/2 do Hexagon®
+;; $ENGLISH$   Hexagon® PS/2 mouse handling services
 ;;
 ;;************************************************************************************
 
-compararPalavrasString equ 53 ;; Comparar primeiras words de duas strings 
-                              ;; Entrada: ESI - Primeira string; EDI - Segunda string 
-                              ;; Saída: CF definido se iguais
-
-removerCaractereString equ 54 ;; Remover um caractere de uma posição específica na string 
-                              ;; Entrada: ESI - String; EAX - Posição do caractere
-
-inserirCaractere equ 55  ;; Inserir um caractere em posição específica da string
-                         ;; Entrada: ESI - String; EDX - Caractere para inserir; AL - Caractere para inserir
-                                  
-tamanhoString equ 56     ;; Onter o tamanho de uma string 
-                         ;; Entrada: ESI - String. 
-                         ;; Saída: AX - Tamanho da string
-
-compararString  equ 57   ;; Comparar duas strings 
-                         ;; Entrada: ESI - Primeira string; EDI - Segunda string 
-                         ;; Saída: CF definido se as duas forem iguais
-
-stringParaMaiusculo equ 58 ;; Converter string para maiúsculo
-                           ;; Entrada: ESI - String
-
-stringParaMinusculo equ 59 ;; Converter string para minúsculo 
-                           ;; Entrada: ESI - String 
-
-cortarString equ 60      ;; Remover espaços em branco da string
-                         ;; Entrada: ESI - String.
-
-encontrarCaractere  equ 61 ;; Encontrar caractere específico na string
-                           ;; Entrada: ESI - String, AL - caractere para encontrar
-                           ;; Saída: EAX - Número de ocorrências do caractere
-                           ;; CF definido se caractere não encontrado
-                              
-stringParaInt equ 62     ;; Converter um número string para número inteiro
-                         ;; Entrada: ESI - String
-                         ;; Saída: EAX - Inteiro
-                         ;; CF definido em caso e número inválido
-
-paraString equ 63        ;; Converte um número inteiro em uma string
-                         ;; Entrada: EAX - Inteiro à ser convertido
-                         ;; Saída: ESI - Ponteiro para o buffer contendo o conteúdo   
+aguardarMouse          equ 50    
+obterMouse             equ 51        
+definirMouse           equ 52      
 
 ;;************************************************************************************
 ;;
-;;  Serviços de saída por som do Hexagonix®
+;; $PORTUGUÊS$ Serviços de manipulação e conversão de dados do Hexagon®
+;; $ENGLISH$   Hexagon® data manipulation and conversion services
+;;
+;;************************************************************************************
+
+compararPalavrasString equ 53 
+removerCaractereString equ 54 
+inserirCaractere       equ 55            
+tamanhoString          equ 56      
+compararString         equ 57     
+stringParaMaiusculo    equ 58 
+stringParaMinusculo    equ 59 
+cortarString           equ 60        
+encontrarCaractere     equ 61      
+stringParaInt          equ 62      
+paraString             equ 63       
+
+;;************************************************************************************
+;;
+;; $PORTUGUÊS$ Serviços de saída por som do Hexagon68®
+;; $ENGLISH$   Hexagon® sound output services
 ;;
 ;;************************************************************************************  
 
-emitirSom equ 64         ;; Toca um tom no alto-falante interno do computador
-                         ;; Entrada: AX - Frequência à ser reproduzida
-
-desligarSom equ 65       ;; Desliga o alto-falante interno do computador, interrompendo
-                         ;; qualquer emissão de som em progresso                                 
+emitirSom              equ 64        
+desligarSom            equ 65       
 
 ;;************************************************************************************
 ;;
-;;  Serviços de mensagens do Hexagonix®
+;; $PORTUGUÊS$ Serviços de mensagens do Hexagon®
+;; $ENGLISH$   Hexagon® messaging services
 ;;
 ;;************************************************************************************  
 
-enviarMensagemHexagon equ 66 ;; Envia uma mensagem de alta prioridade do Hexagon
-                             ;; Entrada: ESI - Mensagem
-                             ;;          EAX - Código de erro, se houver
-                             ;;          EBX - Prioridade 
+enviarMensagemHexagon  equ 66 
 
 ;;************************************************************************************                      
 
 ;;************************************************************************************
 ;;
-;;  Serviço de relógio em tempo real do Hexagon®
+;; $PORTUGUÊS$ Serviço de relógio em tempo real do Hexagon®
+;; $ENGLISH$   Hexagon® real time clock service
 ;;
 ;;************************************************************************************  
 
-retornarData equ 67      ;; Retorna informações de relógio em tempo real em formato
-                         ;; ASCII (String). Conversão para número pode ser necessária
-                         ;; Saída: EAX - Dia, em ASCII
-                         ;;        EBX - Mês, em ASCII
-                         ;;        ECX - Século, em ASCII
-                         ;;        EDX - Ano, em ASCII
+retornarData           equ 67     
+retornarHora           equ 68     
 
-retornarHora equ 68      ;; Retorna informações de relógio em tempo real em formato
-                         ;; ASCII (String). Conversão para número pode ser necessária
-                         ;;        EAX - Hora, em ASCII
-                         ;;        EBX - Minuto, em ASCII
-                         ;;        ECX - Segundo, em ASCII
+;;************************************************************************************
 
 ;;************************************************************************************
 ;;
-;;                   Chamar Interrupção de Software Hexagonix®
-;;               Aliases de nome de função para padronização futura
-;;    Estes aliases servem para implementar mudanças na padronização sem quebrar as 
-;;     chamadas em código que ainda não teve a nomenclatura de chamada atualizada
+;; $PORTUGUÊS$ Tabela 2: Padronização de nomes de função com Version 7 UNIX
+;; $ENGLISH$   Table 2: Function name standardization with Version 7 UNIX
 ;;
-;; Após ataliação de todos os códigos, as funções podem ter o nome alterado e os
-;; aliases podem ser removidos
+;;************************************************************************************
+;;
+;; $PORTUGUÊS$
+;;
+;; Tabela de padronização de nomes de função com Version 7 UNIX
+;;
+;; Observações importantes sobre essa tabela:
+;;
+;; - O Hexagon expõe uma série de funções ao ambiente de usuário. Muitas dessas funções
+;; não estão disponíveis no Version 7 UNIX ou vice e versa. Muitas funções expostas pelo
+;; Version 7 UNIX não estarão disponíveis aqui, uma vez que o Hexagonix não busca
+;; compatibilidade com esse sistema, mas se inspira na arquitetura. Como exemplo, temos
+;; a ausência das funções mount() e unmount(). No Hexagon, a montagem e desmontagem de um
+;; volume se dá pelas funções open() e close(). Apesar de tentar ser um sistema Unix-like,
+;; a implementação é bem diferente. Além disso, a chamada uname() não está disponível no
+;; Version 7 UNIX, mas está disponível no Hexagonix. No mais, as chamadas de sistema 
+;; do Hexagon apresentam um comportamento totalmente diferente do Version 7 UNIX, embora
+;; o comportamento de algumas foi escrito para se assemelhar ao máximo.
+;;
+;; O Hexagon expõe uma série de funções para facilitar o desenvolvimento de utilitários.
+;; Junta-se a isso o fato do motor de renderização gráfica estar no kernel. Assim, funções
+;; para exibir caracteres e desenhar pixels na tela, presentes no kernel, foram adaptadas
+;; e expostas ao ambiente de usuário. A tabela acima (Tabela 1: Chamadas de sistema do Hexagon)
+;; contêm todas as chamadas disponíveis na versão atual do Hexagonix. Com a evolução do
+;; software, se espera que muitas delas sejam transferidas completamente para o ambiente
+;; de usuário.
+;;
+;; Para chamar a função, use:
+;; 
+;; hx hx.função
+;;     ou
+;; sys hx.função
+;;     ou
+;; Hexagonix hx.função
+;;
+;; $ENGLISH$
+;; 
+;; Table of function name standardization with Version 7 UNIX
+;;
+;; Important notes about this table:
+;;
+;; - Hexagon exposes a series of functions to the user environment. Many of these functions
+;; are not available on Version 7 UNIX or vice versa. Many functions exposed by
+;; Version 7 UNIX will not be available here, as Hexagonix does not aims compatibility
+;; with that system, but is inspired by the architecture. As an example, we have the absence of
+;; the mount() and unmount() functions. At Hexagon, mounting and dismounting a volume is given
+;; by the open() and close() functions. Despite trying to be a Unix-like system, the implementation 
+;; is quite different. Also, the uname() call is not available in Version 7 UNIX, but is available
+;; on Hexagonix. Furthermore, system calls of Hexagon behave completely different from Version 7
+;; UNIX, although the behavior of some was written to resemble as closely as possible.
+;;
+;; Hexagon exposes a number of functions to facilitate the development of utilities.
+;; Added to this is the fact that the graphics rendering engine is in the kernel. So, functions
+;; to display characters and draw pixels on the screen, present in the kernel, were adapted
+;; and exposed to the user environment. The table above (Table 1: Hexagon System Calls)
+;; contain all calls available in the current version of Hexagonix. With the evolution of
+;; software, it is expected that many of them will be transferred completely to the user
+;; environment.
+;;
+;; To call the function, use:
+;;
+;; hx hx.function
+;;       or
+;; sys hx.function
+;;       or
+;; Hexagonix hx.function
 ;;
 ;;************************************************************************************
 
-maloc equ 1
-mfree equ 2
-fork equ 3
-
-;; Histórico de funções com nome substituído
-
-;; encerrarProcesso             = 4 (Adaptação a partir de terminarPrograma completa em 06/11/2020)
-;; iniciarProcesso              = 3 (Adaptação a partir de carregarPrograma completa em 06/11/2020)
+hx.malloc             equ 1
+hx.mfree              equ 2
+hx.spawn              equ 3
+hx.exit               equ 4
+hx.getpid             equ 5
+hx.open               equ 9
+hx.write              equ 10
+hx.close              equ 11
+hx.creat              equ 13
+hx.unlink             equ 14
+hx.indir              equ 15
+hx.syslock            equ 18
+hx.sysunlock          equ 19
+hx.uname              equ 22
+hx.sleep              equ 25
+hx.date               equ 67
+hx.time               equ 68
 
 ;;************************************************************************************
 ;;

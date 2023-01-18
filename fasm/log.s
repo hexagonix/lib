@@ -53,8 +53,8 @@
 ;;
 ;; Lista de prioridades para mensagens do sistema
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix® 1.11 (09/06/2019) ou superior
-;; Versão:            1.0 rev 09/06/2019
+;; Compatibilidade:   Sistema Operacional Hexagonix® H1 ou superior
+;; Versão:            1.0 rev 1 18/01/2023
 ;; Autor:             Felipe Miguel Nery Lunkes
 ;;
 ;;************************************************************************************

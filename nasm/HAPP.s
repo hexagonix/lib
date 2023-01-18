@@ -51,9 +51,9 @@
 
 ;;************************************************************************************
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix® 1.14.3 (24/11/2020) ou superior
-;;                    Hexagon® 8.40 ou superior
-;; Versão:            1.0 rev 1 02/10/2021
+;; Compatibilidade:   Sistema Operacional Hexagonix® H1 ou superior
+;;                    Hexagon® 1.0 ou superior
+;; Versão:            1.0 rev 2 18/01/2023
 ;; Autor:             Felipe Miguel Nery Lunkes
 ;;
 ;;************************************************************************************
