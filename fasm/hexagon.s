@@ -374,7 +374,7 @@ macro sys chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexago
     
 }
 
-macro hx chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon®
+macro hx.syscall chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon®
 {
 
     push chamadaHexagon 
@@ -394,7 +394,7 @@ macro novaLinha
     
     pop ebx
     
-    Hexagonix imprimirCaractere
+    hx.syscall imprimirCaractere
     
 }
 
@@ -403,7 +403,7 @@ macro imprimirInteiro
 
     mov ebx, 01h
     
-    Hexagonix imprimir
+    hx.syscall imprimir
 
 }
 
@@ -412,7 +412,7 @@ macro imprimirHexadecimal
 
     mov ebx, 02h
     
-    Hexagonix imprimir
+    hx.syscall imprimir
     
 }
 
@@ -421,7 +421,7 @@ macro imprimirBinario
 
     mov ebx, 03h
     
-    Hexagonix imprimir
+    hx.syscall imprimir
 
 }
 
@@ -430,7 +430,7 @@ macro imprimirString
 
     mov ebx, 04h
     
-    Hexagonix imprimir
+    hx.syscall imprimir
 
 }
 
