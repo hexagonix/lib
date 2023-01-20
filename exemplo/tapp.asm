@@ -120,4 +120,4 @@ inicioAPP:
 
     imprimirString
 
-    Hexagonix encerrarProcesso
+    hx.syscall encerrarProcesso

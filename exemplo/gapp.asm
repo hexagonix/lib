@@ -139,14 +139,14 @@ inicioAPP:
 
     mov esi, gapp.vd0
 
-    Hexagonix abrir ;; Abrir dispositivo
+    hx.syscall abrir ;; Abrir dispositivo
 
 ;; Pronto, agora vamos continuar. Primeiro, limpar a saida e obter informacoes
 ;; de resolucao
 
-    Hexagonix limparTela
+    hx.syscall limparTela
 
-    Hexagonix obterInfoTela
+    hx.syscall obterInfoTela
     
     mov byte[Andromeda.Interface.numColunas], bl
     mov byte[Andromeda.Interface.numLinhas], bh
@@ -155,7 +155,7 @@ inicioAPP:
 ;; Isso e importante para definir se estamos em modo claro ou escuro de
 ;; interface
 
-    Hexagonix obterCor
+    hx.syscall obterCor
 
     mov dword[Andromeda.Interface.corFonte], eax
     mov dword[Andromeda.Interface.corFundo], ebx
@@ -183,7 +183,7 @@ inicioAPP:
 
 ;; Vamos aguardar interacao do usuario para finalizar o app
 
-    Hexagonix aguardarTeclado
+    hx.syscall aguardarTeclado
 
 ;; Interagiu? Ok, vamos finalizar o app
 
