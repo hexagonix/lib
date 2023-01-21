@@ -289,11 +289,9 @@ retornarHora           equ 68
 ;;
 ;; Para chamar a função, use:
 ;; 
-;; hx hx.função
+;; hx.syscall hx.função
 ;;     ou
 ;; sys hx.função
-;;     ou
-;; Hexagonix hx.função
 ;;
 ;; $ENGLISH$
 ;; 
@@ -321,11 +319,9 @@ retornarHora           equ 68
 ;;
 ;; To call the function, use:
 ;;
-;; hx hx.function
+;; hx.syscall hx.function
 ;;       or
 ;; sys hx.function
-;;       or
-;; Hexagonix hx.function
 ;;
 ;;************************************************************************************
 
@@ -354,7 +350,7 @@ hx.time               equ 68
 ;;
 ;;************************************************************************************
 
-%macro Hexagonix 1 ;; Macro utilizado para solicitar um serviço do Hexagon®
+%macro hx.syscall 1 ;; Macro utilizado para solicitar um serviço do Hexagon®
 
     push [%1]   
     
@@ -372,7 +368,7 @@ hx.time               equ 68
     
     pop ebx
     
-    Hexagonix imprimirCaractere
+    hx.syscall imprimirCaractere
     
 %endmacro
 
@@ -380,7 +376,7 @@ hx.time               equ 68
 
     mov ebx, 01h
     
-    Hexagonix imprimir
+    hx.syscall imprimir
 
 %endmacro
 
@@ -388,7 +384,7 @@ hx.time               equ 68
 
     mov ebx, 02h
     
-    Hexagonix imprimir
+    hx.syscall imprimir
 
 %endmacro
 
@@ -396,7 +392,7 @@ hx.time               equ 68
 
     mov ebx, 03h
     
-    Hexagonix imprimir
+    hx.syscall imprimir
 
 %endmacro
 
@@ -404,7 +400,7 @@ hx.time               equ 68
 
     mov ebx, 04h
     
-    Hexagonix imprimir
+    hx.syscall imprimir
 
 %endmacro
 
