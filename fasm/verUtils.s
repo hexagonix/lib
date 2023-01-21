@@ -80,7 +80,7 @@ obterVersaoDistribuicao:
     mov esi, arquivoVersao
     mov edi, enderecoCarregamento
     
-    Hexagonix abrir
+    hx.syscall abrir
     
     jc .erro
     
@@ -168,7 +168,7 @@ obterCodigoDistribuicao:
     mov esi, arquivoVersao
     mov edi, enderecoCarregamento
     
-    Hexagonix abrir
+    hx.syscall abrir
     
     jc .erro
     
@@ -259,7 +259,7 @@ obterPacoteDistribuicao:
     mov esi, arquivoVersao
     mov edi, enderecoCarregamento
     
-    Hexagonix abrir
+    hx.syscall abrir
     
     jc .erro
     
@@ -348,7 +348,7 @@ obterDataHora:
     mov esi, arquivoVersao
     mov edi, enderecoCarregamento
     
-    Hexagonix abrir
+    hx.syscall abrir
     
     jc .erro
     
@@ -439,7 +439,7 @@ obterBuildDistribuicao:
     mov esi, arquivoVersao
     mov edi, enderecoCarregamento
     
-    Hexagonix abrir
+    hx.syscall abrir
     
     jc .erro
     

@@ -69,7 +69,7 @@ macro Abrir nome, endereco
     mov esi, nome
     mov edi, endereco
 
-    Hexagonix abrir
+    hx.syscall abrir
 
 }
 
@@ -79,14 +79,14 @@ macro finalizarProcesso codigoErro, tipoSaida
     mov eax, codigoErro
     mov ebx, tipoSaida
 
-    Hexagonix encerrarProcesso
+    hx.syscall encerrarProcesso
 
 }
 
 macro finalizarProcessoGrafico codigoErroGrafico, tipoSaidaGrafico
 {
 
-    Hexagonix limparTela
+    hx.syscall limparTela
 
     finalizarProcesso codigoErroGrafico, tipoSaidaGrafico
 
@@ -98,7 +98,7 @@ macro tocarNota frequencia
     mov ax, frequencia
     mov bx, 00h
 
-    Hexagonix emitirSom
+    hx.syscall emitirSom
 
 }
 
@@ -108,13 +108,13 @@ macro tocarNotaT frequencia, temporizador
     mov ax, frequencia
     mov bx, 00h
 
-    Hexagonix emitirSom
+    hx.syscall emitirSom
 
     mov ecx, temporizador
 
-    Hexagonix causarAtraso
+    hx.syscall causarAtraso
 
-    Hexagonix desligarSom
+    hx.syscall desligarSom
 
 }
 
@@ -123,14 +123,14 @@ macro pausar tempo
 
     mov ecx, tempo 
     
-    Hexagonix causarAtraso
+    hx.syscall causarAtraso
 
 }
 
 macro finalizarNota
 {
 
-    Hexagonix desligarSom
+    hx.syscall desligarSom
     
 }
 
@@ -140,7 +140,7 @@ macro cursorPara posicaoX, posicaoY
     mov dl, posicaoX
     mov dh, posicaoY
 
-    Hexagonix definirCursor
+    hx.syscall definirCursor
 
 }
 

@@ -69,7 +69,7 @@ macro tocarNota frequencia
     mov ax, frequencia
     mov bx, 00h
 
-    Hexagonix emitirSom
+    hx.syscall emitirSom
 
 }
 
@@ -79,13 +79,13 @@ macro tocarNotaT frequencia, temporizador
     mov ax, frequencia
     mov bx, 00h
 
-    Hexagonix emitirSom
+    hx.syscall emitirSom
 
     mov ecx, temporizador
 
-    Hexagonix causarAtraso
+    hx.syscall causarAtraso
 
-    Hexagonix desligarSom
+    hx.syscall desligarSom
 
 }
 
@@ -94,13 +94,13 @@ macro pausar tempo
 
     mov ecx, tempo 
     
-    Hexagonix causarAtraso
+    hx.syscall causarAtraso
 
 }
 
 macro finalizarNota
 {
 
-    Hexagonix desligarSom
+    hx.syscall desligarSom
     
 }

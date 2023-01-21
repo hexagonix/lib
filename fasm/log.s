@@ -90,7 +90,7 @@ macro logSistema mensagem, codigoErro, prioridade
     mov eax, codigoErro ;; Código de erro
     mov ebx, prioridade ;; Importante!
 
-    Hexagonix enviarMensagemHexagon
+    hx.syscall enviarMensagemHexagon
 
 }
 
@@ -111,6 +111,6 @@ macro syslogdX mensagem, codigoErro, prioridade
     mov edi, mensagem
     mov eax, 01h ;; Não deixar em branco
 
-    Hexagonix iniciarProcesso
+    hx.syscall iniciarProcesso
 
 }

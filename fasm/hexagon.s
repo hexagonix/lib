@@ -289,11 +289,9 @@ retornarHora           = 68
 ;;
 ;; Para chamar a função, use:
 ;; 
-;; hx hx.função
+;; hx.syscall hx.função
 ;;     ou
 ;; sys hx.função
-;;     ou
-;; Hexagonix hx.função
 ;;
 ;; $ENGLISH$
 ;; 
@@ -321,11 +319,9 @@ retornarHora           = 68
 ;;
 ;; To call the function, use:
 ;;
-;; hx hx.function
+;; hx.syscall hx.function
 ;;       or
 ;; sys hx.function
-;;       or
-;; Hexagonix hx.function
 ;;
 ;;************************************************************************************
 
@@ -351,19 +347,10 @@ hx.time               = 68
 
 ;;************************************************************************************
 ;;
-;;                   Chamar Interrupção de Software Hexagonix®
+;;                                    libasm
 ;;                                    Macros
 ;;
 ;;************************************************************************************
-
-macro Hexagonix chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon®
-{
-
-    push chamadaHexagon 
-    
-    int 69h     
-    
-}
 
 macro sys chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon®
 {
