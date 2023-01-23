@@ -109,7 +109,6 @@ include "estelar.s" ;; Inclui funcoes de criacao de interfaces
 ;; Variaveis e constantes
 
 ;; Agora vamos criar uma instancia da estrutura de controle de interfaces
-;; para que possamos criar uma
 ;; Sintaxe: estrutura para o app (instancia), estrutura original
 
 Andromeda.Interface Andromeda.Estelar.Interface
