@@ -422,13 +422,37 @@ macro imprimirString
 
 }
 
-macro imprimir conteudo     ;; Macro utilizado para imprimir determinado conteúdo na tela para o usuário
+macro imprimir conteudo ;; Macro utilizado para imprimir determinado conteúdo no console
 {
 
     mov esi, conteudo
     
     imprimirString
     
+}   
+
+;; O macro fputs não adiciona uma nova linha após enviar o conteúdo para o console
+
+macro fputs string     ;; Macro utilizado para imprimir determinado conteúdo no console
+{
+
+    mov esi, string
+    
+    imprimirString
+    
+}   
+
+;; O macro puts adiciona uma nova linha após enviar o conteúdo para o console
+
+macro puts string      ;; Macro utilizado para imprimir determinado conteúdo no console
+{
+
+    mov esi, string
+    
+    imprimirString
+    
+    novaLinha
+
 }   
 
 ;; Fim do arquivo
