@@ -412,3 +412,21 @@ hx.time               equ 68
     imprimirString
     
 %endmacro
+
+%macro fputs 1    
+
+    mov esi, [%1]
+    
+    imprimirString
+    
+%endmacro
+
+%macro puts 1    
+
+    mov esi, [%1]
+    
+    imprimirString
+    
+    novaLinha
+    
+%endmacro
