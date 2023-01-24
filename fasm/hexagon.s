@@ -325,23 +325,24 @@ retornarHora           = 68
 ;;
 ;;************************************************************************************
 
-malloc             = 1
-mfree              = 2
-spawn              = 3
-exit               = 4
-getpid             = 5
-open               = 9
-write              = 10
-close              = 11
-creat              = 13
-unlink             = 14
-indir              = 15
-syslock            = 18
-sysunlock          = 19
-uname              = 22
-sleep              = 25
-date               = 67
-time               = 68
+hx.malloc             = 1
+hx.mfree              = 2
+hx.spawn              = 3
+hx.exit               = 4
+hx.getpid             = 5
+hx.open               = 9
+hx.write              = 10
+hx.close              = 11
+hx.creat              = 13
+hx.unlink             = 14
+hx.indir              = 15
+hx.syslock            = 18
+hx.sysunlock          = 19
+hx.uname              = 22
+hx.sleep              = 25
+hx.putc               = 29
+hx.date               = 67
+hx.time               = 68
 
 ;;************************************************************************************
 
