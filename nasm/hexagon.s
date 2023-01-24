@@ -325,23 +325,24 @@ retornarHora           equ 68
 ;;
 ;;************************************************************************************
 
-malloc             equ 1
-mfree              equ 2
-spawn              equ 3
-exit               equ 4
-getpid             equ 5
-open               equ 9
-write              equ 10
-close              equ 11
-creat              equ 13
-unlink             equ 14
-indir              equ 15
-syslock            equ 18
-sysunlock          equ 19
-uname              equ 22
-sleep              equ 25
-date               equ 67
-time               equ 68
+hx.malloc             equ 1
+hx.mfree              equ 2
+hx.spawn              equ 3
+hx.exit               equ 4
+hx.getpid             equ 5
+hx.open               equ 9
+hx.write              equ 10
+hx.close              equ 11
+hx.creat              equ 13
+hx.unlink             equ 14
+hx.indir              equ 15
+hx.syslock            equ 18
+hx.sysunlock          equ 19
+hx.uname              equ 22
+hx.sleep              equ 25
+hx.putc               equ 29
+hx.date               equ 67
+hx.time               equ 68
 
 ;;************************************************************************************
 ;;
