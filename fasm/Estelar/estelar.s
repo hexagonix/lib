@@ -67,7 +67,7 @@ Andromeda.Estelar.Versao:
 
 .versao: db 1
 .subver: db 0
-.string: db "Estelar versao 1.5 [ALPHA]", 0
+.string: db "Estelar versao 1.6-CURRENT", 0
 
 struc Andromeda.Estelar.Interface
 {
@@ -125,10 +125,8 @@ macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, cor
     
     hx.syscall limparLinha
     
-    mov esi, titulo
-    
-    imprimirString
-    
+    fputs titulo
+        
     mov eax, corTextoRodape
     mov ebx, corRodape
     
@@ -140,10 +138,8 @@ macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, cor
     
     hx.syscall limparLinha
     
-    mov esi, rodape
-    
-    imprimirString
-    
+    fputs rodape
+        
     mov eax, corTexto
     mov ebx, corFundo
     
@@ -421,9 +417,7 @@ macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
 
     hx.syscall definirCursor
 
-    mov esi, mensagem
-
-    imprimirString
+    fputs mensagem
     
 }
 
