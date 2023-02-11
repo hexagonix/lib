@@ -1,13 +1,13 @@
 ;;************************************************************************************
 ;;
 ;;    
-;; ┌┐ ┌┐                                 Sistema Operacional Hexagonix(R)
+;; ┌┐ ┌┐                                 Sistema Operacional Hexagonix®
 ;; ││ ││
-;; │└─┘├──┬┐┌┬──┬──┬──┬─┐┌┬┐┌┐    Copyright (C) 2016-2023 Felipe Miguel Nery Lunkes
+;; │└─┘├──┬┐┌┬──┬──┬──┬─┐┌┬┐┌┐    Copyright © 2015-2023 Felipe Miguel Nery Lunkes
 ;; │┌─┐││─┼┼┼┤┌┐│┌┐│┌┐│┌┐┼┼┼┼┘          Todos os direitos reservados
 ;; ││ │││─┼┼┼┤┌┐│└┘│└┘││││├┼┼┐
 ;; └┘ └┴──┴┘└┴┘└┴─┐├──┴┘└┴┴┘└┘
-;;              ┌─┘│                 Licenciado sob licenca BSD-3-Clause
+;;              ┌─┘│                 Licenciado sob licença BSD-3-Clause
 ;;              └──┘          
 ;;
 ;;
