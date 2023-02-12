@@ -76,7 +76,7 @@
 ;; usuario insira fasmx tapp.asm tapp.app, toda essa linha pode ser
 ;; ignorada e a linha abaixo nao precisa estar no codigo.
 
-format binary as "app" ;; Especifica o formato e extensao do arquivo
+format binary as " " ;; Especifica o formato e extensao do arquivo
 
 use32
 
