@@ -11,10 +11,10 @@
 ;;                                               aa,    ,88                                         
 ;;                                                "P8bbdP"       
 ;;
-;;           Sistema Operacional Hexagonix(R) - Hexagonix(R) Operating System            
+;;                  Sistema Operacional Hexagonix(R) - Hexagonix(R) Operating System
 ;;
-;;                  Copyright (c) 2015-2023 Felipe Miguel Nery Lunkes
-;;                 Todos os direitos reservados - All rights reserved.
+;;                          Copyright (c) 2015-2023 Felipe Miguel Nery Lunkes
+;;                        Todos os direitos reservados - All rights reserved.
 ;;
 ;;*************************************************************************************************
 ;;
