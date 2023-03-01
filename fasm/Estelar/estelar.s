@@ -75,16 +75,18 @@
 ;;
 ;;              Biblioteca de desenvolvimento Estelar para Hexagonix®
 ;;
-;; Versão:  2 rev 2  (20/02/2021)
-;; Compatibilidade: Hexagonix® 1.14+ (22/11/2020)
+;; Versão:  1.7-CURRENT (01/03/2023)
+;; Compatibilidade: Hexagonix® H1 (22/11/2020)
 ;;
 ;;************************************************************************************
+
+include "console.s"
 
 Andromeda.Estelar.Versao:
 
 .versao: db 1
 .subver: db 0
-.string: db "Estelar versao 1.6-CURRENT", 0
+.string: db "Estelar versao 1.7-CURRENT", 0
 
 struc Andromeda.Estelar.Interface
 {
@@ -378,14 +380,6 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
 
     hx.syscall definirCor
 
-    mov al, 't'
-
-    hx.syscall imprimirCaractere
-
-    mov al, 'm'
-
-    hx.syscall imprimirCaractere
-
     mov eax, corTextoAposLogotipo
     mov ebx, corFundoAposLogotipo
 
@@ -439,128 +433,5 @@ macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
 }
 
 ;;************************************************************************************
-
-;;************************************************************************************
-;;
-;;     Cores e definições para uso na montagem de interfaces em modo gráfico
-;;
-;;   Aviso! Estas são apenas algumas cores recomendadas para utilização na montagem
-;;                     de interfaces gráficas para o Hexagonix®
-;;
-;;************************************************************************************
-
-;; Lista de cores que podem ser utilizadas no design de interfaces do sistema
-
-;; Cor            | Código
-
-;; Escala de cinza
-
-PRETO                = 0x000000
-CINZA                = 0x808080
-CINZA_ESCURO         = 0xA9A9A9
-CINZA_ANDROMEDA      = 0xFF808080
-CINZA_CLARO          = 0xD3D3D3
-PRATA                = 0xC0C0C0
-BRANCO_ANDROMEDA     = 0xFFFFFF
-BRANCO_PURO          = 0xFDFEFE
-
-;; Escala de azul
-
-AZUL_NAVY            = 0x000080
-AZUL_MEDIO           = 0x0000CD
-AZUL_ROYAL           = 0x4169E1
-AZUL_CEU             = 0x87CEEB
-AZUL                 = 0x0000FF
-AZUL_ESCURO          = 0x00008B
-CIANO                = 0x00FFFF
-CIANO_ESCURO         = 0x008B8B
-TURQUESA             = 0x40E0D0
-TURQUESA_ESCURO      = 0x00CED1
-VERDE_AGUA           = 0x20B2AA
-AQUAMARINE           = 0x7FFFD4
-AQUAMARINE_ESCURO    = 0x66CDAA
-AZUL_CADET           = 0x5F9EA0
-AZUL_METALICO        = 0x4682B4
-AZUL_NOTURNO         = 0x191970
-AZUL_CALMANTE        = 0x2980B9
-
-;; Escala de verde
-
-VERDE                = 0x008000
-VERDE_PRIMAVERA      = 0x00FF7F
-VERDE_CLARO          = 0x90EE90
-VERDE_ESCURO         = 0x006400
-VERDE_AMARELADO      = 0x9ACD32
-VERDE_MAR            = 0x2E8B57
-VERDE_PAZ            = 0x2ECC71
-VERDE_MAR_ESCURO     = 0x8FBC8F
-VERDE_FLORESTA       = 0x228B22
-LIMA                 = 0x00FF00
-OLIVA                = 0x808000
-OLIVA_ESCURO         = 0x556B2F
-VERDE_ANDROMEDA      = 0xff00f000
-
-;; Escala do marrom
-
-CAQUI_ESCURO         = 0xBDB76B
-MARROM               = 0x8B4513
-MARROM_OURO          = 0xDAA520
-MARROM_NAVAJO        = 0xFFDEAD
-TRIGO                = 0xF5DEB3
-MARROM_PERU          = 0xCD853F
-BRONZE               = 0xD35400
-
-;; Escala do roxo
-
-ROXO                 = 0x800080
-INDIGO               = 0x4B0082
-VIOLETA              = 0x8A2BE2
-VIOLETA_ESCURO       = 0x9400D3
-MAGENTA              = 0xFF00FF
-ROXO_ESCURO          = 0x9932CC  
-LAVANDA_SURPRESA     = 0x4A235A
-
-;; Escala do vermelho
-
-CORAL                = 0xFF7F50
-VERMELHO             = 0xFF0000
-VERMELHO_ESCURO      = 0x8B0000
-VERMELHO_TIJOLO      = 0xB22222
-SALMAO               = 0xFA8072
-SALMAO_CLARO         = 0xFFA07A
-TOMATE               = 0xFF6347
-VERMELHO_HEXA        = 0xB03A2E
-VERMELHO_GABRIEL     = 0xD4553A
-
-;; Escala do laranja
-
-LARANJA              = 0xFFA500
-LARANJA_ESCURO       = 0xFF8C00 ;; Cor padrão do Hexagonix®
-LARANJA_VERMELHO     = 0xFF4500
-
-;; Escala do amarelo
-
-AMARELO              = 0xFFFF00
-AMARELO_VIVO         = 0xF1C40F 
-AMARELO_OURO         = 0xFFD700
-CAQUI                = 0xF0E68C
-AMARELO_ESCURO       = 0xB7950B
-AMARELO_ANDROMEDA    = 0xF5A700
-
-;; Escala de tons pastéis
-;;
-;; Preferencialmente utilizar com fontes de cores escuras
-
-AZUL_PASTEL          = 0xE0FFFF
-AMARELO_CLARO_PASTEL = 0xFFFFE0
-LIMAO_PASTEL         = 0xFFFACD
-PESSEGO_PASTEL       = 0xFFDAB9
-VERDE_PASTEL         = 0xEEE8AA
-LAVANDA_PASTEL       = 0xE6E6FA
-TURQUESA_PASTEL      = 0xE0FFFF
-ASTERACEAE_PASTEL    = 0xD8BFD8
-MOCASSIM_PASTEL      = 0xFFE4B5
-AZURE_PASTEL         = 0xF0FFFF
-AZUL_PO_PASTEL       = 0xB0E0E6
 
 ;; Fim deste arquivo
