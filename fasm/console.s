@@ -66,6 +66,69 @@
 ;;
 ;; $HexagonixOS$
 
+;; Salvar as informações sobre o console em uso
+
+macro salvarConsole
+{
+
+    hx.syscall obterInfoTela
+    
+    mov byte[Lib.Console.maxColunas], bl
+    mov byte[Lib.Console.maxLinhas], bh
+
+    hx.syscall obterCor
+
+    mov dword[Lib.Console.corFonte], eax 
+    mov dword[Lib.Console.corFundo], ebx
+
+    hx.syscall obterResolucao
+
+    mov dword[Lib.Console.resolucao], eax
+
+}
+
+;; Restaurar informações sobre o console atual
+
+macro restaurarConsole
+{
+
+    mov eax, dword[Lib.Console.corFonte]
+    mov ebx, dword[Lib.Console.corFundo]
+
+    hx.syscall definirCor
+
+    mov eax, dword[Lib.Console.resolucao]
+    
+    hx.syscall definirResolucao
+
+}
+
+;; Macro para alterar o conjunto de cores do console
+
+macro definirCorConsole consoleCorFonte, consoleCorFundo
+{
+
+    mov eax, consoleCorFonte
+    mov ebx, consoleCorFundo
+
+    hx.syscall definirCor
+
+}
+
+;; Restaurar o conjunto de cores do console
+
+macro restaurarCorConsole
+{
+
+    mov eax, dword[Lib.Console.corFonte]
+    mov ebx, dword[Lib.Console.corFundo]
+
+    hx.syscall definirCor
+
+}
+
+;;************************************************************************************
+
 ;; Lista de cores que podem ser utilizadas no design de interfaces do sistema
 
 ;; Cor            | Código
@@ -179,5 +242,15 @@ ASTERACEAE_PASTEL    = 0xD8BFD8
 MOCASSIM_PASTEL      = 0xFFE4B5
 AZURE_PASTEL         = 0xF0FFFF
 AZUL_PO_PASTEL       = 0xB0E0E6
+
+;;************************************************************************************
+
+Lib.Console:
+
+.maxColunas: db 0
+.maxLinhas:  db 0
+.corFundo:   dd 0
+.corFonte:   dd 0
+.resolucao:  dd 0
 
 ;; Fim deste arquivo
