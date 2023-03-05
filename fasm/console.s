@@ -127,6 +127,17 @@ macro restaurarCorConsole
 
 }
 
+;; Restaura o comportamento padrão do console e limpar o terminal
+
+macro restaurarConsoleLimpar
+{
+
+    restaurarConsole
+
+    hx.syscall limparTela
+
+}
+
 ;;************************************************************************************
 
 ;; Lista de cores que podem ser utilizadas no design de interfaces do sistema
