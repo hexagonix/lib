@@ -264,4 +264,11 @@ Lib.Console:
 .corFonte:   dd 0
 .resolucao:  dd 0
 
+;; Um guia rápido sobre o campo resolução, responsável por armazenar o código relativo
+;; à resolução em uso ou a ser implementada. As opções podem ser:
+;;
+;; 1 - Resolução de 800x600 pixels
+;; 2 - Resolução de 1024x768 pixels
+;; 3 - Modo texto
+
 ;; Fim deste arquivo
