@@ -125,7 +125,8 @@ include "hexagon.s" ;; Incluir as chamadas de sistema
 
 ;; Variaveis e constantes
 
-msg: db 10, 10, "Este e um template com um exemplo de aplicativo HAPP simples!", 10, 0
+msg: 
+db 10, 10, "Este e um template com um exemplo de aplicativo HAPP simples!", 10, 0
 
 ;;*************************************************************
 

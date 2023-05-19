@@ -136,13 +136,18 @@ VERSAO equ "1.1" ;; Versao do aplicativo
 
 gapp:
 
-.mensagemOla: db 10, 10, "Este e um exemplo de aplicativo HAPP grafico do Hexagonix(R)!", 10, 10
-              db 10, 10, "Pressione qualquer tecla para finalizar este programa...", 10, 10, 0 
+.mensagemOla: ;; Colocar os dbs abaixo para facilitar a organização
+db 10, 10, "Este e um exemplo de aplicativo HAPP grafico do Hexagonix(R)!", 10, 10
+db 10, 10, "Pressione qualquer tecla para finalizar este programa...", 10, 10, 0 
 
-.TITULO:      db "Seja bem-vindo!", 0
-.RODAPE:      db "[", VERSAO, "] | Pressione qualquer tecla para continuar...", 0                
+.TITULO:
+db "Seja bem-vindo!", 0
 
-.vd0:         db "vd0", 0 ;; Console principal
+.RODAPE:
+db "[", VERSAO, "] | Pressione qualquer tecla para continuar...", 0                
+
+.vd0:
+db "vd0", 0 ;; Console principal
 
 ;;************************************************************************************
 
