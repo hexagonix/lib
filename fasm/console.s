@@ -157,6 +157,10 @@ BRANCO_PURO          = 0xFDFEFE
 
 ;; Escala de azul
 
+AZUL_PURO            = 0x0000FF
+AZUL_80              = 0x9999FF
+AZUL_65              = 0x4D4DFF
+AZUL_30              = 0x000099
 AZUL_NAVY            = 0x000080
 AZUL_MEDIO           = 0x0000CD
 AZUL_ROYAL           = 0x4169E1
@@ -177,6 +181,10 @@ AZUL_CALMANTE        = 0x2980B9
 
 ;; Escala de verde
 
+VERDE_75             = 0x80FFAA
+VERDE_60             = 0x33FF77
+VERDE_40             = 0x00CC44
+VERDE_30             = 0x009933
 VERDE                = 0x008000
 VERDE_PRIMAVERA      = 0x00FF7F
 VERDE_CLARO          = 0x90EE90
@@ -197,12 +205,18 @@ CAQUI_ESCURO         = 0xBDB76B
 MARROM               = 0x8B4513
 MARROM_OURO          = 0xDAA520
 MARROM_NAVAJO        = 0xFFDEAD
+MARROM_JAVA          = 0x873E23
 TRIGO                = 0xF5DEB3
 MARROM_PERU          = 0xCD853F
 BRONZE               = 0xD35400
 
 ;; Escala do roxo
 
+ROXO_PURO            = 0x660066
+ROXO_70              = 0xFF66FF
+ROXO_60              = 0xFF33FF
+ROXO_50              = 0xFF00FF
+ROXO_45              = 0xE600E6
 ROXO                 = 0x800080
 INDIGO               = 0x4B0082
 VIOLETA              = 0x8A2BE2
@@ -223,14 +237,30 @@ TOMATE               = 0xFF6347
 VERMELHO_HEXA        = 0xB03A2E
 VERMELHO_GABRIEL     = 0xD4553A
 
+;; Escala do rosa
+
+ROSA_CHOQUE          = 0xFF0080
+ROSA_70              = 0xFF66B3
+ROSA_60              = 0xFF3399
+ROSA_35              = 0xB30059
+
 ;; Escala do laranja
 
+LARANJA_PURO         = 0xFF6600
+LARANJA_70           = 0xFFA366
+LARANJA_55           = 0xFF751A
 LARANJA              = 0xFFA500
 LARANJA_ESCURO       = 0xFF8C00 ;; Cor padrão do Hexagonix®
 LARANJA_VERMELHO     = 0xFF4500
 
 ;; Escala do amarelo
 
+OURO                 = 0xFFCC00
+GEMA                 = 0xE6B800
+AMARELO_80           = 0xFFEB99
+AMARELO_70           = 0xFFE066
+AMARELO_60           = 0xFFD633
+AMABAR               = 0xFF9900
 AMARELO              = 0xFFFF00
 AMARELO_VIVO         = 0xF1C40F 
 AMARELO_OURO         = 0xFFD700
