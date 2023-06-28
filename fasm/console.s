@@ -209,7 +209,6 @@ VERDE_FLORESTA       = 0x228B22
 LIMA                 = 0x00FF00
 OLIVA                = 0x808000
 OLIVA_ESCURO         = 0x556B2F
-VERDE_ANDROMEDA      = 0xff00f0
 
 ;; Escala do marrom
 
