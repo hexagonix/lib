@@ -161,7 +161,7 @@ CINZENTO_HEXAGONIX   = 0xCBB5B9
 PRETO                = 0x000000
 CINZA                = 0x808080
 CINZA_ESCURO         = 0xA9A9A9
-CINZA_ANDROMEDA      = 0xFF808080
+CINZA_ANDROMEDA      = 0xFF8080
 CINZA_CLARO          = 0xD3D3D3
 PRATA                = 0xC0C0C0
 BRANCO_ANDROMEDA     = 0xFFFFFF
@@ -209,7 +209,7 @@ VERDE_FLORESTA       = 0x228B22
 LIMA                 = 0x00FF00
 OLIVA                = 0x808000
 OLIVA_ESCURO         = 0x556B2F
-VERDE_ANDROMEDA      = 0xff00f000
+VERDE_ANDROMEDA      = 0xff00f0
 
 ;; Escala do marrom
 
