@@ -144,6 +144,18 @@ macro restaurarConsoleLimpar
 
 ;; Cor            | Código
 
+;; Cores padrão do Hexagonix (extraídas do logo do sistema)
+
+MARROM_HEXAGONIX     = 0xC3765B
+CAQUI_HEXAGONIX      = 0xF2D2BE
+TERRA_HEXAGONIX      = 0x9A5743
+NUDE_HEXAGONIX       = 0xDBAF9E
+ROXO_HEXAGONIX       = 0x7C4454
+ROXO_ESC_HEXAGONIX   = 0x371429
+AMARELO_HEXAGONIX    = 0xFBCB04
+OURO_HEXAGONIX       = 0xAF7F11
+CINZENTO_HEXAGONIX   = 0xCBB5B9
+
 ;; Escala de cinza
 
 PRETO                = 0x000000
