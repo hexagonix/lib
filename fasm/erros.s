@@ -71,12 +71,12 @@
 ;; Lista de dispositivos que podem ser acessados pelo usuário
 ;;
 ;; Compatibilidade:   Sistema Operacional Hexagonix® H1 ou superior
-;; Versão:            1.0 rev 3 18/01/2023
+;; Versão:            1.1 rev 0 24/08/2023
 ;; Autor:             Felipe Miguel Nery Lunkes
 ;;
 ;;************************************************************************************
 
-;; Erros de entrada e saída (I/O)
+;; Erros de entrada e saída (I/O), VFS e Hexagon
 
 IO:
 
@@ -85,6 +85,11 @@ IO:
 .erroLeitura     = 3
 .erroEscrita     = 4
 .operacaoNegada  = 5
+.naoEncontrado   = 6
+
+VFS:
+
+.fsInvalido      = 200h
 
 Hexagon:
 
