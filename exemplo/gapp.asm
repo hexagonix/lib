@@ -198,9 +198,7 @@ inicioAPP:
 
 ;; Agora vamos imprimir na interface uma mensagem simples
 
-    mov esi, gapp.mensagemOla
-
-    imprimirString
+    fputs gapp.mensagemOla
 
 ;; Vamos aguardar interacao do usuario para finalizar o app
 

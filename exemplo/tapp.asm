@@ -120,6 +120,7 @@ cabecalhoAPP:
 ;;*************************************************************
 
 include "hexagon.s" ;; Incluir as chamadas de sistema
+include "console.s"
 
 ;;*************************************************************
 
@@ -134,8 +135,6 @@ db 10, 10, "Este e um template com um exemplo de aplicativo HAPP simples!", 10, 
 
 inicioAPP:
 
-    mov esi, msg
-
-    imprimirString
+   fputs msg
 
     hx.syscall encerrarProcesso
