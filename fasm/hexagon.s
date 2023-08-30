@@ -68,11 +68,11 @@
 
 ;;************************************************************************************
 ;;
-;; Cabeçalho de macros, funções e chamadas de Sistema do Hexagonix®
+;; Cabeçalho de macros, funções e chamadas de Sistema do Hexagonix
 ;;
-;; Compatibilidade: Sistema Operacional Hexagonix® H1 R1.2 (05/06/2022) ou superior
-;;                  Hexagon® 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          6.0 rev 0 17/01/2023
+;; Compatibilidade: Sistema Operacional Hexagonix H1 R1.2 (05/06/2022) ou superior
+;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
+;; Versão:          6.0 rev 1 30/08/2023
 ;;
 ;; Total de chamadas: 68 (26/04/2020) - Este número não é final e pode diminuir (ou aumentar)
 ;;
@@ -84,80 +84,80 @@
 ;;
 ;;************************************************************************************
 
-alocarMemoria          = 1  ;; Serviços de gerenciamento de memória e processos do Hexagon®
-liberarMemoria         = 2  ;; Serviços de gerenciamento de memória e processos do Hexagon®
-iniciarProcesso        = 3  ;; Serviços de gerenciamento de memória e processos do Hexagon®
-encerrarProcesso       = 4  ;; Serviços de gerenciamento de memória e processos do Hexagon®
-obterPID               = 5  ;; Serviços de gerenciamento de memória e processos do Hexagon®
-usoMemoria             = 6  ;; Serviços de gerenciamento de memória e processos do Hexagon®
-obterProcessos         = 7  ;; Serviços de gerenciamento de memória e processos do Hexagon®
-obterCodigoErro        = 8  ;; Serviços de gerenciamento de memória e processos do Hexagon®
-abrir                  = 9  ;; Serviços de gerenciamento de arquivos e dispositivos do Hexagon®
-escrever               = 10 ;; Serviços de gerenciamento de arquivos e dispositivos do Hexagon®
-fechar                 = 11 ;; Serviços de gerenciamento de arquivos e dispositivos do Hexagon®
-salvarArquivo          = 13 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon®
-deletarArquivo         = 14 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon®
-listarArquivos         = 15 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon®
-arquivoExiste          = 16 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon®
-obterDisco             = 17 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon®
-travar                 = 18 ;; Serviços de gerenciamento de usuários do Hexagon®
-destravar              = 19 ;; Serviços de gerenciamento de usuários do Hexagon®
-definirUsuario         = 20 ;; Serviços de gerenciamento de usuários do Hexagon®
-obterUsuario           = 21 ;; Serviços de gerenciamento de usuários do Hexagon®
-retornarVersao         = 22 ;; Serviços oferecidos pelo Hexagon®
-obterAleatorio         = 23 ;; Serviços oferecidos pelo Hexagon®
-alimentarAleatorio     = 24 ;; Serviços oferecidos pelo Hexagon®
-causarAtraso           = 25 ;; Serviços oferecidos pelo Hexagon®
-instalarISR            = 26 ;; Serviços oferecidos pelo Hexagon®
-reiniciarPC            = 27 ;; Serviços de gerenciamento de energia do Hexagon®
-desligarPC             = 28 ;; Serviços de gerenciamento de energia do Hexagon®
-imprimir               = 29 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-limparTela             = 30 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-limparLinha            = 31 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-rolarTela              = 33 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-definirCursor          = 34 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-desenharCaractere      = 35 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-desenharBloco          = 36 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-imprimirCaractere      = 37 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-definirCor             = 38 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-obterCor               = 39 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-obterInfoTela          = 40 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-atualizarTela          = 41 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-definirResolucao       = 42 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-obterResolucao         = 43 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-obterCursor            = 44 ;; Serviços de saída em vídeo e gráficos do Hexagon®
-aguardarTeclado        = 45 ;; Serviços de manipulação de teclado PS/2 do Hexagon®
-obterString            = 46 ;; Serviços de manipulação de teclado PS/2 do Hexagon®
-obterEstadoTeclas      = 47 ;; Serviços de manipulação de teclado PS/2 do Hexagon®
-alterarFonte           = 48 ;; Serviços de manipulação de teclado PS/2 do Hexagon®
-alterarLeiaute         = 49 ;; Serviços de manipulação de teclado PS/2 do Hexagon®
-aguardarMouse          = 50 ;; Serviços de manipulação de mouse PS/2 do Hexagon®
-obterMouse             = 51 ;; Serviços de manipulação de mouse PS/2 do Hexagon®
-definirMouse           = 52 ;; Serviços de manipulação de mouse PS/2 do Hexagon®
-compararPalavrasString = 53 ;; Serviços de manipulação e conversão de dados do Hexagon®
-removerCaractereString = 54 ;; Serviços de manipulação e conversão de dados do Hexagon®
-inserirCaractere       = 55 ;; Serviços de manipulação e conversão de dados do Hexagon®
-tamanhoString          = 56 ;; Serviços de manipulação e conversão de dados do Hexagon®
-compararString         = 57 ;; Serviços de manipulação e conversão de dados do Hexagon®
-stringParaMaiusculo    = 58 ;; Serviços de manipulação e conversão de dados do Hexagon®
-stringParaMinusculo    = 59 ;; Serviços de manipulação e conversão de dados do Hexagon®
-cortarString           = 60 ;; Serviços de manipulação e conversão de dados do Hexagon®
-encontrarCaractere     = 61 ;; Serviços de manipulação e conversão de dados do Hexagon®
-stringParaInt          = 62 ;; Serviços de manipulação e conversão de dados do Hexagon®
-paraString             = 63 ;; Serviços de manipulação e conversão de dados do Hexagon®
-emitirSom              = 64 ;; Serviços de saída por som do Hexagon®
-desligarSom            = 65 ;; Serviços de saída por som do Hexagon®
-enviarMensagemHexagon  = 66 ;; Serviços de mensagens do Hexagon®
-retornarData           = 67 ;; Serviço de relógio em tempo real do Hexagon®
-retornarHora           = 68 ;; Serviço de relógio em tempo real do Hexagon®
+alocarMemoria          = 1  ;; Serviços de gerenciamento de memória e processos do Hexagon
+liberarMemoria         = 2  ;; Serviços de gerenciamento de memória e processos do Hexagon
+iniciarProcesso        = 3  ;; Serviços de gerenciamento de memória e processos do Hexagon
+encerrarProcesso       = 4  ;; Serviços de gerenciamento de memória e processos do Hexagon
+obterPID               = 5  ;; Serviços de gerenciamento de memória e processos do Hexagon
+usoMemoria             = 6  ;; Serviços de gerenciamento de memória e processos do Hexagon
+obterProcessos         = 7  ;; Serviços de gerenciamento de memória e processos do Hexagon
+obterCodigoErro        = 8  ;; Serviços de gerenciamento de memória e processos do Hexagon
+abrir                  = 9  ;; Serviços de gerenciamento de arquivos e dispositivos do Hexagon
+escrever               = 10 ;; Serviços de gerenciamento de arquivos e dispositivos do Hexagon
+fechar                 = 11 ;; Serviços de gerenciamento de arquivos e dispositivos do Hexagon
+salvarArquivo          = 13 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
+deletarArquivo         = 14 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
+listarArquivos         = 15 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
+arquivoExiste          = 16 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
+obterDisco             = 17 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
+travar                 = 18 ;; Serviços de gerenciamento de usuários do Hexagon
+destravar              = 19 ;; Serviços de gerenciamento de usuários do Hexagon
+definirUsuario         = 20 ;; Serviços de gerenciamento de usuários do Hexagon
+obterUsuario           = 21 ;; Serviços de gerenciamento de usuários do Hexagon
+retornarVersao         = 22 ;; Serviços oferecidos pelo Hexagon
+obterAleatorio         = 23 ;; Serviços oferecidos pelo Hexagon
+alimentarAleatorio     = 24 ;; Serviços oferecidos pelo Hexagon
+causarAtraso           = 25 ;; Serviços oferecidos pelo Hexagon
+instalarISR            = 26 ;; Serviços oferecidos pelo Hexagon
+reiniciarPC            = 27 ;; Serviços de gerenciamento de energia do Hexagon
+desligarPC             = 28 ;; Serviços de gerenciamento de energia do Hexagon
+imprimir               = 29 ;; Serviços de saída em vídeo e gráficos do Hexagon
+limparTela             = 30 ;; Serviços de saída em vídeo e gráficos do Hexagon
+limparLinha            = 31 ;; Serviços de saída em vídeo e gráficos do Hexagon
+rolarTela              = 33 ;; Serviços de saída em vídeo e gráficos do Hexagon
+definirCursor          = 34 ;; Serviços de saída em vídeo e gráficos do Hexagon
+desenharCaractere      = 35 ;; Serviços de saída em vídeo e gráficos do Hexagon
+desenharBloco          = 36 ;; Serviços de saída em vídeo e gráficos do Hexagon
+imprimirCaractere      = 37 ;; Serviços de saída em vídeo e gráficos do Hexagon
+definirCor             = 38 ;; Serviços de saída em vídeo e gráficos do Hexagon
+obterCor               = 39 ;; Serviços de saída em vídeo e gráficos do Hexagon
+obterInfoTela          = 40 ;; Serviços de saída em vídeo e gráficos do Hexagon
+atualizarTela          = 41 ;; Serviços de saída em vídeo e gráficos do Hexagon
+definirResolucao       = 42 ;; Serviços de saída em vídeo e gráficos do Hexagon
+obterResolucao         = 43 ;; Serviços de saída em vídeo e gráficos do Hexagon
+obterCursor            = 44 ;; Serviços de saída em vídeo e gráficos do Hexagon
+aguardarTeclado        = 45 ;; Serviços de manipulação de teclado PS/2 do Hexagon
+obterString            = 46 ;; Serviços de manipulação de teclado PS/2 do Hexagon
+obterEstadoTeclas      = 47 ;; Serviços de manipulação de teclado PS/2 do Hexagon
+alterarFonte           = 48 ;; Serviços de manipulação de teclado PS/2 do Hexagon
+alterarLeiaute         = 49 ;; Serviços de manipulação de teclado PS/2 do Hexagon
+aguardarMouse          = 50 ;; Serviços de manipulação de mouse PS/2 do Hexagon
+obterMouse             = 51 ;; Serviços de manipulação de mouse PS/2 do Hexagon
+definirMouse           = 52 ;; Serviços de manipulação de mouse PS/2 do Hexagon
+compararPalavrasString = 53 ;; Serviços de manipulação e conversão de dados do Hexagon
+removerCaractereString = 54 ;; Serviços de manipulação e conversão de dados do Hexagon
+inserirCaractere       = 55 ;; Serviços de manipulação e conversão de dados do Hexagon
+tamanhoString          = 56 ;; Serviços de manipulação e conversão de dados do Hexagon
+compararString         = 57 ;; Serviços de manipulação e conversão de dados do Hexagon
+stringParaMaiusculo    = 58 ;; Serviços de manipulação e conversão de dados do Hexagon
+stringParaMinusculo    = 59 ;; Serviços de manipulação e conversão de dados do Hexagon
+cortarString           = 60 ;; Serviços de manipulação e conversão de dados do Hexagon
+encontrarCaractere     = 61 ;; Serviços de manipulação e conversão de dados do Hexagon
+stringParaInt          = 62 ;; Serviços de manipulação e conversão de dados do Hexagon
+paraString             = 63 ;; Serviços de manipulação e conversão de dados do Hexagon
+emitirSom              = 64 ;; Serviços de saída por som do Hexagon
+desligarSom            = 65 ;; Serviços de saída por som do Hexagon
+enviarMensagemHexagon  = 66 ;; Serviços de mensagens do Hexagon
+retornarData           = 67 ;; Serviço de relógio em tempo real do Hexagon
+retornarHora           = 68 ;; Serviço de relógio em tempo real do Hexagon
 
 ;;************************************************************************************
 ;;
-;; Header of Hexagonix® Macros, Functions and System Calls
+;; Header of Hexagonix Macros, Functions and System Calls
 ;;
-;; Compatibility: Hexagonix® H1 R1.2 (05/06/2022) or higher
-;;                Hexagon® 1 0 or newer (kernel version required)
-;;                Version: 6.0 rev 0 01/17/2023
+;; Compatibility: Hexagonix H1 R1.2 (05/06/2022) or higher
+;;                Hexagon 1 0 or newer (kernel version required)
+;;                Version: 6.0 rev 1 08/30/2023
 ;;
 ;; Total calls: 68 (04/26/2020) - This number is not final and may decrease (or increase)
 ;;
@@ -169,72 +169,72 @@ retornarHora           = 68 ;; Serviço de relógio em tempo real do Hexagon®
 ;;
 ;;************************************************************************************
 
-allocateMemory         = 1  ;; Hexagon® memory and process management services
-freeMemory             = 2  ;; Hexagon® memory and process management services
-startProcess           = 3  ;; Hexagon® memory and process management services
-endProcess             = 4  ;; Hexagon® memory and process management services
-getPID                 = 5  ;; Hexagon® memory and process management services
-memoryUse              = 6  ;; Hexagon® memory and process management services
-getProcesses           = 7  ;; Hexagon® memory and process management services
-getErrorCode           = 8  ;; Hexagon® memory and process management services
-HXopen                 = 9  ;; Hexagon® File and Device Management Services
-HXwrite                = 10 ;; Hexagon® File and Device Management Services
-HXclose                = 11 ;; Hexagon® File and Device Management Services
-saveFile               = 13 ;; Hexagon® File System and Volume Management Services
-deleteFile             = 14 ;; Hexagon® File System and Volume Management Services
-listFiles              = 15 ;; Hexagon® File System and Volume Management Services
-fileExists             = 16 ;; Hexagon® File System and Volume Management Services
-getDisk                = 17 ;; Hexagon® File System and Volume Management Services
-HXlock                 = 18 ;; Hexagon® User Management Services
-HXunlock               = 19 ;; Hexagon® User Management Services
-defineUser             = 20 ;; Hexagon® User Management Services
-getUser                = 21 ;; Hexagon® User Management Services
-returnVersion          = 22 ;; Services offered by Hexagon®
-getRandom              = 23 ;; Services offered by Hexagon®
-feedRandom             = 24 ;; Services offered by Hexagon®
-causeDelay             = 25 ;; Services offered by Hexagon®
-installISR             = 26 ;; Services offered by Hexagon®
-restartPC              = 27 ;; Hexagon® Power Management Services
-shutdownPC             = 28 ;; Hexagon® Power Management Services
-HXprint                = 29 ;; Hexagon® Graphics and Video Output Services
-clearScreen            = 30 ;; Hexagon® Graphics and Video Output Services
-clearLine              = 31 ;; Hexagon® Graphics and Video Output Services
-scrollScreen           = 33 ;; Hexagon® Graphics and Video Output Services
-setCursor              = 34 ;; Hexagon® Graphics and Video Output Services
-drawCharacter          = 35 ;; Hexagon® Graphics and Video Output Services
-drawBlock              = 36 ;; Hexagon® Graphics and Video Output Services
-printCharacter         = 37 ;; Hexagon® Graphics and Video Output Services
-setColor               = 38 ;; Hexagon® Graphics and Video Output Services
-getColor               = 39 ;; Hexagon® Graphics and Video Output Services
-getScreenInfo          = 40 ;; Hexagon® Graphics and Video Output Services
-updateScreen           = 41 ;; Hexagon® Graphics and Video Output Services
-defineResolution       = 42 ;; Hexagon® Graphics and Video Output Services
-getResolution          = 43 ;; Hexagon® Graphics and Video Output Services
-getCursor              = 44 ;; Hexagon® Graphics and Video Output Services
-awaitKeyboard          = 45 ;; Hexagon® PS/2 Keyboard Handling Services
-getString              = 46 ;; Hexagon® PS/2 Keyboard Handling Services
-getKeyState            = 47 ;; Hexagon® PS/2 Keyboard Handling Services
-changeFont             = 48 ;; Hexagon® PS/2 Keyboard Handling Services
-changeLayout           = 49 ;; Hexagon® PS/2 Keyboard Handling Services
-waitMouse              = 50 ;; Hexagon® PS/2 Mouse Handling Services
-getMouse               = 51 ;; Hexagon® PS/2 Mouse Handling Services
-setMouse               = 52 ;; Hexagon® PS/2 Mouse Handling Services
-compareWordsString     = 53 ;; Hexagon® data manipulation and conversion services
-removeCharacterString  = 54 ;; Hexagon® data manipulation and conversion services
-insertCharacter        = 55 ;; Hexagon® data manipulation and conversion services
-stringSize             = 56 ;; Hexagon® data manipulation and conversion services
-compareString          = 57 ;; Hexagon® data manipulation and conversion services
-stringToUppercase      = 58 ;; Hexagon® data manipulation and conversion services
-stringToLowercase      = 59 ;; Hexagon® data manipulation and conversion services
-cutString              = 60 ;; Hexagon® data manipulation and conversion services
-findCharacter          = 61 ;; Hexagon® data manipulation and conversion services
-stringToInt            = 62 ;; Hexagon® data manipulation and conversion services
-intToString            = 63 ;; Hexagon® data manipulation and conversion services
-emitSom                = 64 ;; Hexagon® Sound Output Services
-offSound               = 65 ;; Hexagon® Sound Output Services
-sendMessageHexagon     = 66 ;; Hexagon® Messaging Services
-returnDate             = 67 ;; Hexagon® Real Time Clock Service
-returnTime             = 68 ;; Hexagon® Real Time Clock Service
+allocateMemory         = 1  ;; Hexagon memory and process management services
+freeMemory             = 2  ;; Hexagon memory and process management services
+startProcess           = 3  ;; Hexagon memory and process management services
+endProcess             = 4  ;; Hexagon memory and process management services
+getPID                 = 5  ;; Hexagon memory and process management services
+memoryUse              = 6  ;; Hexagon memory and process management services
+getProcesses           = 7  ;; Hexagon memory and process management services
+getErrorCode           = 8  ;; Hexagon memory and process management services
+HXopen                 = 9  ;; Hexagon File and Device Management Services
+HXwrite                = 10 ;; Hexagon File and Device Management Services
+HXclose                = 11 ;; Hexagon File and Device Management Services
+saveFile               = 13 ;; Hexagon File System and Volume Management Services
+deleteFile             = 14 ;; Hexagon File System and Volume Management Services
+listFiles              = 15 ;; Hexagon File System and Volume Management Services
+fileExists             = 16 ;; Hexagon File System and Volume Management Services
+getDisk                = 17 ;; Hexagon File System and Volume Management Services
+HXlock                 = 18 ;; Hexagon User Management Services
+HXunlock               = 19 ;; Hexagon User Management Services
+defineUser             = 20 ;; Hexagon User Management Services
+getUser                = 21 ;; Hexagon User Management Services
+returnVersion          = 22 ;; Services offered by Hexagon
+getRandom              = 23 ;; Services offered by Hexagon
+feedRandom             = 24 ;; Services offered by Hexagon
+causeDelay             = 25 ;; Services offered by Hexagon
+installISR             = 26 ;; Services offered by Hexagon
+restartPC              = 27 ;; Hexagon Power Management Services
+shutdownPC             = 28 ;; Hexagon Power Management Services
+HXprint                = 29 ;; Hexagon Graphics and Video Output Services
+clearScreen            = 30 ;; Hexagon Graphics and Video Output Services
+clearLine              = 31 ;; Hexagon Graphics and Video Output Services
+scrollScreen           = 33 ;; Hexagon Graphics and Video Output Services
+setCursor              = 34 ;; Hexagon Graphics and Video Output Services
+drawCharacter          = 35 ;; Hexagon Graphics and Video Output Services
+drawBlock              = 36 ;; Hexagon Graphics and Video Output Services
+printCharacter         = 37 ;; Hexagon Graphics and Video Output Services
+setColor               = 38 ;; Hexagon Graphics and Video Output Services
+getColor               = 39 ;; Hexagon Graphics and Video Output Services
+getScreenInfo          = 40 ;; Hexagon Graphics and Video Output Services
+updateScreen           = 41 ;; Hexagon Graphics and Video Output Services
+defineResolution       = 42 ;; Hexagon Graphics and Video Output Services
+getResolution          = 43 ;; Hexagon Graphics and Video Output Services
+getCursor              = 44 ;; Hexagon Graphics and Video Output Services
+awaitKeyboard          = 45 ;; Hexagon PS/2 Keyboard Handling Services
+getString              = 46 ;; Hexagon PS/2 Keyboard Handling Services
+getKeyState            = 47 ;; Hexagon PS/2 Keyboard Handling Services
+changeFont             = 48 ;; Hexagon PS/2 Keyboard Handling Services
+changeLayout           = 49 ;; Hexagon PS/2 Keyboard Handling Services
+waitMouse              = 50 ;; Hexagon PS/2 Mouse Handling Services
+getMouse               = 51 ;; Hexagon PS/2 Mouse Handling Services
+setMouse               = 52 ;; Hexagon PS/2 Mouse Handling Services
+compareWordsString     = 53 ;; Hexagon data manipulation and conversion services
+removeCharacterString  = 54 ;; Hexagon data manipulation and conversion services
+insertCharacter        = 55 ;; Hexagon data manipulation and conversion services
+stringSize             = 56 ;; Hexagon data manipulation and conversion services
+compareString          = 57 ;; Hexagon data manipulation and conversion services
+stringToUppercase      = 58 ;; Hexagon data manipulation and conversion services
+stringToLowercase      = 59 ;; Hexagon data manipulation and conversion services
+cutString              = 60 ;; Hexagon data manipulation and conversion services
+findCharacter          = 61 ;; Hexagon data manipulation and conversion services
+stringToInt            = 62 ;; Hexagon data manipulation and conversion services
+intToString            = 63 ;; Hexagon data manipulation and conversion services
+emitSom                = 64 ;; Hexagon Sound Output Services
+offSound               = 65 ;; Hexagon Sound Output Services
+sendMessageHexagon     = 66 ;; Hexagon Messaging Services
+returnDate             = 67 ;; Hexagon Real Time Clock Service
+returnTime             = 68 ;; Hexagon Real Time Clock Service
 
 ;;************************************************************************************
 ;;
@@ -334,7 +334,7 @@ hx.time               = 68
 ;;
 ;;************************************************************************************
 
-macro sys chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon®
+macro hx.syscall chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon
 {
 
     push chamadaHexagon 
@@ -342,98 +342,5 @@ macro sys chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexago
     int 69h     
     
 }
-
-macro hx.syscall chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon®
-{
-
-    push chamadaHexagon 
-    
-    int 69h     
-    
-}
-
-macro novaLinha
-{
-    
-    push ebx
-    
-    xor ebx, ebx
-    
-    mov al, 10              ;; 10 é o caractere de nova linha
-    
-    pop ebx
-    
-    hx.syscall imprimirCaractere
-    
-}
-
-macro imprimirInteiro
-{
-
-    mov ebx, 01h
-    
-    hx.syscall imprimir
-
-}
-
-macro imprimirHexadecimal
-{
-
-    mov ebx, 02h
-    
-    hx.syscall imprimir
-    
-}
-
-macro imprimirBinario
-{
-
-    mov ebx, 03h
-    
-    hx.syscall imprimir
-
-}
-
-macro imprimirString
-{
-
-    mov ebx, 04h
-    
-    hx.syscall imprimir
-
-}
-
-macro imprimir conteudo ;; Macro utilizado para imprimir determinado conteúdo no console
-{
-
-    mov esi, conteudo
-    
-    imprimirString
-    
-}   
-
-;; O macro fputs não adiciona uma nova linha após enviar o conteúdo para o console
-
-macro fputs string     ;; Macro utilizado para imprimir determinado conteúdo no console
-{
-
-    mov esi, string
-    
-    imprimirString
-    
-}   
-
-;; O macro puts adiciona uma nova linha após enviar o conteúdo para o console
-
-macro puts string      ;; Macro utilizado para imprimir determinado conteúdo no console
-{
-
-    mov esi, string
-    
-    imprimirString
-    
-    novaLinha
-
-}   
 
 ;; Fim do arquivo

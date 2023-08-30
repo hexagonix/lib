@@ -138,6 +138,113 @@ macro restaurarConsoleLimpar
 
 }
 
+macro novaLinha
+{
+    
+    push ebx
+    
+    xor ebx, ebx
+    
+    mov al, 10 ;; 10 é o caractere de nova linha
+    
+    pop ebx
+    
+    hx.syscall imprimirCaractere
+    
+}
+
+macro imprimirInteiro
+{
+
+    mov ebx, 01h
+    
+    hx.syscall imprimir
+
+}
+
+macro imprimirHexadecimal
+{
+
+    mov ebx, 02h
+    
+    hx.syscall imprimir
+    
+}
+
+macro imprimirBinario
+{
+
+    mov ebx, 03h
+    
+    hx.syscall imprimir
+
+}
+
+macro imprimirString
+{
+
+    mov ebx, 04h
+    
+    hx.syscall imprimir
+
+}
+
+macro imprimir conteudo ;; Macro utilizado para imprimir determinado conteúdo no console
+{
+
+    mov esi, conteudo
+    
+    imprimirString
+    
+}   
+
+;; O macro fputs não adiciona uma nova linha após enviar o conteúdo para o console
+
+macro fputs string ;; Macro utilizado para imprimir determinado conteúdo no console
+{
+
+    mov esi, string
+    
+    imprimirString
+    
+}   
+
+;; O macro puts adiciona uma nova linha após enviar o conteúdo para o console
+
+macro puts string ;; Macro utilizado para imprimir determinado conteúdo no console
+{
+
+    mov esi, string
+    
+    imprimirString
+    
+    novaLinha
+
+}   
+
+macro gotoxy x, y
+{
+ 
+    mov dl, x 
+    mov dh, y
+
+    hx.syscall definirCursor
+
+}
+
+macro xyputs x, y, string 
+{
+
+    gotoxy x, y
+
+    pop esi 
+
+    mov esi, string
+
+    imprimirString
+
+}
+
 ;;************************************************************************************
 
 ;; Lista de cores que podem ser utilizadas no design de interfaces do sistema
