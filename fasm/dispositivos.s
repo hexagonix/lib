@@ -70,9 +70,9 @@
 ;;
 ;; Lista de dispositivos que podem ser acessados pelo usuário
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix® H1 ou superior
-;; Versão:            1.0 rev 3 18/01/2023
-;; Autor:             Felipe Miguel Nery Lunkes
+;; Compatibilidade: Hexagonix H1 ou superior
+;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
+;; Versão:          1.0 rev 3 18/01/2023
 ;;
 ;;************************************************************************************
 

@@ -68,9 +68,9 @@
 
 ;;************************************************************************************
 ;;
-;; Cabeçalho de macros, funções e chamadas de Sistema do Hexagonix
+;; Cabeçalho de macros, funções e chamadas de sistema do Hexagonix
 ;;
-;; Compatibilidade: Sistema Operacional Hexagonix H1 R1.2 (05/06/2022) ou superior
+;; Compatibilidade: Hexagonix H1 R1.2 (05/06/2022) ou superior
 ;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
 ;; Versão:          6.0 rev 1 30/08/2023
 ;;

@@ -68,6 +68,16 @@
 
 ;;************************************************************************************
 ;;
+;; Macros e funções para manipulação de dados de versão do Hexagonix
+;;
+;; Compatibilidade: Hexagonix H1 ou superior
+;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
+;; Versão:          1.0 rev 0 31/08/2023
+;;
+;;************************************************************************************
+
+;;************************************************************************************
+;;
 ;; Este arquivo contém definições úteis para o uso em todo o sistema
 ;;
 ;; Essas definições incluem a versão do sistema, assim como dados úteis a todos

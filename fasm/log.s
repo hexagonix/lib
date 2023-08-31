@@ -68,11 +68,11 @@
 
 ;;************************************************************************************
 ;;
-;; Lista de prioridades para mensagens do sistema
+;; Lista de prioridades e macros para envio de mensagens do sistema
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix® H1 ou superior
-;; Versão:            1.0 rev 1 18/01/2023
-;; Autor:             Felipe Miguel Nery Lunkes
+;; Compatibilidade: Hexagonix H1 ou superior
+;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
+;; Versão:          1.0 rev 1 18/01/2023
 ;;
 ;;************************************************************************************
 

@@ -66,6 +66,16 @@
 ;;
 ;; $HexagonixOS$
 
+;;************************************************************************************
+;;
+;; Macros para manipulação do console
+;;
+;; Compatibilidade: Hexagonix H1 R1.2 (05/06/2022) ou superior
+;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
+;; Versão:          0.9 rev 0 31/08/2023
+;;
+;;************************************************************************************
+
 ;; Salvar as informações sobre o console em uso
 
 macro salvarConsole

@@ -66,6 +66,16 @@
 ;;
 ;; $HexagonixOS$
 
+;;************************************************************************************
+;;
+;; Macros e dados de uso comum por componentes do Hexagonix
+;;
+;; Compatibilidade: Hexagonix H1 ou superior
+;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
+;; Versão:          0.5 rev 0 31/08/2023
+;;
+;;************************************************************************************
+
 Hexagonix.Logo:
 
 .logo: 

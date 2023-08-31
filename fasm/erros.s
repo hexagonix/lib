@@ -68,11 +68,11 @@
 
 ;;************************************************************************************
 ;;
-;; Lista de dispositivos que podem ser acessados pelo usuário
+;; Lista de erros lançados pelo Hexagon ou outros componentes do Hexagonix
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix® H1 ou superior
-;; Versão:            1.1 rev 0 24/08/2023
-;; Autor:             Felipe Miguel Nery Lunkes
+;; Compatibilidade: Hexagonix H1 ou superior
+;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
+;; Versão:          1.1 rev 0 24/08/2023
 ;;
 ;;************************************************************************************
 

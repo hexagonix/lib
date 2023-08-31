@@ -68,10 +68,11 @@
 
 ;;************************************************************************************
 ;;
-;;              Biblioteca de desenvolvimento Cosmos para Hexagonix®
+;; Macros para desenvolvimento de utilitários do Hexagonix
 ;;
-;; Versão: 2.0 rev 1 (18/01/2023)
-;; Compatibilidade: Hexagonix® H1 ou superior
+;; Compatibilidade: Hexagonix H1 ou superior
+;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
+;; Versão:          2.0 rev 1 18/01/2023
 ;;
 ;;************************************************************************************
  

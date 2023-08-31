@@ -68,10 +68,11 @@
 
 ;;************************************************************************************
 ;;
-;; Compatibilidade:   Sistema Operacional Hexagonix® H1 ou superior
-;;                    Hexagon® 1.0 ou superior
-;; Versão:            1.0 rev 2 18/01/2023
-;; Autor:             Felipe Miguel Nery Lunkes
+;; Macros para criação e manipulação de cabeçalhos e imagens HAPP
+;;
+;; Compatibilidade: Hexagonix H1 ou superior
+;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
+;; Versão:          1.1 rev 2 18/01/2023
 ;;
 ;;************************************************************************************
 
