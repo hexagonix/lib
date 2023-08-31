@@ -138,6 +138,8 @@ macro restaurarConsoleLimpar
 
 }
 
+;; Macro para enviar um caractere de nova linha para o console
+
 macro novaLinha
 {
     
@@ -153,6 +155,8 @@ macro novaLinha
     
 }
 
+;; Macro para exibir um número inteiro no console
+
 macro imprimirInteiro
 {
 
@@ -161,6 +165,8 @@ macro imprimirInteiro
     hx.syscall imprimir
 
 }
+
+;; Macro para exibir um número hexadecimal no console
 
 macro imprimirHexadecimal
 {
@@ -171,6 +177,8 @@ macro imprimirHexadecimal
     
 }
 
+;; Macro para exibir um número binário no console
+
 macro imprimirBinario
 {
 
@@ -179,6 +187,8 @@ macro imprimirBinario
     hx.syscall imprimir
 
 }
+
+;; Macro para exibir uma string no console
 
 macro imprimirString
 {
@@ -222,6 +232,8 @@ macro puts string ;; Macro utilizado para imprimir determinado conteúdo no cons
 
 }   
 
+;; O macro gotoxy é utilizado para alterar para uma linha ou coluna específica no console
+
 macro gotoxy x, y
 {
  
@@ -232,12 +244,13 @@ macro gotoxy x, y
 
 }
 
-macro xyputs x, y, string 
+;; O macro xyfputs altera para uma linha e coluna específicas e envia o conteúdo passado
+;; como parâmetro para o console
+
+macro xyfputs x, y, string ;; Macro utilizado para imprimir determinado conteúdo no console
 {
 
     gotoxy x, y
-
-    pop esi 
 
     mov esi, string
 
