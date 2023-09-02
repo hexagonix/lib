@@ -72,7 +72,7 @@
 ;;
 ;; Compatibilidade: Hexagonix H1 ou superior
 ;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          2.0 rev 1 18/01/2023
+;; Versão:          2.1 rev 0 02/09/2023
 ;;
 ;;************************************************************************************
  
@@ -150,16 +150,6 @@ macro finalizarNota
 
     hx.syscall desligarSom
     
-}
-
-macro cursorPara posicaoX, posicaoY
-{
-
-    mov dl, posicaoX
-    mov dh, posicaoY
-
-    hx.syscall definirCursor
-
 }
 
 ;;************************************************************************************
