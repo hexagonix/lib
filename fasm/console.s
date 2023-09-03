@@ -72,7 +72,7 @@
 ;;
 ;; Compatibilidade: Hexagonix H1 R1.2 (05/06/2022) ou superior
 ;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          0.9 rev 0 31/08/2023
+;; Versão:          0.9 rev 1 03/09/2023
 ;;
 ;;************************************************************************************
 
