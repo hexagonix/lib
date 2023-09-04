@@ -11,9 +11,9 @@
 ;;                                               aa,    ,88                                         
 ;;                                                "P8bbdP"       
 ;;
-;;                    Sistema Operacional Hexagonix® - Hexagonix® Operating System
+;;                     Sistema Operacional Hexagonix - Hexagonix Operating System
 ;;
-;;                          Copyright © 2015-2023 Felipe Miguel Nery Lunkes
+;;                         Copyright (c) 2015-2023 Felipe Miguel Nery Lunkes
 ;;                        Todos os direitos reservados - All rights reserved.
 ;;
 ;;*************************************************************************************************
@@ -70,20 +70,20 @@
 ;; 
 ;; $PORTUGUÊS$
 ;;
-;; Cabeçalho de macros, funções e chamadas de Sistema do Hexagonix®
+;; Cabeçalho de macros, funções e chamadas de Sistema do Hexagonix
 ;;
-;; Compatibilidade: Sistema Operacional Hexagonix® H1 R1.2 (05/06/2022) ou superior
-;;                  Hexagon® 1.0 ou mais recente (versão do kernel necessária)
+;; Compatibilidade: Sistema Operacional Hexagonix H1 R1.2 (05/06/2022) ou superior
+;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
 ;; Versão:          6.0 rev 0 17/01/2023
 ;;
 ;; Total de chamadas: 68 (26/04/2020) - Este número não é final e pode diminuir (ou aumentar)
 ;;
 ;; $ENGLISH$
 ;;
-;; Header of Hexagonix® Macros, Functions and System Calls
+;; Header of Hexagonix Macros, Functions and System Calls
 ;;
-;; Compatibility: Hexagonix® H1 R1.2 (05/06/2022) or higher
-;;                Hexagon® 1 0 or newer (kernel version required)
+;; Compatibility: Hexagonix H1 R1.2 (05/06/2022) or higher
+;;                Hexagon 1 0 or newer (kernel version required)
 ;;                Version: 6.0 rev 0 01/17/2023
 ;;
 ;; Total calls: 68 (04/26/2020) - This number is not final and may decrease (or increase)
@@ -99,8 +99,8 @@
 
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviços de gerenciamento de memória e processos do Hexagon®
-;; $ENGLISH$   Hexagon® memory and process management services
+;; $PORTUGUÊS$ Serviços de gerenciamento de memória e processos do Hexagon
+;; $ENGLISH$   Hexagon memory and process management services
 ;;
 ;;************************************************************************************
 
@@ -115,8 +115,8 @@ obterCodigoErro        equ 8
 
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviços de gerenciamento de arquivos e dispositivos do Hexagon®
-;; $ENGLISH$   Hexagon® file and device management services
+;; $PORTUGUÊS$ Serviços de gerenciamento de arquivos e dispositivos do Hexagon
+;; $ENGLISH$   Hexagon file and device management services
 ;;
 ;;************************************************************************************
 
@@ -126,8 +126,8 @@ fechar                 equ 11
 
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon®
-;; $ENGLISH$   Hexagon® File System and volume management services
+;; $PORTUGUÊS$ Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
+;; $ENGLISH$   Hexagon File System and volume management services
 ;;
 ;;************************************************************************************
 
@@ -139,8 +139,8 @@ obterDisco             equ 17
 
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviços de gerenciamento de usuários do Hexagon®
-;; $ENGLISH$   Hexagon® user management services
+;; $PORTUGUÊS$ Serviços de gerenciamento de usuários do Hexagon
+;; $ENGLISH$   Hexagon user management services
 ;;
 ;;************************************************************************************
 
@@ -151,8 +151,8 @@ obterUsuario           equ 21
 
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviços oferecidos pelo Hexagon®
-;; $ENGLISH$   Services offered by Hexagon®
+;; $PORTUGUÊS$ Serviços oferecidos pelo Hexagon
+;; $ENGLISH$   Services offered by Hexagon
 ;;
 ;;************************************************************************************
 
@@ -164,8 +164,8 @@ instalarISR            equ 26
 
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviços de gerenciamento de energia do Hexagon®
-;; $ENGLISH$   Hexagon® power management services 
+;; $PORTUGUÊS$ Serviços de gerenciamento de energia do Hexagon
+;; $ENGLISH$   Hexagon power management services 
 ;;
 ;;************************************************************************************
 
@@ -174,8 +174,8 @@ desligarPC             equ 28
 
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviços de saída em vídeo e gráficos do Hexagon®
-;; $ENGLISH$   Hexagon® graphics and video output services
+;; $PORTUGUÊS$ Serviços de saída em vídeo e gráficos do Hexagon
+;; $ENGLISH$   Hexagon graphics and video output services
 ;;
 ;;************************************************************************************
 
@@ -198,8 +198,8 @@ obterCursor            equ 44
                                             
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviços de manipulação de teclado PS/2 do Hexagon®
-;; $ENGLISH$   Hexagon® PS/2 keyboard handling services
+;; $PORTUGUÊS$ Serviços de manipulação de teclado PS/2 do Hexagon
+;; $ENGLISH$   Hexagon PS/2 keyboard handling services
 ;;
 ;;************************************************************************************
 
@@ -211,8 +211,8 @@ alterarLeiaute         equ 49
 
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviços de manipulação de mouse PS/2 do Hexagon®
-;; $ENGLISH$   Hexagon® PS/2 mouse handling services
+;; $PORTUGUÊS$ Serviços de manipulação de mouse PS/2 do Hexagon
+;; $ENGLISH$   Hexagon PS/2 mouse handling services
 ;;
 ;;************************************************************************************
 
@@ -222,8 +222,8 @@ definirMouse           equ 52
 
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviços de manipulação e conversão de dados do Hexagon®
-;; $ENGLISH$   Hexagon® data manipulation and conversion services
+;; $PORTUGUÊS$ Serviços de manipulação e conversão de dados do Hexagon
+;; $ENGLISH$   Hexagon data manipulation and conversion services
 ;;
 ;;************************************************************************************
 
@@ -241,8 +241,8 @@ paraString             equ 63
 
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviços de saída por som do Hexagon68®
-;; $ENGLISH$   Hexagon® sound output services
+;; $PORTUGUÊS$ Serviços de saída por som do Hexagon
+;; $ENGLISH$   Hexagon sound output services
 ;;
 ;;************************************************************************************  
 
@@ -251,8 +251,8 @@ desligarSom            equ 65
 
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviços de mensagens do Hexagon®
-;; $ENGLISH$   Hexagon® messaging services
+;; $PORTUGUÊS$ Serviços de mensagens do Hexagon
+;; $ENGLISH$   Hexagon messaging services
 ;;
 ;;************************************************************************************  
 
@@ -262,8 +262,8 @@ enviarMensagemHexagon  equ 66
 
 ;;************************************************************************************
 ;;
-;; $PORTUGUÊS$ Serviço de relógio em tempo real do Hexagon®
-;; $ENGLISH$   Hexagon® real time clock service
+;; $PORTUGUÊS$ Serviço de relógio em tempo real do Hexagon
+;; $ENGLISH$   Hexagon real time clock service
 ;;
 ;;************************************************************************************  
 
@@ -363,12 +363,12 @@ hx.time               equ 68
 
 ;;************************************************************************************
 ;;
-;;                   Chamar Interrupção de Software Hexagonix®
+;;                   Chamar Interrupção de Software Hexagonix
 ;;                                    Macros
 ;;
 ;;************************************************************************************
 
-%macro hx.syscall 1 ;; Macro utilizado para solicitar um serviço do Hexagon®
+%macro hx.syscall 1 ;; Macro utilizado para solicitar um serviço do Hexagon
 
     push [%1]   
     
