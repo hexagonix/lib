@@ -11,19 +11,19 @@
 ;;                                               aa,    ,88                                         
 ;;                                                "P8bbdP"       
 ;;
-;;                  Sistema Operacional Hexagonix(R) - Hexagonix(R) Operating System
+;;                     Sistema Operacional Hexagonix - Hexagonix Operating System
 ;;
-;;                          Copyright (c) 2015-2023 Felipe Miguel Nery Lunkes
+;;                         Copyright (c) 2015-2023 Felipe Miguel Nery Lunkes
 ;;                        Todos os direitos reservados - All rights reserved.
 ;;
 ;;*************************************************************************************************
 ;;
-;; Portugues:
+;; Português:
 ;; 
-;; O Hexagonix e seus componentes sao licenciados sob licenca BSD-3-Clause. Leia abaixo
-;; a licenca que governa este arquivo e verifique a licenca de cada repositorio para
-;; obter mais informacoes sobre seus direitos e obrigacoes ao utilizar e reutilizar
-;; o codigo deste ou de outros arquivos.
+;; O Hexagonix e seus componentes são licenciados sob licença BSD-3-Clause. Leia abaixo
+;; a licença que governa este arquivo e verifique a licença de cada repositório para
+;; obter mais informações sobre seus direitos e obrigações ao utilizar e reutilizar
+;; o código deste ou de outros arquivos.
 ;;
 ;; English:
 ;;
@@ -69,7 +69,7 @@
 ;;************************************************************************************
 ;;
 ;; Este e um template para a construcao de um app de modo texto para 
-;; o Hexagonix(R)!
+;; o Hexagonix!
 ;;
 ;; Escrito por Felipe Miguel Nery Lunkes em 04/12/2020
 ;;
