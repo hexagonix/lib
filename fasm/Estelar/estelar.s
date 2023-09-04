@@ -11,9 +11,9 @@
 ;;                                               aa,    ,88                                         
 ;;                                                "P8bbdP"       
 ;;
-;;                    Sistema Operacional Hexagonix® - Hexagonix® Operating System
+;;                     Sistema Operacional Hexagonix - Hexagonix Operating System
 ;;
-;;                          Copyright © 2015-2023 Felipe Miguel Nery Lunkes
+;;                         Copyright (c) 2015-2023 Felipe Miguel Nery Lunkes
 ;;                        Todos os direitos reservados - All rights reserved.
 ;;
 ;;*************************************************************************************************
@@ -73,10 +73,10 @@
 ;;
 ;;************************************************************************************
 ;;
-;;              Biblioteca de desenvolvimento Estelar para Hexagonix®
+;;              Biblioteca de desenvolvimento Estelar para Hexagonix
 ;;
 ;; Versão:  1.7-CURRENT (01/03/2023)
-;; Compatibilidade: Hexagonix® H1 (22/11/2020)
+;; Compatibilidade: Hexagonix H1 (22/11/2020)
 ;;
 ;;************************************************************************************
 
@@ -119,7 +119,7 @@ struc Andromeda.Estelar.Interface
 
 ;;************************************************************************************
 ;;
-;;            Definições de tamanho de fonte utilizada pelo Hexagonix®
+;;            Definições de tamanho de fonte utilizada pelo Hexagonix
 ;;
 ;;************************************************************************************
 

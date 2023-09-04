@@ -11,9 +11,9 @@
 ;;                                               aa,    ,88                                         
 ;;                                                "P8bbdP"       
 ;;
-;;                    Sistema Operacional Hexagonix® - Hexagonix® Operating System
+;;                     Sistema Operacional Hexagonix - Hexagonix Operating System
 ;;
-;;                          Copyright © 2015-2023 Felipe Miguel Nery Lunkes
+;;                         Copyright (c) 2015-2023 Felipe Miguel Nery Lunkes
 ;;                        Todos os direitos reservados - All rights reserved.
 ;;
 ;;*************************************************************************************************
@@ -73,10 +73,10 @@
 ;;
 ;;************************************************************************************
 ;;
-;;              Biblioteca de desenvolvimento Big-Bang para Hexagonix®
+;;              Biblioteca de desenvolvimento Big-Bang para Hexagonix
 ;;
 ;; Versão:  1 rev 0 (22/11/2020)
-;; Compatibilidade: Hexagonix® 1.14+ (22/11/2020)
+;; Compatibilidade: Hexagonix 1.14+ (22/11/2020)
 ;;
 ;;************************************************************************************
 
