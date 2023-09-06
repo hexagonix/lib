@@ -80,12 +80,12 @@ discos:
 
 ;; Dispositivos de armazenamento
 
-.hd0:   db "hd0", 0   ;; Primeiro disco rígido
-.hd1:   db "hd1", 0   ;; Segundo disco rígido
-.hd2:   db "hd2", 0   ;; Terceiro disco rígido
-.hd3:   db "hd3", 0   ;; Quarto disco rígido
-.dsq0:  db "dsq0", 0  ;; Disquete 1
-.dsq1:  db "dsq1", 0  ;; Disquete 2
+.hd0:   db "hd0", 0    ;; Primeiro disco rígido
+.hd1:   db "hd1", 0    ;; Segundo disco rígido
+.hd2:   db "hd2", 0    ;; Terceiro disco rígido
+.hd3:   db "hd3", 0    ;; Quarto disco rígido
+.dsq0:  db "dsq0", 0   ;; Disquete 1
+.dsq1:  db "dsq1", 0   ;; Disquete 2
 .cdrom: db "cdrom0", 0 ;; Primeiro drive de CD
 
 portasSeriais:

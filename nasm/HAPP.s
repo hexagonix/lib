@@ -85,17 +85,17 @@ versaoMinima:    db [%2]
 subVersaoMinima: db [%3]
 pontoEntrada:    dd [%4]
 tipoImagemHAPP:  db [%5]
-reservado0:      dd 0      ;; Reservado (Dword)
-reservado1:      db 0      ;; Reservado (Byte)
-reservado2:      db 0      ;; Reservado (Byte)
-reservado3:      db 0      ;; Reservado (Byte)
-reservado4:      dd 0      ;; Reservado (Dword)
-reservado5:      dd 0      ;; Reservado (Dword)
-reservado6:      dd 0      ;; Reservado (Dword)
-reservado7:      db 0      ;; Reservado (Byte)
-reservado8:      dw 0      ;; Reservado (Word)
-reservado9:      dw 0      ;; Reservado (Word)
-reservado10:     dw 0      ;; Reservado (Word)
+reservado0:      dd 0 ;; Reservado (Dword)
+reservado1:      db 0 ;; Reservado (Byte)
+reservado2:      db 0 ;; Reservado (Byte)
+reservado3:      db 0 ;; Reservado (Byte)
+reservado4:      dd 0 ;; Reservado (Dword)
+reservado5:      dd 0 ;; Reservado (Dword)
+reservado6:      dd 0 ;; Reservado (Dword)
+reservado7:      db 0 ;; Reservado (Byte)
+reservado8:      dw 0 ;; Reservado (Word)
+reservado9:      dw 0 ;; Reservado (Word)
+reservado10:     dw 0 ;; Reservado (Word)
 
 %endmacro
 

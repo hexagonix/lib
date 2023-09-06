@@ -111,8 +111,8 @@ obterVersaoDistribuicao:
 
     jc .erro
 
-    mov si, enderecoCarregamento    ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, 0FFFFh                  ;; Inicia na posição -1, para que se possa encontrar os delimitadores
+    mov si, enderecoCarregamento ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, 0FFFFh ;; Inicia na posição -1, para que se possa encontrar os delimitadores
 
 .procurarEntreDelimitadores:
 
@@ -121,7 +121,7 @@ obterVersaoDistribuicao:
     mov word[posicaoBXVerUtils], bx
 
     cmp bx, limiteBusca
-    je .erro         ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .erro ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
 
     mov al, [ds:si+bx]
 
@@ -133,24 +133,24 @@ obterVersaoDistribuicao:
     push ds
     pop es
 
-    mov di, versaoObtida            ;; A versão será copiado para ES:DI
+    mov di, versaoObtida ;; A versão será copiado para ES:DI
 
     mov si, enderecoCarregamento
 
-    add si, bx                      ;; Mover SI para aonde BX aponta
+    add si, bx ;; Mover SI para aonde BX aponta
 
-    mov bx, 0                       ;; Iniciar em 0
+    mov bx, 0 ;; Iniciar em 0
 
 .obterVersao:
 
     inc bx
 
     cmp bx, 64
-    je .erro                        ;; Se versão maior que 64 caracteres, a mesma é inválida
+    je .erro ;; Se versão maior que 64 caracteres, a mesma é inválida
 
     mov al, [ds:si+bx]
 
-    cmp al, ']'                     ;; Se encontrar outro delimitador, a versão foi recuperada
+    cmp al, ']' ;; Se encontrar outro delimitador, a versão foi recuperada
     je .versaoObtida
 
 ;; Se não estiver pronto, armazenar o caractere obtido
@@ -199,8 +199,8 @@ obterCodigoDistribuicao:
 
     jc .erro
 
-    mov si, enderecoCarregamento      ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [posicaoBXVerUtils]  ;; Continua de onde a opção anterior parou
+    mov si, enderecoCarregamento     ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [posicaoBXVerUtils] ;; Continua de onde a opção anterior parou
 
     dec bx
 
@@ -212,7 +212,7 @@ obterCodigoDistribuicao:
 
     cmp bx, limiteBusca
 
-    je .erro        ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .erro ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
 
     mov al, [ds:si+bx]
 
@@ -224,25 +224,25 @@ obterCodigoDistribuicao:
     push ds
     pop es
 
-    mov di, codigoObtido            ;; O nome de código será copiado para ES:DI
+    mov di, codigoObtido ;; O nome de código será copiado para ES:DI
 
     mov si, enderecoCarregamento
 
-    add si, bx                      ;; Mover SI para onde BX aponta
+    add si, bx ;; Mover SI para onde BX aponta
 
-    mov bx, 0                       ;; Iniciar em 0
+    mov bx, 0 ;; Iniciar em 0
 
 .obterCodigo:
 
     inc bx
 
     cmp bx, 64
-    je .erro                        ;; Se maior que 64, o mesmo é inválida
+    je .erro ;; Se maior que 64, o mesmo é inválida
 
     mov al, [ds:si+bx]
 
-    cmp al, '"'                     ;; Se encontrar outro delimitador,o nome de código
-    je .codigoObtido                ;; foi completamente recuperado
+    cmp al, '"' ;; Se encontrar outro delimitador,o nome de código
+    je .codigoObtido ;; foi completamente recuperado
 
 ;; Se não estiver pronto, armazenar o caractere obtido
 
@@ -290,8 +290,8 @@ obterPacoteDistribuicao:
 
     jc .erro
 
-    mov si, enderecoCarregamento            ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [posicaoBXVerUtils]        ;; Continua de onde a opção anterior parou
+    mov si, enderecoCarregamento     ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [posicaoBXVerUtils] ;; Continua de onde a opção anterior parou
 
     dec bx
 
@@ -303,7 +303,7 @@ obterPacoteDistribuicao:
 
     cmp bx, limiteBusca
 
-    je .erro  ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .erro ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
 
     mov al, [ds:si+bx]
 
@@ -315,24 +315,24 @@ obterPacoteDistribuicao:
     push ds
     pop es
 
-    mov di, pacoteAtualizacoes      ;; O pacote será copiado para ES:DI
+    mov di, pacoteAtualizacoes ;; O pacote será copiado para ES:DI
 
     mov si, enderecoCarregamento
 
-    add si, bx                      ;; Mover SI para aonde BX aponta
+    add si, bx ;; Mover SI para aonde BX aponta
 
-    mov bx, 0                       ;; Iniciar em 0
+    mov bx, 0 ;; Iniciar em 0
 
 .obterPacote:
 
     inc bx
 
     cmp bx, 64
-    je .erro           ;; Se maior que 64, é inválido
+    je .erro ;; Se maior que 64, é inválido
 
     mov al, [ds:si+bx]
 
-    cmp al, '#'        ;; Se encontrar outro delimitador, foi carregado com sucesso
+    cmp al, '#' ;; Se encontrar outro delimitador, foi carregado com sucesso
     je .pacoteObtido
 
 ;; Se não estiver pronto, armazenar o caractere obtido
@@ -379,8 +379,8 @@ obterDataHora:
 
     jc .erro
 
-    mov si, enderecoCarregamento            ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [posicaoBXVerUtils]        ;; Continua de onde a opção anterior parou
+    mov si, enderecoCarregamento     ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [posicaoBXVerUtils] ;; Continua de onde a opção anterior parou
 
     dec bx
 
@@ -392,7 +392,7 @@ obterDataHora:
 
     cmp bx, limiteBusca
 
-    je .erro  ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .erro ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
 
     mov al, [ds:si+bx]
 
@@ -404,24 +404,24 @@ obterDataHora:
     push ds
     pop es
 
-    mov di, dataHora                ;; Será copiado para ES:DI
+    mov di, dataHora ;; Será copiado para ES:DI
 
     mov si, enderecoCarregamento
 
-    add si, bx                      ;; Mover SI para aonde BX aponta
+    add si, bx ;; Mover SI para aonde BX aponta
 
-    mov bx, 0                       ;; Iniciar em 0
+    mov bx, 0 ;; Iniciar em 0
 
 .recuperarDataHora:
 
     inc bx
 
     cmp bx, 64
-    je .erro           ;; Se maior que 64, é inválido
+    je .erro ;; Se maior que 64, é inválido
 
     mov al, [ds:si+bx]
 
-    cmp al, '!'                     ;; Se encontrar outro delimitador, foi carregado com sucesso
+    cmp al, '!' ;; Se encontrar outro delimitador, foi carregado com sucesso
     je .dataHoraObtida
 
 ;; Se não estiver pronto, armazenar o caractere obtido
@@ -470,8 +470,8 @@ obterBuildDistribuicao:
 
     jc .erro
 
-    mov si, enderecoCarregamento            ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [posicaoBXVerUtils]        ;; Continua de onde a opção anterior parou
+    mov si, enderecoCarregamento     ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [posicaoBXVerUtils] ;; Continua de onde a opção anterior parou
 
     dec bx
 
@@ -483,7 +483,7 @@ obterBuildDistribuicao:
 
     cmp bx, limiteBusca
 
-    je .erro  ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .erro ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
 
     mov al, [ds:si+bx]
 
@@ -495,24 +495,24 @@ obterBuildDistribuicao:
     push ds
     pop es
 
-    mov di, buildObtida             ;; Será copiado ES:DI
+    mov di, buildObtida ;; Será copiado ES:DI
 
     mov si, enderecoCarregamento
 
-    add si, bx                      ;; Mover SI para aonde BX aponta
+    add si, bx ;; Mover SI para aonde BX aponta
 
-    mov bx, 0                       ;; Iniciar em 0
+    mov bx, 0 ;; Iniciar em 0
 
 .recuperarDataHora:
 
     inc bx
 
     cmp bx, 64
-    je .erro                        ;; Se nome de arquivo maior que 64, é inválido
+    je .erro ;; Se nome de arquivo maior que 64, é inválido
 
     mov al, [ds:si+bx]
 
-    cmp al, '>'                     ;; Se encontrar outro delimitador, foi carregado com sucesso
+    cmp al, '>' ;; Se encontrar outro delimitador, foi carregado com sucesso
     je .buildObtida
 
 ;; Se não estiver pronto, armazenar o caractere obtido

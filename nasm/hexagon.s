@@ -382,7 +382,7 @@ hx.time               equ 68
 
     xor ebx, ebx
 
-    mov al, 10              ;; 10 é o caractere de nova linha
+    mov al, 10 ;; 10 é o caractere de nova linha
 
     pop ebx
 
@@ -422,7 +422,7 @@ hx.time               equ 68
 
 %endmacro
 
-%macro imprimir 1     ;; Macro utilizado para imprimir determinado conteúdo na tela para o usuário
+%macro imprimir 1 ;; Macro utilizado para imprimir determinado conteúdo na tela para o usuário
 
     mov esi, [%1]
 
