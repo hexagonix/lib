@@ -1,15 +1,15 @@
 ;;*************************************************************************************************
 ;;
-;; 88                                                                                88              
-;; 88                                                                                ""              
-;; 88                                                                                                
-;; 88,dPPPba,   ,adPPPba, 8b,     ,d8 ,adPPPPba,  ,adPPPb,d8  ,adPPPba,  8b,dPPPba,  88 8b,     ,d8  
-;; 88P'    "88 a8P     88  `P8, ,8P'  ""     `P8 a8"    `P88 a8"     "8a 88P'   `"88 88  `P8, ,8P'   
-;; 88       88 8PP"""""""    )888(    ,adPPPPP88 8b       88 8b       d8 88       88 88    )888(     
-;; 88       88 "8b,   ,aa  ,d8" "8b,  88,    ,88 "8a,   ,d88 "8a,   ,a8" 88       88 88  ,d8" "8b,   
-;; 88       88  `"Pbbd8"' 8P'     `P8 `"8bbdP"P8  `"PbbdP"P8  `"PbbdP"'  88       88 88 8P'     `P8  
-;;                                               aa,    ,88                                         
-;;                                                "P8bbdP"       
+;; 88                                                                                88
+;; 88                                                                                ""
+;; 88
+;; 88,dPPPba,   ,adPPPba, 8b,     ,d8 ,adPPPPba,  ,adPPPb,d8  ,adPPPba,  8b,dPPPba,  88 8b,     ,d8
+;; 88P'    "88 a8P     88  `P8, ,8P'  ""     `P8 a8"    `P88 a8"     "8a 88P'   `"88 88  `P8, ,8P'
+;; 88       88 8PP"""""""    )888(    ,adPPPPP88 8b       88 8b       d8 88       88 88    )888(
+;; 88       88 "8b,   ,aa  ,d8" "8b,  88,    ,88 "8a,   ,d88 "8a,   ,a8" 88       88 88  ,d8" "8b,
+;; 88       88  `"Pbbd8"' 8P'     `P8 `"8bbdP"P8  `"PbbdP"P8  `"PbbdP"'  88       88 88 8P'     `P8
+;;                                               aa,    ,88
+;;                                                "P8bbdP"
 ;;
 ;;                     Sistema Operacional Hexagonix - Hexagonix Operating System
 ;;
@@ -19,7 +19,7 @@
 ;;*************************************************************************************************
 ;;
 ;; Português:
-;; 
+;;
 ;; O Hexagonix e seus componentes são licenciados sob licença BSD-3-Clause. Leia abaixo
 ;; a licença que governa este arquivo e verifique a licença de cada repositório para
 ;; obter mais informações sobre seus direitos e obrigações ao utilizar e reutilizar
@@ -38,10 +38,10 @@
 ;;
 ;; Copyright (c) 2015-2023, Felipe Miguel Nery Lunkes
 ;; All rights reserved.
-;; 
+;;
 ;; Redistribution and use in source and binary forms, with or without
 ;; modification, are permitted provided that the following conditions are met:
-;; 
+;;
 ;; 1. Redistributions of source code must retain the above copyright notice, this
 ;;    list of conditions and the following disclaimer.
 ;;
@@ -52,7 +52,7 @@
 ;; 3. Neither the name of the copyright holder nor the names of its
 ;;    contributors may be used to endorse or promote products derived from
 ;;    this software without specific prior written permission.
-;; 
+;;
 ;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 ;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 ;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -68,7 +68,7 @@
 
 ;;************************************************************************************
 ;;
-;; Este e um template para a construcao de um app de modo grafico para 
+;; Este e um template para a construcao de um app de modo grafico para
 ;; o Hexagonix!
 ;;
 ;; Escrito por Felipe Miguel Nery Lunkes em 04/12/2020
@@ -138,13 +138,13 @@ gapp:
 
 .mensagemOla: ;; Colocar os dbs abaixo para facilitar a organização
 db 10, 10, "Este e um exemplo de aplicativo HAPP grafico do Hexagonix!", 10, 10
-db 10, 10, "Pressione qualquer tecla para finalizar este programa...", 10, 10, 0 
+db 10, 10, "Pressione qualquer tecla para finalizar este programa...", 10, 10, 0
 
 .TITULO:
 db "Seja bem-vindo!", 0
 
 .RODAPE:
-db "[", VERSAO, "] | Pressione qualquer tecla para continuar...", 0                
+db "[", VERSAO, "] | Pressione qualquer tecla para continuar...", 0
 
 .vd0:
 db "vd0", 0 ;; Console principal
@@ -154,7 +154,7 @@ db "vd0", 0 ;; Console principal
 inicioAPP:
 
 ;; Vamos definir que queremos saida direta para vd0 (similar a tty0 no Linux)
-;; Isso nem sempre e necessario. Se o shell foi utilizado para chamar o app, 
+;; Isso nem sempre e necessario. Se o shell foi utilizado para chamar o app,
 ;; vd0 ja esta aberto. A menos que seja chamado por um app que esteja usando, por
 ;; exemplo, vd1. vd0 é o console principal, enquanto vd1-vdn são consoles virtuais.
 
@@ -168,7 +168,7 @@ inicioAPP:
     hx.syscall limparTela
 
     hx.syscall obterInfoTela
-    
+
     mov byte[Andromeda.Interface.numColunas], bl
     mov byte[Andromeda.Interface.numLinhas], bh
 
@@ -211,6 +211,6 @@ inicioAPP:
 ;; Codigo de erro (neste caso, 0), tipo de saida (neste caso, 0)
 
     Andromeda.Estelar.finalizarProcessoGrafico 0, 0
-    
+
 ;;************************************************************************************
 

@@ -1,15 +1,15 @@
 ;;*************************************************************************************************
 ;;
-;; 88                                                                                88              
-;; 88                                                                                ""              
-;; 88                                                                                                
-;; 88,dPPPba,   ,adPPPba, 8b,     ,d8 ,adPPPPba,  ,adPPPb,d8  ,adPPPba,  8b,dPPPba,  88 8b,     ,d8  
-;; 88P'    "88 a8P     88  `P8, ,8P'  ""     `P8 a8"    `P88 a8"     "8a 88P'   `"88 88  `P8, ,8P'   
-;; 88       88 8PP"""""""    )888(    ,adPPPPP88 8b       88 8b       d8 88       88 88    )888(     
-;; 88       88 "8b,   ,aa  ,d8" "8b,  88,    ,88 "8a,   ,d88 "8a,   ,a8" 88       88 88  ,d8" "8b,   
-;; 88       88  `"Pbbd8"' 8P'     `P8 `"8bbdP"P8  `"PbbdP"P8  `"PbbdP"'  88       88 88 8P'     `P8  
-;;                                               aa,    ,88                                         
-;;                                                "P8bbdP"       
+;; 88                                                                                88
+;; 88                                                                                ""
+;; 88
+;; 88,dPPPba,   ,adPPPba, 8b,     ,d8 ,adPPPPba,  ,adPPPb,d8  ,adPPPba,  8b,dPPPba,  88 8b,     ,d8
+;; 88P'    "88 a8P     88  `P8, ,8P'  ""     `P8 a8"    `P88 a8"     "8a 88P'   `"88 88  `P8, ,8P'
+;; 88       88 8PP"""""""    )888(    ,adPPPPP88 8b       88 8b       d8 88       88 88    )888(
+;; 88       88 "8b,   ,aa  ,d8" "8b,  88,    ,88 "8a,   ,d88 "8a,   ,a8" 88       88 88  ,d8" "8b,
+;; 88       88  `"Pbbd8"' 8P'     `P8 `"8bbdP"P8  `"PbbdP"P8  `"PbbdP"'  88       88 88 8P'     `P8
+;;                                               aa,    ,88
+;;                                                "P8bbdP"
 ;;
 ;;                     Sistema Operacional Hexagonix - Hexagonix Operating System
 ;;
@@ -19,7 +19,7 @@
 ;;*************************************************************************************************
 ;;
 ;; Português:
-;; 
+;;
 ;; O Hexagonix e seus componentes são licenciados sob licença BSD-3-Clause. Leia abaixo
 ;; a licença que governa este arquivo e verifique a licença de cada repositório para
 ;; obter mais informações sobre seus direitos e obrigações ao utilizar e reutilizar
@@ -38,10 +38,10 @@
 ;;
 ;; Copyright (c) 2015-2023, Felipe Miguel Nery Lunkes
 ;; All rights reserved.
-;; 
+;;
 ;; Redistribution and use in source and binary forms, with or without
 ;; modification, are permitted provided that the following conditions are met:
-;; 
+;;
 ;; 1. Redistributions of source code must retain the above copyright notice, this
 ;;    list of conditions and the following disclaimer.
 ;;
@@ -52,7 +52,7 @@
 ;; 3. Neither the name of the copyright holder nor the names of its
 ;;    contributors may be used to endorse or promote products derived from
 ;;    this software without specific prior written permission.
-;; 
+;;
 ;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 ;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 ;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -256,7 +256,7 @@ returnTime             = 68 ;; Hexagon Real Time Clock Service
 ;; a ausência das funções mount() e unmount(). No Hexagon, a montagem e desmontagem de um
 ;; volume se dá pelas funções open() e close(). Apesar de tentar ser um sistema Unix-like,
 ;; a implementação é bem diferente. Além disso, a chamada uname() não está disponível no
-;; Version 7 UNIX, mas está disponível no Hexagonix. No mais, as chamadas de sistema 
+;; Version 7 UNIX, mas está disponível no Hexagonix. No mais, as chamadas de sistema
 ;; do Hexagon apresentam um comportamento totalmente diferente do Version 7 UNIX, embora
 ;; o comportamento de algumas foi escrito para se assemelhar ao máximo.
 ;;
@@ -269,13 +269,13 @@ returnTime             = 68 ;; Hexagon Real Time Clock Service
 ;; de usuário.
 ;;
 ;; Para chamar a função, use:
-;; 
+;;
 ;; hx.syscall hx.função
 ;;     ou
 ;; sys hx.função
 ;;
 ;; $ENGLISH$
-;; 
+;;
 ;; Table of function name standardization with Version 7 UNIX
 ;;
 ;; Important notes about this table:
@@ -285,7 +285,7 @@ returnTime             = 68 ;; Hexagon Real Time Clock Service
 ;; Version 7 UNIX will not be available here, as Hexagonix does not aims compatibility
 ;; with that system, but is inspired by the architecture. As an example, we have the absence of
 ;; the mount() and unmount() functions. At Hexagon, mounting and dismounting a volume is given
-;; by the open() and close() functions. Despite trying to be a Unix-like system, the implementation 
+;; by the open() and close() functions. Despite trying to be a Unix-like system, the implementation
 ;; is quite different. Also, the uname() call is not available in Version 7 UNIX, but is available
 ;; on Hexagonix. Furthermore, system calls of Hexagon behave completely different from Version 7
 ;; UNIX, although the behavior of some was written to resemble as closely as possible.
@@ -337,10 +337,10 @@ hx.time               = 68
 macro hx.syscall chamadaHexagon ;; Macro utilizado para solicitar um serviço do Hexagon
 {
 
-    push chamadaHexagon 
-    
-    int 69h     
-    
+    push chamadaHexagon
+
+    int 69h
+
 }
 
 ;; Fim do arquivo

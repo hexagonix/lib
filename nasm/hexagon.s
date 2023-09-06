@@ -1,15 +1,15 @@
 ;;*************************************************************************************************
 ;;
-;; 88                                                                                88              
-;; 88                                                                                ""              
-;; 88                                                                                                
-;; 88,dPPPba,   ,adPPPba, 8b,     ,d8 ,adPPPPba,  ,adPPPb,d8  ,adPPPba,  8b,dPPPba,  88 8b,     ,d8  
-;; 88P'    "88 a8P     88  `P8, ,8P'  ""     `P8 a8"    `P88 a8"     "8a 88P'   `"88 88  `P8, ,8P'   
-;; 88       88 8PP"""""""    )888(    ,adPPPPP88 8b       88 8b       d8 88       88 88    )888(     
-;; 88       88 "8b,   ,aa  ,d8" "8b,  88,    ,88 "8a,   ,d88 "8a,   ,a8" 88       88 88  ,d8" "8b,   
-;; 88       88  `"Pbbd8"' 8P'     `P8 `"8bbdP"P8  `"PbbdP"P8  `"PbbdP"'  88       88 88 8P'     `P8  
-;;                                               aa,    ,88                                         
-;;                                                "P8bbdP"       
+;; 88                                                                                88
+;; 88                                                                                ""
+;; 88
+;; 88,dPPPba,   ,adPPPba, 8b,     ,d8 ,adPPPPba,  ,adPPPb,d8  ,adPPPba,  8b,dPPPba,  88 8b,     ,d8
+;; 88P'    "88 a8P     88  `P8, ,8P'  ""     `P8 a8"    `P88 a8"     "8a 88P'   `"88 88  `P8, ,8P'
+;; 88       88 8PP"""""""    )888(    ,adPPPPP88 8b       88 8b       d8 88       88 88    )888(
+;; 88       88 "8b,   ,aa  ,d8" "8b,  88,    ,88 "8a,   ,d88 "8a,   ,a8" 88       88 88  ,d8" "8b,
+;; 88       88  `"Pbbd8"' 8P'     `P8 `"8bbdP"P8  `"PbbdP"P8  `"PbbdP"'  88       88 88 8P'     `P8
+;;                                               aa,    ,88
+;;                                                "P8bbdP"
 ;;
 ;;                     Sistema Operacional Hexagonix - Hexagonix Operating System
 ;;
@@ -19,7 +19,7 @@
 ;;*************************************************************************************************
 ;;
 ;; Português:
-;; 
+;;
 ;; O Hexagonix e seus componentes são licenciados sob licença BSD-3-Clause. Leia abaixo
 ;; a licença que governa este arquivo e verifique a licença de cada repositório para
 ;; obter mais informações sobre seus direitos e obrigações ao utilizar e reutilizar
@@ -38,10 +38,10 @@
 ;;
 ;; Copyright (c) 2015-2023, Felipe Miguel Nery Lunkes
 ;; All rights reserved.
-;; 
+;;
 ;; Redistribution and use in source and binary forms, with or without
 ;; modification, are permitted provided that the following conditions are met:
-;; 
+;;
 ;; 1. Redistributions of source code must retain the above copyright notice, this
 ;;    list of conditions and the following disclaimer.
 ;;
@@ -52,7 +52,7 @@
 ;; 3. Neither the name of the copyright holder nor the names of its
 ;;    contributors may be used to endorse or promote products derived from
 ;;    this software without specific prior written permission.
-;; 
+;;
 ;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 ;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 ;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -67,7 +67,7 @@
 ;; $HexagonixOS$
 
 ;;************************************************************************************
-;; 
+;;
 ;; $PORTUGUÊS$
 ;;
 ;; Cabeçalho de macros, funções e chamadas de Sistema do Hexagonix
@@ -104,14 +104,14 @@
 ;;
 ;;************************************************************************************
 
-alocarMemoria          equ 1      
-liberarMemoria         equ 2   
-iniciarProcesso        equ 3    
-encerrarProcesso       equ 4   
-obterPID               equ 5          
-usoMemoria             equ 6                                    
-obterProcessos         equ 7    
-obterCodigoErro        equ 8   
+alocarMemoria          equ 1
+liberarMemoria         equ 2
+iniciarProcesso        equ 3
+encerrarProcesso       equ 4
+obterPID               equ 5
+usoMemoria             equ 6
+obterProcessos         equ 7
+obterCodigoErro        equ 8
 
 ;;************************************************************************************
 ;;
@@ -120,9 +120,9 @@ obterCodigoErro        equ 8
 ;;
 ;;************************************************************************************
 
-abrir                  equ 9             
-escrever               equ 10         
-fechar                 equ 11          
+abrir                  equ 9
+escrever               equ 10
+fechar                 equ 11
 
 ;;************************************************************************************
 ;;
@@ -131,11 +131,11 @@ fechar                 equ 11
 ;;
 ;;************************************************************************************
 
-salvarArquivo          equ 13    
-deletarArquivo         equ 14  
-listarArquivos         equ 15           
-arquivoExiste          equ 16     
-obterDisco             equ 17        
+salvarArquivo          equ 13
+deletarArquivo         equ 14
+listarArquivos         equ 15
+arquivoExiste          equ 16
+obterDisco             equ 17
 
 ;;************************************************************************************
 ;;
@@ -144,10 +144,10 @@ obterDisco             equ 17
 ;;
 ;;************************************************************************************
 
-travar                 equ 18            
-destravar              equ 19        
-definirUsuario         equ 20   
-obterUsuario           equ 21     
+travar                 equ 18
+destravar              equ 19
+definirUsuario         equ 20
+obterUsuario           equ 21
 
 ;;************************************************************************************
 ;;
@@ -156,21 +156,21 @@ obterUsuario           equ 21
 ;;
 ;;************************************************************************************
 
-retornarVersao         equ 22    
-obterAleatorio         equ 23   
-alimentarAleatorio     equ 24 
-causarAtraso           equ 25     
-instalarISR            equ 26       
+retornarVersao         equ 22
+obterAleatorio         equ 23
+alimentarAleatorio     equ 24
+causarAtraso           equ 25
+instalarISR            equ 26
 
 ;;************************************************************************************
 ;;
 ;; $PORTUGUÊS$ Serviços de gerenciamento de energia do Hexagon
-;; $ENGLISH$   Hexagon power management services 
+;; $ENGLISH$   Hexagon power management services
 ;;
 ;;************************************************************************************
 
-reiniciarPC            equ 27                   
-desligarPC             equ 28      
+reiniciarPC            equ 27
+desligarPC             equ 28
 
 ;;************************************************************************************
 ;;
@@ -179,23 +179,23 @@ desligarPC             equ 28
 ;;
 ;;************************************************************************************
 
-imprimir               equ 29                                                          
-limparTela             equ 30                     
-limparLinha            equ 31      
-NULA                   equ 32            
-rolarTela              equ 33         
-definirCursor          equ 34     
-desenharCaractere      equ 35 
-desenharBloco          equ 36    
-imprimirCaractere      equ 37 
-definirCor             equ 38       
-obterCor               equ 39         
-obterInfoTela          equ 40        
-atualizarTela          equ 41                       
-definirResolucao       equ 42  
-obterResolucao         equ 43   
-obterCursor            equ 44      
-                                            
+imprimir               equ 29
+limparTela             equ 30
+limparLinha            equ 31
+NULA                   equ 32
+rolarTela              equ 33
+definirCursor          equ 34
+desenharCaractere      equ 35
+desenharBloco          equ 36
+imprimirCaractere      equ 37
+definirCor             equ 38
+obterCor               equ 39
+obterInfoTela          equ 40
+atualizarTela          equ 41
+definirResolucao       equ 42
+obterResolucao         equ 43
+obterCursor            equ 44
+
 ;;************************************************************************************
 ;;
 ;; $PORTUGUÊS$ Serviços de manipulação de teclado PS/2 do Hexagon
@@ -203,11 +203,11 @@ obterCursor            equ 44
 ;;
 ;;************************************************************************************
 
-aguardarTeclado        equ 45   
-obterString            equ 46       
-obterEstadoTeclas      equ 47 
-alterarFonte           equ 48      
-alterarLeiaute         equ 49    
+aguardarTeclado        equ 45
+obterString            equ 46
+obterEstadoTeclas      equ 47
+alterarFonte           equ 48
+alterarLeiaute         equ 49
 
 ;;************************************************************************************
 ;;
@@ -216,9 +216,9 @@ alterarLeiaute         equ 49
 ;;
 ;;************************************************************************************
 
-aguardarMouse          equ 50    
-obterMouse             equ 51        
-definirMouse           equ 52      
+aguardarMouse          equ 50
+obterMouse             equ 51
+definirMouse           equ 52
 
 ;;************************************************************************************
 ;;
@@ -227,48 +227,48 @@ definirMouse           equ 52
 ;;
 ;;************************************************************************************
 
-compararPalavrasString equ 53 
-removerCaractereString equ 54 
-inserirCaractere       equ 55            
-tamanhoString          equ 56      
-compararString         equ 57     
-stringParaMaiusculo    equ 58 
-stringParaMinusculo    equ 59 
-cortarString           equ 60        
-encontrarCaractere     equ 61      
-stringParaInt          equ 62      
-paraString             equ 63       
+compararPalavrasString equ 53
+removerCaractereString equ 54
+inserirCaractere       equ 55
+tamanhoString          equ 56
+compararString         equ 57
+stringParaMaiusculo    equ 58
+stringParaMinusculo    equ 59
+cortarString           equ 60
+encontrarCaractere     equ 61
+stringParaInt          equ 62
+paraString             equ 63
 
 ;;************************************************************************************
 ;;
 ;; $PORTUGUÊS$ Serviços de saída por som do Hexagon
 ;; $ENGLISH$   Hexagon sound output services
 ;;
-;;************************************************************************************  
+;;************************************************************************************
 
-emitirSom              equ 64        
-desligarSom            equ 65       
+emitirSom              equ 64
+desligarSom            equ 65
 
 ;;************************************************************************************
 ;;
 ;; $PORTUGUÊS$ Serviços de mensagens do Hexagon
 ;; $ENGLISH$   Hexagon messaging services
 ;;
-;;************************************************************************************  
+;;************************************************************************************
 
-enviarMensagemHexagon  equ 66 
+enviarMensagemHexagon  equ 66
 
-;;************************************************************************************                      
+;;************************************************************************************
 
 ;;************************************************************************************
 ;;
 ;; $PORTUGUÊS$ Serviço de relógio em tempo real do Hexagon
 ;; $ENGLISH$   Hexagon real time clock service
 ;;
-;;************************************************************************************  
+;;************************************************************************************
 
-retornarData           equ 67     
-retornarHora           equ 68     
+retornarData           equ 67
+retornarHora           equ 68
 
 ;;************************************************************************************
 
@@ -292,7 +292,7 @@ retornarHora           equ 68
 ;; a ausência das funções mount() e unmount(). No Hexagon, a montagem e desmontagem de um
 ;; volume se dá pelas funções open() e close(). Apesar de tentar ser um sistema Unix-like,
 ;; a implementação é bem diferente. Além disso, a chamada uname() não está disponível no
-;; Version 7 UNIX, mas está disponível no Hexagonix. No mais, as chamadas de sistema 
+;; Version 7 UNIX, mas está disponível no Hexagonix. No mais, as chamadas de sistema
 ;; do Hexagon apresentam um comportamento totalmente diferente do Version 7 UNIX, embora
 ;; o comportamento de algumas foi escrito para se assemelhar ao máximo.
 ;;
@@ -305,13 +305,13 @@ retornarHora           equ 68
 ;; de usuário.
 ;;
 ;; Para chamar a função, use:
-;; 
+;;
 ;; hx.syscall hx.função
 ;;     ou
 ;; sys hx.função
 ;;
 ;; $ENGLISH$
-;; 
+;;
 ;; Table of function name standardization with Version 7 UNIX
 ;;
 ;; Important notes about this table:
@@ -321,7 +321,7 @@ retornarHora           equ 68
 ;; Version 7 UNIX will not be available here, as Hexagonix does not aims compatibility
 ;; with that system, but is inspired by the architecture. As an example, we have the absence of
 ;; the mount() and unmount() functions. At Hexagon, mounting and dismounting a volume is given
-;; by the open() and close() functions. Despite trying to be a Unix-like system, the implementation 
+;; by the open() and close() functions. Despite trying to be a Unix-like system, the implementation
 ;; is quite different. Also, the uname() call is not available in Version 7 UNIX, but is available
 ;; on Hexagonix. Furthermore, system calls of Hexagon behave completely different from Version 7
 ;; UNIX, although the behavior of some was written to resemble as closely as possible.
@@ -370,30 +370,30 @@ hx.time               equ 68
 
 %macro hx.syscall 1 ;; Macro utilizado para solicitar um serviço do Hexagon
 
-    push [%1]   
-    
-    int 69h     
+    push [%1]
+
+    int 69h
 
 %endmacro
 
 %macro novaLinha 0
-    
+
     push ebx
-    
+
     xor ebx, ebx
-    
+
     mov al, 10              ;; 10 é o caractere de nova linha
-    
+
     pop ebx
-    
+
     hx.syscall imprimirCaractere
-    
+
 %endmacro
 
 %macro imprimirInteiro 0
 
     mov ebx, 01h
-    
+
     hx.syscall imprimir
 
 %endmacro
@@ -401,7 +401,7 @@ hx.time               equ 68
 %macro imprimirHexadecimal 0
 
     mov ebx, 02h
-    
+
     hx.syscall imprimir
 
 %endmacro
@@ -409,7 +409,7 @@ hx.time               equ 68
 %macro imprimirBinario 0
 
     mov ebx, 03h
-    
+
     hx.syscall imprimir
 
 %endmacro
@@ -417,7 +417,7 @@ hx.time               equ 68
 %macro imprimirString 0
 
     mov ebx, 04h
-    
+
     hx.syscall imprimir
 
 %endmacro
@@ -425,25 +425,25 @@ hx.time               equ 68
 %macro imprimir 1     ;; Macro utilizado para imprimir determinado conteúdo na tela para o usuário
 
     mov esi, [%1]
-    
+
     imprimirString
-    
+
 %endmacro
 
-%macro fputs 1    
+%macro fputs 1
 
     mov esi, [%1]
-    
+
     imprimirString
-    
+
 %endmacro
 
-%macro puts 1    
+%macro puts 1
 
     mov esi, [%1]
-    
+
     imprimirString
-    
+
     novaLinha
-    
+
 %endmacro

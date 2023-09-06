@@ -1,15 +1,15 @@
 ;;*************************************************************************************************
 ;;
-;; 88                                                                                88              
-;; 88                                                                                ""              
-;; 88                                                                                                
-;; 88,dPPPba,   ,adPPPba, 8b,     ,d8 ,adPPPPba,  ,adPPPb,d8  ,adPPPba,  8b,dPPPba,  88 8b,     ,d8  
-;; 88P'    "88 a8P     88  `P8, ,8P'  ""     `P8 a8"    `P88 a8"     "8a 88P'   `"88 88  `P8, ,8P'   
-;; 88       88 8PP"""""""    )888(    ,adPPPPP88 8b       88 8b       d8 88       88 88    )888(     
-;; 88       88 "8b,   ,aa  ,d8" "8b,  88,    ,88 "8a,   ,d88 "8a,   ,a8" 88       88 88  ,d8" "8b,   
-;; 88       88  `"Pbbd8"' 8P'     `P8 `"8bbdP"P8  `"PbbdP"P8  `"PbbdP"'  88       88 88 8P'     `P8  
-;;                                               aa,    ,88                                         
-;;                                                "P8bbdP"       
+;; 88                                                                                88
+;; 88                                                                                ""
+;; 88
+;; 88,dPPPba,   ,adPPPba, 8b,     ,d8 ,adPPPPba,  ,adPPPb,d8  ,adPPPba,  8b,dPPPba,  88 8b,     ,d8
+;; 88P'    "88 a8P     88  `P8, ,8P'  ""     `P8 a8"    `P88 a8"     "8a 88P'   `"88 88  `P8, ,8P'
+;; 88       88 8PP"""""""    )888(    ,adPPPPP88 8b       88 8b       d8 88       88 88    )888(
+;; 88       88 "8b,   ,aa  ,d8" "8b,  88,    ,88 "8a,   ,d88 "8a,   ,a8" 88       88 88  ,d8" "8b,
+;; 88       88  `"Pbbd8"' 8P'     `P8 `"8bbdP"P8  `"PbbdP"P8  `"PbbdP"'  88       88 88 8P'     `P8
+;;                                               aa,    ,88
+;;                                                "P8bbdP"
 ;;
 ;;                     Sistema Operacional Hexagonix - Hexagonix Operating System
 ;;
@@ -19,7 +19,7 @@
 ;;*************************************************************************************************
 ;;
 ;; Português:
-;; 
+;;
 ;; O Hexagonix e seus componentes são licenciados sob licença BSD-3-Clause. Leia abaixo
 ;; a licença que governa este arquivo e verifique a licença de cada repositório para
 ;; obter mais informações sobre seus direitos e obrigações ao utilizar e reutilizar
@@ -38,10 +38,10 @@
 ;;
 ;; Copyright (c) 2015-2023, Felipe Miguel Nery Lunkes
 ;; All rights reserved.
-;; 
+;;
 ;; Redistribution and use in source and binary forms, with or without
 ;; modification, are permitted provided that the following conditions are met:
-;; 
+;;
 ;; 1. Redistributions of source code must retain the above copyright notice, this
 ;;    list of conditions and the following disclaimer.
 ;;
@@ -52,7 +52,7 @@
 ;; 3. Neither the name of the copyright holder nor the names of its
 ;;    contributors may be used to endorse or promote products derived from
 ;;    this software without specific prior written permission.
-;; 
+;;
 ;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 ;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 ;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -68,7 +68,7 @@
 
 ;;************************************************************************************
 ;;
-;; Cabeçalho de macros, estruturas, funções e chamadas para o desenvolvimento de 
+;; Cabeçalho de macros, estruturas, funções e chamadas para o desenvolvimento de
 ;; aplicativos e utilitários
 ;;
 ;;************************************************************************************
@@ -137,36 +137,36 @@ macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, cor
 
     mov eax, corTextoTitulo
     mov ebx, corTitulo
-    
+
     hx.syscall definirCor
-    
+
     mov al, 0
-    
+
     hx.syscall limparLinha
-    
+
     fputs titulo
-        
+
     mov eax, corTextoRodape
     mov ebx, corRodape
-    
+
     hx.syscall definirCor
 
     mov al, byte[Andromeda.Interface.numLinhas] ;; Última linha
-    
+
     dec al
-    
+
     hx.syscall limparLinha
-    
+
     fputs rodape
-        
+
     mov eax, corTexto
     mov ebx, corFundo
-    
+
     hx.syscall definirCor
-    
+
     mov dl, 2
     mov dh, 1
-    
+
     hx.syscall definirCursor
 
 }
@@ -191,13 +191,13 @@ macro Andromeda.Estelar.atualizarResolucao
 
     mov byte[Andromeda.Interface.resolucao], 01h
 
-    jmp .fim 
+    jmp .fim
 
 .resolucao1024x768:
 
     mov byte[Andromeda.Interface.resolucao], 02h
 
-    jmp .fim 
+    jmp .fim
 
 .fim:
 
@@ -208,7 +208,7 @@ macro Andromeda.Estelar.atualizarResolucao
 macro Andromeda.Estelar.criarBarraCarregamento posicaoY, corBarra, corFundo
 {
 
-;; Primeiramente, salvar a posição de Y 
+;; Primeiramente, salvar a posição de Y
 
     mov dword[Andromeda.Interface.barraCarregamentoY], posicaoY
 
@@ -244,16 +244,16 @@ macro Andromeda.Estelar.criarBarraCarregamento posicaoY, corBarra, corFundo
 
     mov eax, BRANCO_ANDROMEDA
     mov ebx, dword[Andromeda.Interface.barraCarregamentoCorFundo]
-    
+
     hx.syscall definirCor
-    
+
     mov al, byte[Andromeda.Interface.barraCarregamentoY]
-    
+
     hx.syscall limparLinha
 
     mov eax, dword[Andromeda.Interface.corFonte]
     mov ebx, dword[Andromeda.Interface.corFundo]
-    
+
     hx.syscall definirCor
 
     Andromeda.Estelar.atualizarBarracarregamento 1
@@ -288,18 +288,18 @@ macro Andromeda.Estelar.atualizarBarracarregamento porcentagem
     mov eax, dword[Andromeda.Interface.barraCarregamentoFatorAdicao]
     mov ebx, porcentagem
 
-    mul ebx 
+    mul ebx
 
     add eax, dword[Andromeda.Interface.barraCarregamentoPorcentagem]
 
-    mov dword[Andromeda.Interface.barraCarregamentoAdd], eax 
+    mov dword[Andromeda.Interface.barraCarregamentoAdd], eax
 
     mov eax, dword[Andromeda.Interface.barraCarregamentoPorcentagem] ;; Posição X
     mov ebx, dword[Andromeda.Interface.barraCarregamentoY] ;; Posição Y
     mov esi, dword[Andromeda.Interface.barraCarregamentoAdd] ;; Comprimento
     mov edi, 16 ;; Altura
     mov edx, dword[Andromeda.Interface.barraCarregamentoCor] ;; Cor
-    
+
     hx.syscall desenharBloco
 
     mov eax, dword[Andromeda.Interface.barraCarregamentoAdd]
@@ -323,7 +323,7 @@ macro Andromeda.Estelar.excluirBarraCarregamento ;; Não necessita de parâmetro
 
 ;; Fim das rotinas de manipulação de barras de carregamento [ALPHA]
 
-;; Agora uma barra de carregamento típica para ser usada em modo texto 
+;; Agora uma barra de carregamento típica para ser usada em modo texto
 ;; \|/--
 
 macro Andromeda.Estelar.barraCarregamentoTexto tempo
@@ -341,15 +341,15 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
 ;; Entrada: EDI - Altura; EDX - Cor em hexadecimal
 
 .primeiraLinha:
-    
+
     mov eax, 20           ;; Posição X
     mov ebx, 30           ;; Posição Y
     mov esi, 20           ;; Comprimento
     mov edi, 150          ;; Altura
     mov edx, corLogotipo  ;; Cor
-    
+
     hx.syscall desenharBloco
- 
+
 .segundaLinha:
 
     mov eax, 89           ;; Posição X
@@ -357,9 +357,9 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
     mov esi, 20           ;; Comprimento
     mov edi, 150          ;; Altura
     mov edx, corLogotipo  ;; Cor
-    
+
     hx.syscall desenharBloco
-    
+
 .terceiraLinha:
 
     mov eax, 39           ;; Posição X
@@ -367,12 +367,12 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
     mov esi, 50           ;; Comprimento
     mov edi, 30           ;; Altura
     mov edx, corLogotipo  ;; Cor
-    
-    hx.syscall desenharBloco    
+
+    hx.syscall desenharBloco
 
     mov dh, 02
     mov dl, 14
-    
+
     hx.syscall definirCursor
 
     mov eax, corLogotipo
@@ -409,7 +409,7 @@ macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
 
     movxz bx, bl
 
-    push ebx 
+    push ebx
 
     mov esi, mensagem
 
@@ -417,7 +417,7 @@ macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
 
 ;; Em AX, o tamanho da String
 
-    pop ebx 
+    pop ebx
 
     div ax, bx
 
@@ -429,7 +429,7 @@ macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
     hx.syscall definirCursor
 
     fputs mensagem
-    
+
 }
 
 ;;************************************************************************************
