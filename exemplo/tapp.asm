@@ -137,4 +137,4 @@ inicioAPP:
 
    fputs msg
 
-    hx.syscall encerrarProcesso
+   hx.syscall encerrarProcesso
