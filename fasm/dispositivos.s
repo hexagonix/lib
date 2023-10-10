@@ -80,44 +80,64 @@ discos:
 
 ;; Dispositivos de armazenamento
 
-.hd0:   db "hd0", 0    ;; Primeiro disco rígido
-.hd1:   db "hd1", 0    ;; Segundo disco rígido
-.hd2:   db "hd2", 0    ;; Terceiro disco rígido
-.hd3:   db "hd3", 0    ;; Quarto disco rígido
-.dsq0:  db "dsq0", 0   ;; Disquete 1
-.dsq1:  db "dsq1", 0   ;; Disquete 2
-.cdrom: db "cdrom0", 0 ;; Primeiro drive de CD
+.hd0: ;; Primeiro disco rígido
+db "hd0", 0
+.hd1: ;; Segundo disco rígido
+db "hd1", 0
+.hd2: ;; Terceiro disco rígido
+db "hd2", 0
+.hd3: ;; Quarto disco rígido
+db "hd3", 0
+.dsq0: ;; Disquete 1
+db "dsq0", 0
+.dsq1: ;; Disquete 2
+db "dsq1", 0
+.cdrom: ;; Primeiro drive de CD
+db "cdrom0", 0
 
 portasSeriais:
 
 ;; Portas seriais
 
-.com1: db "com1", 0 ;; Primeira porta serial
-.com2: db "com2", 0 ;; Segunda porta serial
-.com3: db "com3", 0 ;; Terceira porta serial
-.com4: db "com4", 0 ;; Quarta porta serial
+.com1: ;; Primeira porta serial
+db "com1", 0
+.com2: ;; Segunda porta serial
+db "com2", 0
+.com3: ;; Terceira porta serial
+db "com3", 0
+.com4: ;; Quarta porta serial
+db "com4", 0
 
 portasParalelas:
 
 ;; Portas paralelas e impressoras
 
-.imp0: db "imp0", 0 ;; Primeira porta paralela
-.imp1: db "imp1", 0 ;; Segunda porta paralela
-.imp2: db "imp2", 0 ;; Terceira porta paralela
+.imp0: ;; Primeira porta paralela
+db "imp0", 0
+.imp1: ;; Segunda porta paralela
+db "imp1", 0
+.imp2: ;; Terceira porta paralela
+db "imp2", 0
 
 video:
 
 ;; Dispositivos de saída
 
-.vd0: db "vd0", 0 ;; Console padrão
-.vd1: db "vd1", 0 ;; Primeiro console virtual
-.vd2: db "vd2", 0 ;; Despejo de dados do Kernel
+.vd0: ;; Console padrão
+db "vd0", 0
+.vd1: ;; Primeiro console virtual
+db "vd1", 0
+.vd2: ;; Despejo de dados do kernel
+db "vd2", 0
 
 audio:
 
-.au0: db "au0", 0 ;; Saída de áudio
+.au0: ;; Saída de áudio
+db "au0", 0
 
 processadores:
 
-.proc0: db "proc0", 0 ;; Primeiro processador
-.proc1: db "proc1", 0 ;; Processador auxiliar, caso exista
+.proc0: ;; Primeiro processador
+db "proc0", 0
+.proc1: ;; Processador auxiliar, caso exista
+db "proc1", 0

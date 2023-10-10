@@ -543,7 +543,8 @@ obterBuildDistribuicao:
 
 ;;************************************************************************************
 
-arquivoVersao:               db "HEXGNIX.OCL", 0
+arquivoVersao:
+db "HEXGNIX.OCL", 0
 versaoObtida:       times 64 db 0
 codigoObtido:       times 64 db 0
 pacoteAtualizacoes: times 64 db 0
