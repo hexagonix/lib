@@ -70,11 +70,11 @@
 ;;
 ;; Cabeçalho de macros, funções e chamadas de sistema do Hexagonix
 ;;
-;; Compatibilidade: Hexagonix H1 R1.2 (05/06/2022) ou superior
-;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          6.0 rev 1 30/08/2023
+;; Compatibilidade: Hexagonix Project Raava (12/10/2023) ou superior
+;;                  Hexagon 1.5 ou mais recente (versão do kernel necessária)
+;; Versão:          7.0 rev 1 12/10/2023
 ;;
-;; Total de chamadas: 68 (26/04/2020) - Este número não é final e pode diminuir (ou aumentar)
+;; Total de chamadas: 68 (12/10/2023) - Este número não é final e pode diminuir (ou aumentar)
 ;;
 ;;************************************************************************************
 
@@ -97,23 +97,24 @@ escrever               = 10 ;; Serviços de gerenciamento de arquivos e disposit
 fechar                 = 11 ;; Serviços de gerenciamento de arquivos e dispositivos do Hexagon
 salvarArquivo          = 13 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
 deletarArquivo         = 14 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
-listarArquivos         = 15 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
-arquivoExiste          = 16 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
-obterDisco             = 17 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
-travar                 = 18 ;; Serviços de gerenciamento de usuários do Hexagon
-destravar              = 19 ;; Serviços de gerenciamento de usuários do Hexagon
-definirUsuario         = 20 ;; Serviços de gerenciamento de usuários do Hexagon
-obterUsuario           = 21 ;; Serviços de gerenciamento de usuários do Hexagon
-retornarVersao         = 22 ;; Serviços oferecidos pelo Hexagon
-obterAleatorio         = 23 ;; Serviços oferecidos pelo Hexagon
-alimentarAleatorio     = 24 ;; Serviços oferecidos pelo Hexagon
-causarAtraso           = 25 ;; Serviços oferecidos pelo Hexagon
-instalarISR            = 26 ;; Serviços oferecidos pelo Hexagon
-reiniciarPC            = 27 ;; Serviços de gerenciamento de energia do Hexagon
-desligarPC             = 28 ;; Serviços de gerenciamento de energia do Hexagon
-imprimir               = 29 ;; Serviços de saída em vídeo e gráficos do Hexagon
-limparTela             = 30 ;; Serviços de saída em vídeo e gráficos do Hexagon
-limparLinha            = 31 ;; Serviços de saída em vídeo e gráficos do Hexagon
+renomearArquivo        = 15 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
+listarArquivos         = 16 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
+arquivoExiste          = 17 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
+obterDisco             = 18 ;; Serviços de gerenciamento do Sistema de Arquivos e de volumes do Hexagon
+travar                 = 19 ;; Serviços de gerenciamento de usuários do Hexagon
+destravar              = 20 ;; Serviços de gerenciamento de usuários do Hexagon
+definirUsuario         = 21 ;; Serviços de gerenciamento de usuários do Hexagon
+obterUsuario           = 22 ;; Serviços de gerenciamento de usuários do Hexagon
+retornarVersao         = 23 ;; Serviços oferecidos pelo Hexagon
+obterAleatorio         = 24 ;; Serviços oferecidos pelo Hexagon
+alimentarAleatorio     = 25 ;; Serviços oferecidos pelo Hexagon
+causarAtraso           = 26 ;; Serviços oferecidos pelo Hexagon
+instalarISR            = 27 ;; Serviços oferecidos pelo Hexagon
+reiniciarPC            = 28 ;; Serviços de gerenciamento de energia do Hexagon
+desligarPC             = 29 ;; Serviços de gerenciamento de energia do Hexagon
+imprimir               = 30 ;; Serviços de saída em vídeo e gráficos do Hexagon
+limparTela             = 31 ;; Serviços de saída em vídeo e gráficos do Hexagon
+limparLinha            = 32 ;; Serviços de saída em vídeo e gráficos do Hexagon
 rolarTela              = 33 ;; Serviços de saída em vídeo e gráficos do Hexagon
 definirCursor          = 34 ;; Serviços de saída em vídeo e gráficos do Hexagon
 desenharCaractere      = 35 ;; Serviços de saída em vídeo e gráficos do Hexagon
@@ -182,23 +183,24 @@ HXwrite                = 10 ;; Hexagon File and Device Management Services
 HXclose                = 11 ;; Hexagon File and Device Management Services
 saveFile               = 13 ;; Hexagon File System and Volume Management Services
 deleteFile             = 14 ;; Hexagon File System and Volume Management Services
-listFiles              = 15 ;; Hexagon File System and Volume Management Services
-fileExists             = 16 ;; Hexagon File System and Volume Management Services
-getDisk                = 17 ;; Hexagon File System and Volume Management Services
-HXlock                 = 18 ;; Hexagon User Management Services
-HXunlock               = 19 ;; Hexagon User Management Services
-defineUser             = 20 ;; Hexagon User Management Services
-getUser                = 21 ;; Hexagon User Management Services
-returnVersion          = 22 ;; Services offered by Hexagon
-getRandom              = 23 ;; Services offered by Hexagon
-feedRandom             = 24 ;; Services offered by Hexagon
-causeDelay             = 25 ;; Services offered by Hexagon
-installISR             = 26 ;; Services offered by Hexagon
-restartPC              = 27 ;; Hexagon Power Management Services
-shutdownPC             = 28 ;; Hexagon Power Management Services
-HXprint                = 29 ;; Hexagon Graphics and Video Output Services
-clearScreen            = 30 ;; Hexagon Graphics and Video Output Services
-clearLine              = 31 ;; Hexagon Graphics and Video Output Services
+rename                 = 15 ;; Hexagon File System and Volume Management Services
+listFiles              = 16 ;; Hexagon File System and Volume Management Services
+fileExists             = 17 ;; Hexagon File System and Volume Management Services
+getDisk                = 18 ;; Hexagon File System and Volume Management Services
+HXlock                 = 19 ;; Hexagon User Management Services
+HXunlock               = 20 ;; Hexagon User Management Services
+defineUser             = 21 ;; Hexagon User Management Services
+getUser                = 22 ;; Hexagon User Management Services
+returnVersion          = 23 ;; Services offered by Hexagon
+getRandom              = 24 ;; Services offered by Hexagon
+feedRandom             = 25 ;; Services offered by Hexagon
+causeDelay             = 26 ;; Services offered by Hexagon
+installISR             = 27 ;; Services offered by Hexagon
+restartPC              = 28 ;; Hexagon Power Management Services
+shutdownPC             = 29 ;; Hexagon Power Management Services
+HXprint                = 30 ;; Hexagon Graphics and Video Output Services
+clearScreen            = 31 ;; Hexagon Graphics and Video Output Services
+clearLine              = 32 ;; Hexagon Graphics and Video Output Services
 scrollScreen           = 33 ;; Hexagon Graphics and Video Output Services
 setCursor              = 34 ;; Hexagon Graphics and Video Output Services
 drawCharacter          = 35 ;; Hexagon Graphics and Video Output Services
@@ -319,7 +321,7 @@ hx.unlink             = 14
 hx.indir              = 15
 hx.syslock            = 18
 hx.sysunlock          = 19
-hx.uname              = 22
+hx.uname              = 23
 hx.sleep              = 25
 hx.putc               = 29
 hx.date               = 67
