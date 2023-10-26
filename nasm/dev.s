@@ -76,7 +76,7 @@
 ;;
 ;;************************************************************************************
 
-discos:
+Hexagon.LibASM.Dev.discos:
 
 ;; Dispositivos de armazenamento
 
@@ -95,7 +95,7 @@ db "dsq1", 0
 .cdrom: ;; Primeiro drive de CD
 db "cdrom0", 0
 
-portasSeriais:
+Hexagon.LibASM.Dev.portasSeriais:
 
 ;; Portas seriais
 
@@ -108,7 +108,7 @@ db "com3", 0
 .com4: ;; Quarta porta serial
 db "com4", 0
 
-portasParalelas:
+Hexagon.LibASM.Dev.portasParalelas:
 
 ;; Portas paralelas e impressoras
 
@@ -119,7 +119,7 @@ db "imp1", 0
 .imp2: ;; Terceira porta paralela
 db "imp2", 0
 
-video:
+Hexagon.LibASM.Dev.video:
 
 ;; Dispositivos de saída
 
@@ -130,12 +130,12 @@ db "tty1", 0
 .tty2: ;; Console de despejo de dados do kernel
 db "tty2", 0
 
-audio:
+Hexagon.LibASM.Dev.audio:
 
 .au0: ;; Saída de áudio
 db "au0", 0
 
-processadores:
+Hexagon.LibASM.Dev.processadores:
 
 .proc0: ;; Primeiro processador
 db "proc0", 0
