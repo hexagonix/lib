@@ -132,7 +132,7 @@ Andromeda.Interface Andromeda.Estelar.Interface
 
 ;; Dentro de gapp estarao todos os dados de texto que serao exibidos ao usuario.
 
-VERSAO equ "1.1" ;; Versao do aplicativo
+VERSAO equ "2.0" ;; Versao do aplicativo
 
 gapp:
 
@@ -146,8 +146,8 @@ db "Seja bem-vindo!", 0
 .RODAPE:
 db "[", VERSAO, "] | Pressione qualquer tecla para continuar...", 0
 
-.vd0:
-db "vd0", 0 ;; Console principal
+.tty0:
+db "tty0", 0 ;; Console principal
 
 ;;************************************************************************************
 
@@ -158,7 +158,7 @@ inicioAPP:
 ;; vd0 ja esta aberto. A menos que seja chamado por um app que esteja usando, por
 ;; exemplo, vd1. vd0 é o console principal, enquanto vd1-vdn são consoles virtuais.
 
-    mov esi, gapp.vd0
+    mov esi, gapp.tty0
 
     hx.syscall abrir ;; Abrir dispositivo
 
