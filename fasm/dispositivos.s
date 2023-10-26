@@ -123,12 +123,12 @@ video:
 
 ;; Dispositivos de saída
 
-.vd0: ;; Console padrão
-db "vd0", 0
-.vd1: ;; Primeiro console virtual
-db "vd1", 0
-.vd2: ;; Despejo de dados do kernel
-db "vd2", 0
+.tty0: ;; Console padrão
+db "tty0", 0
+.tty1: ;; Primeiro console virtual
+db "tty1", 0
+.tty2: ;; Console de despejo de dados do kernel
+db "tty2", 0
 
 audio:
 
