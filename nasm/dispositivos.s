@@ -109,9 +109,9 @@ video:
 
 ;; Dispositivos de saída
 
-.vd0: db "vd0", 0 ;; Console principal
-.vd1: db "vd1", 0 ;; Primeiro console virtual
-.vd2: db "vd2", 0 ;; Despejo de dados do Kernel
+.tty0: db "tty0", 0 ;; Console principal
+.tty1: db "tty1", 0 ;; Primeiro console virtual
+.tty2: db "tty2", 0 ;; Console de despejo de dados do Kernel
 
 audio:
 
