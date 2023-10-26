@@ -81,41 +81,41 @@ discos:
 ;; Dispositivos de armazenamento
 
 .hd0: ;; Primeiro disco rígido
-db "hd0", 0    
+db "hd0", 0
 .hd1: ;; Segundo disco rígido
-db "hd1", 0    
+db "hd1", 0
 .hd2: ;; Terceiro disco rígido
-db "hd2", 0    
+db "hd2", 0
 .hd3: ;; Quarto disco rígido
-db "hd3", 0    
+db "hd3", 0
 .dsq0: ;; Disquete 1
-db "dsq0", 0   
+db "dsq0", 0
 .dsq1: ;; Disquete 2
-db "dsq1", 0   
+db "dsq1", 0
 .cdrom: ;; Primeiro drive de CD
-db "cdrom0", 0 
+db "cdrom0", 0
 
 portasSeriais:
 
 ;; Portas seriais
 
 .com1: ;; Primeira porta serial
-db "com1", 0 
+db "com1", 0
 .com2: ;; Segunda porta serial
-db "com2", 0 
+db "com2", 0
 .com3: ;; Terceira porta serial
 db "com3", 0
 .com4: ;; Quarta porta serial
-db "com4", 0 
+db "com4", 0
 
 portasParalelas:
 
 ;; Portas paralelas e impressoras
 
 .imp0: ;; Primeira porta paralela
-db "imp0", 0 
+db "imp0", 0
 .imp1: ;; Segunda porta paralela
-db "imp1", 0 
+db "imp1", 0
 .imp2: ;; Terceira porta paralela
 db "imp2", 0
 
@@ -124,20 +124,20 @@ video:
 ;; Dispositivos de saída
 
 .tty0: ;; Console principal
-db "tty0", 0 
+db "tty0", 0
 .tty1: ;; Primeiro console virtual
-db "tty1", 0 
+db "tty1", 0
 .tty2: ;; Console de despejo de dados do kernel
-db "tty2", 0 
+db "tty2", 0
 
 audio:
 
 .au0: ;; Saída de áudio
-db "au0", 0 
+db "au0", 0
 
 processadores:
 
 .proc0: ;; Primeiro processador
-db "proc0", 0 
+db "proc0", 0
 .proc1: ;; Processador auxiliar, caso exista
-db "proc1", 0 
+db "proc1", 0
