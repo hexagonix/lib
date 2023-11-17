@@ -261,16 +261,32 @@ macro xyfputs x, y, string ;; Macro utilizado para imprimir determinado conteúd
 
 ;;************************************************************************************
 
-;; Lista de cores que podem ser utilizadas no design de interfaces do sistema
+;; Temas do Hexagonix, utilizados desde a inicialização
 
 ;; Cor            | Código HEX
 
-;; Cores padrão do Hexagonix
+;; Tema padrão do Hexagonix
 
-HEXAGONIX_PADRAO_FUNDO = 0x29282928
-HEXAGONIX_PADRAO_FONTE = 0x00C7B898
-HEXAGONIX_PRETO_FUNDO  = 0x00000000
-HEXAGONIX_BRANCO_FONTE = 0xFFFFFFFF
+HEXAGONIX_PADRAO_FUNDO = HEXAGONIX_BLOSSOM_CINZA
+HEXAGONIX_PADRAO_FONTE = HEXAGONIX_BLOSSOM_AMARELO
+
+;; Tema Blossom (padrão do sistema)
+
+HEXAGONIX_BLOSSOM_CINZA        = 0x29282928
+HEXAGONIX_BLOSSOM_AMARELO      = 0x00C7B898
+HEXAGONIX_BLOSSOM_VERDE_CLARO  = 0x00659B64
+HEXAGONIX_BLOSSOM_VERDE_ESCURO = 0x00466246
+
+;; Tema clássico do Hexagonix (descontinuado)
+
+HEXAGONIX_CLASSICO_PRETO  = 0x00000000
+HEXAGONIX_CLASSICO_BRANCO = 0xFFFFFFFF
+
+;;************************************************************************************
+
+;; Lista de cores que podem ser utilizadas no design de interfaces do sistema
+
+;; Cor            | Código HEX
 
 ;; Cores padrão do Hexagonix (extraídas do logo do sistema)
 
