@@ -91,31 +91,22 @@ Andromeda.Estelar.Versao:
 struc Andromeda.Estelar.Interface
 {
 
-.numColunas:                   db 0 ;; Total de colunas disponíveis no vídeo na resolução atual
-.numLinhas:                    db 0 ;; Total de linhas disponíveis no vídeo na resolução atual
-.resolucao:                    db 0 ;; Resolução atual do vídeo
-.tema:                         db 0 ;; Tema
-.corFundo:                     dd 0 ;; Cor do plano de fundo
-.corFonte:                     dd 0 ;; Cor do texto
-.destaque:                     dd 0 ;; Cor do destaque
-.destaqueFonte:                dd 0 ;; Cor de destaque da fonte
-.posicaoX:                     db 0 ;; Posição de X no vídeo
-.posicaoY:                     db 0 ;; Posição de Y no vídeo
-.cursorX:                      db 0 ;; Posição horizontal do cursor
-.cursorY:                      db 0 ;; Posição vertical do cursor
-
-;; Dados para a criação e atualização da barra de carregamento
-
-.barraCarregamentoY:           dd 0 ;; Posição de criação da barra de carregamento
-.barraCarregamentoCor:         dd 0 ;; Cor da barra de carregamento
-.barraCarregamentoPos:         dd 0 ;; Posição atual da barra de carregamento, para atualização
-.barraCarregamentoAdd:         dd 0 ;; Número, em porcentagem, para incrementar a barra
-.barraCarregamentoStatus:      dd 0 ;; Status da barra, para verificar se já atingiu o tamanho máximo
-.barraCarregamentoPorcentagem: dd 0 ;; O número, em porcentagem
-.barraCarregamentoFatorAdicao: dd 0 ;; O fator varia de acordo com a resolução da tela
-.barraCarregamentoCorFundo:    dd 0
+.numColunas:    db 0 ;; Total de colunas disponíveis no vídeo na resolução atual
+.numLinhas:     db 0 ;; Total de linhas disponíveis no vídeo na resolução atual
+.resolucao:     db 0 ;; Resolução atual do vídeo
+.tema:          db 0 ;; Tema
+.corFundo:      dd 0 ;; Cor do plano de fundo
+.corFonte:      dd 0 ;; Cor do texto
+.destaque:      dd 0 ;; Cor do destaque
+.destaqueFonte: dd 0 ;; Cor de destaque da fonte
+.posicaoX:      db 0 ;; Posição de X no vídeo
+.posicaoY:      db 0 ;; Posição de Y no vídeo
+.cursorX:       db 0 ;; Posição horizontal do cursor
+.cursorY:       db 0 ;; Posição vertical do cursor
 
 }
+
+Andromeda.Interface Andromeda.Estelar.Interface
 
 ;;************************************************************************************
 ;;
@@ -125,10 +116,29 @@ struc Andromeda.Estelar.Interface
 
 Andromeda.Estelar.Tema.Fonte: ;; Definições padrão de cores de plano de fundo e fonte
 
-.fundoPadrao = PRETO
-.fontePadrao = BRANCO_ANDROMEDA
+.fundoPadrao = HEXAGONIX_BLOSSOM_CINZA
+.fontePadrao = HEXAGONIX_BLOSSOM_AMARELO
 .tamanho = 8
 .altura  = 16
+
+;;************************************************************************************
+
+macro Andromeda.Estelar.obterInfoConsole
+{
+
+    hx.syscall obterCor
+
+;; Retornar o esquema padrão de cores do console, não o atual
+
+    mov dword[Andromeda.Interface.corFonte], ecx
+    mov dword[Andromeda.Interface.corFundo], edx
+
+    hx.syscall obterInfoTela
+
+    mov byte[Andromeda.Interface.numColunas], bl
+    mov byte[Andromeda.Interface.numLinhas], bh
+
+}
 
 macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, corTextoTitulo, corTextoRodape, corTexto, corFundo
 {
@@ -200,136 +210,6 @@ macro Andromeda.Estelar.atualizarResolucao
     jmp .fim
 
 .fim:
-
-}
-
-;; Macros para criar, atualizar e excluir uma barra de carregamento [ALPHA]
-
-macro Andromeda.Estelar.criarBarraCarregamento posicaoY, corBarra, corFundo
-{
-
-;; Primeiramente, salvar a posição de Y
-
-    mov dword[Andromeda.Interface.barraCarregamentoY], posicaoY
-
-;; Agora, salvar a cor da barra
-
-    mov dword[Andromeda.Interface.barraCarregamentoCor], corBarra
-    mov dword[Andromeda.Interface.barraCarregamentoCorFundo], corFundo
-
-    Andromeda.Estelar.atualizarResolucao
-
-    cmp byte[Andromeda.Interface.resolucao], 01h
-    je .resolucao800x600
-
-    cmp byte[Andromeda.Interface.resolucao], 02h
-    je .resolucao1024x768
-
-.resolucao800x600:
-
-    mov dword[Andromeda.Interface.barraCarregamentoFatorAdicao], 08
-
-    jmp .fatorDefinido
-
-.resolucao1024x768:
-
-    mov dword[Andromeda.Interface.barraCarregamentoFatorAdicao], 10.24
-
-    jmp .fatorDefinido
-
-.fatorDefinido:
-
-;; Agora vamos criar um fundo que demarca a posição da barra de carregamento
-;; na tela, com o preenchimento dela após cada atualização
-
-    mov eax, BRANCO_ANDROMEDA
-    mov ebx, dword[Andromeda.Interface.barraCarregamentoCorFundo]
-
-    hx.syscall definirCor
-
-    mov al, byte[Andromeda.Interface.barraCarregamentoY]
-
-    hx.syscall limparLinha
-
-    mov eax, dword[Andromeda.Interface.corFonte]
-    mov ebx, dword[Andromeda.Interface.corFundo]
-
-    hx.syscall definirCor
-
-    Andromeda.Estelar.atualizarBarracarregamento 1
-
-.fim:
-
-;; A barra já foi criada, junto com a demarcação inferior, bem como foi atualizada
-;; para preencher ao menos 1%
-
-}
-
-;; Aviso! A barra só cresce da esquerda para a direita e não pode ser decrementada (ainda)
-
-macro Andromeda.Estelar.atualizarBarracarregamento porcentagem
-{
-
-;; Primeiro, devemos ver se a barra de carregamento já atingiu 100%. Em caso
-;; afirmativo, não devemos continuar, uma vez que isso seria um estouro na barra
-
-    cmp dword[Andromeda.Interface.barraCarregamentoStatus], 100
-    jng .continuar
-
-    jmp .estouroFim
-
-;; Caso seja menor que 100, podemos atualizar a barra
-
-.continuar:
-
-;; Agora devemos computar os dados de adição em porcentagem com base no fator de
-;; resolução e o valor fornecido pelo aplicativo gráfico
-
-    mov eax, dword[Andromeda.Interface.barraCarregamentoFatorAdicao]
-    mov ebx, porcentagem
-
-    mul ebx
-
-    add eax, dword[Andromeda.Interface.barraCarregamentoPorcentagem]
-
-    mov dword[Andromeda.Interface.barraCarregamentoAdd], eax
-
-    mov eax, dword[Andromeda.Interface.barraCarregamentoPorcentagem] ;; Posição X
-    mov ebx, dword[Andromeda.Interface.barraCarregamentoY] ;; Posição Y
-    mov esi, dword[Andromeda.Interface.barraCarregamentoAdd] ;; Comprimento
-    mov edi, 16 ;; Altura
-    mov edx, dword[Andromeda.Interface.barraCarregamentoCor] ;; Cor
-
-    hx.syscall desenharBloco
-
-    mov eax, dword[Andromeda.Interface.barraCarregamentoAdd]
-    add dword[Andromeda.Interface.barraCarregamentoPorcentagem], eax
-
-;; Vamos também salvar a informação de porcentagem, para não estourar 100%
-
-    mov eax, porcentagem
-    add dword[Andromeda.Interface.barraCarregamentoStatus], eax
-
-}
-
-macro Andromeda.Estelar.excluirBarraCarregamento ;; Não necessita de parâmetros
-{
-
-    mov al, byte[Andromeda.Interface.barraCarregamentoY]
-
-    hx.syscall limparLinha
-
-}
-
-;; Fim das rotinas de manipulação de barras de carregamento [ALPHA]
-
-;; Agora uma barra de carregamento típica para ser usada em modo texto
-;; \|/--
-
-macro Andromeda.Estelar.barraCarregamentoTexto tempo
-{
-
-;; A ser feito
 
 }
 
