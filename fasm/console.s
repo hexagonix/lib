@@ -72,7 +72,7 @@
 ;;
 ;; Compatibilidade: Hexagonix H1 R1.2 (05/06/2022) ou superior
 ;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          0.9 rev 1 03/09/2023
+;; Versão:          0.9.1 rev 0 17/11/2023
 ;;
 ;;************************************************************************************
 
@@ -272,10 +272,21 @@ HEXAGONIX_PADRAO_FONTE = HEXAGONIX_BLOSSOM_AMARELO
 
 ;; Tema Blossom (padrão do sistema)
 
-HEXAGONIX_BLOSSOM_CINZA        = 0x29282928
-HEXAGONIX_BLOSSOM_AMARELO      = 0x00C7B898
-HEXAGONIX_BLOSSOM_VERDE_CLARO  = 0x00659B64
-HEXAGONIX_BLOSSOM_VERDE_ESCURO = 0x00466246
+HEXAGONIX_BLOSSOM_CINZA         = 0x29282928
+HEXAGONIX_BLOSSOM_AMARELO       = 0x00C7B898
+HEXAGONIX_BLOSSOM_VERDE_CLARO   = 0x00659B64
+HEXAGONIX_BLOSSOM_VERDE_ESCURO  = 0x00466246
+HEXAGONIX_BLOSSOM_AZUL          = 0x00E0FFFF
+HEXAGONIX_BLOSSOM_AMARELO_CLARO = 0x00FFFFE0
+HEXAGONIX_BLOSSOM_LIMAO         = 0x00FFFACD
+HEXAGONIX_BLOSSOM_PESSEGO       = 0x00FFDAB9
+HEXAGONIX_BLOSSOM_VERDE         = 0x00EEE8AA
+HEXAGONIX_BLOSSOM_LAVANDA       = 0x00E6E6FA
+HEXAGONIX_BLOSSOM_TURQUESA      = 0x00E0FFFF
+HEXAGONIX_BLOSSOM_ASTERACEAE    = 0x00D8BFD8
+HEXAGONIX_BLOSSOM_MOCASSIM      = 0x00FFE4B5
+HEXAGONIX_BLOSSOM_AZURE         = 0x00F0FFFF
+HEXAGONIX_BLOSSOM_AZUL_PO       = 0x00B0E0E6
 
 ;; Tema clássico do Hexagonix (descontinuado)
 
@@ -422,22 +433,6 @@ AMARELO_OURO      = 0xFFD700
 CAQUI             = 0xF0E68C
 AMARELO_ESCURO    = 0xB7950B
 AMARELO_ANDROMEDA = 0xF5A700
-
-;; Escala de tons pastéis
-;;
-;; Preferencialmente utilizar com fontes de cores escuras
-
-AZUL_PASTEL          = 0xE0FFFF
-AMARELO_CLARO_PASTEL = 0xFFFFE0
-LIMAO_PASTEL         = 0xFFFACD
-PESSEGO_PASTEL       = 0xFFDAB9
-VERDE_PASTEL         = 0xEEE8AA
-LAVANDA_PASTEL       = 0xE6E6FA
-TURQUESA_PASTEL      = 0xE0FFFF
-ASTERACEAE_PASTEL    = 0xD8BFD8
-MOCASSIM_PASTEL      = 0xFFE4B5
-AZURE_PASTEL         = 0xF0FFFF
-AZUL_PO_PASTEL       = 0xB0E0E6
 
 ;;************************************************************************************
 
