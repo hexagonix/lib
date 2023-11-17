@@ -125,13 +125,6 @@ include "estelar.s" ;; Inclui funcoes de criacao de interfaces
 
 ;; Variaveis e constantes
 
-;; Agora vamos criar uma instancia da estrutura de controle de interfaces
-;; Sintaxe: estrutura para o app (instancia), estrutura original
-
-Andromeda.Interface Andromeda.Estelar.Interface
-
-;; Dentro de gapp estarao todos os dados de texto que serao exibidos ao usuario.
-
 VERSAO equ "2.0" ;; Versao do aplicativo
 
 gapp:
@@ -165,21 +158,9 @@ inicioAPP:
 ;; Pronto, agora vamos continuar. Primeiro, limpar a saida e obter informacoes
 ;; de resolucao
 
+    Andromeda.Estelar.obterInfoConsole
+
     hx.syscall limparTela
-
-    hx.syscall obterInfoTela
-
-    mov byte[Andromeda.Interface.numColunas], bl
-    mov byte[Andromeda.Interface.numLinhas], bh
-
-;; Vamos salvar o esquema de cores atual do Sistema, para consistencia
-;; Isso e importante para definir se estamos em modo claro ou escuro de
-;; interface
-
-    hx.syscall obterCor
-
-    mov dword[Andromeda.Interface.corFonte], eax
-    mov dword[Andromeda.Interface.corFundo], ebx
 
 ;; Vamos criar a estrutura de interface com titulo e rodape
 
