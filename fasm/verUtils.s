@@ -72,7 +72,7 @@
 ;;
 ;; Compatibilidade: Hexagonix H1 ou superior
 ;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          1.0 rev 0 31/08/2023
+;; Versão:          1.1 rev 0 27/11/2023
 ;;
 ;;************************************************************************************
 
@@ -347,7 +347,7 @@ obterPacoteDistribuicao:
 
     popa
 
-    jmp obterDataHora
+    jmp obterRelease
 
 .erro:
 
@@ -363,7 +363,7 @@ obterPacoteDistribuicao:
 
 ;;************************************************************************************
 
-obterDataHora:
+obterRelease:
 
     pusha
 
@@ -399,12 +399,12 @@ obterDataHora:
     cmp al, '#'
     jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
 
-;; BX agora aponta para o primeiro caractere da data e hora de lançamento
+;; BX agora aponta para o primeiro caractere do lançamento
 
     push ds
     pop es
 
-    mov di, dataHora ;; Será copiado para ES:DI
+    mov di, release ;; Será copiado para ES:DI
 
     mov si, enderecoCarregamento
 
@@ -412,7 +412,7 @@ obterDataHora:
 
     mov bx, 0 ;; Iniciar em 0
 
-.recuperarDataHora:
+.recuperarRelease:
 
     inc bx
 
@@ -422,15 +422,15 @@ obterDataHora:
     mov al, [ds:si+bx]
 
     cmp al, '!' ;; Se encontrar outro delimitador, foi carregado com sucesso
-    je .dataHoraObtida
+    je .releaseObtida
 
 ;; Se não estiver pronto, armazenar o caractere obtido
 
     stosb
 
-    jmp .recuperarDataHora
+    jmp .recuperarRelease
 
-.dataHoraObtida:
+.releaseObtida:
 
     pop es
 
@@ -503,7 +503,7 @@ obterBuildDistribuicao:
 
     mov bx, 0 ;; Iniciar em 0
 
-.recuperarDataHora:
+.recuperarBuild:
 
     inc bx
 
@@ -519,7 +519,7 @@ obterBuildDistribuicao:
 
     stosb
 
-    jmp .recuperarDataHora
+    jmp .recuperarBuild
 
 .buildObtida:
 
@@ -548,6 +548,6 @@ db "HEXGNIX.OCL", 0
 versaoObtida:       times 64 db 0
 codigoObtido:       times 64 db 0
 pacoteAtualizacoes: times 64 db 0
-dataHora:           times 64 db 0
+release:            times 64 db 0
 buildObtida:        times 64 db 0
 posicaoBXVerUtils:           dw 0
