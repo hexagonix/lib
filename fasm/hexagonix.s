@@ -72,21 +72,48 @@
 ;;
 ;; Compatibilidade: Hexagonix H1 ou superior
 ;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          0.5 rev 0 31/08/2023
+;; Versão:          0.6 rev 0 07/12/2023
 ;;
 ;;************************************************************************************
 
 Hexagonix.Logo:
 
-.logo:
-db 10,10
-db "  88                                                                                88", 10
-db "  88                                                                                ''", 10
-db "  88", 10
-db "  88,dPPPba,   ,adPPPba, 8b,     ,d8 ,adPPPPba,  ,adPPPb,d8  ,adPPPba,  8b,dPPPba,  88 8b,     ,d8", 10
-db "  88P'    '88 a8P     88  `P8, ,8P'  ''     `P8 a8'    `P88 a8'     '8a 88P'   `'88 88  `P8, ,8P'", 10
-db "  88       88 8PP'''''''    )888(    ,adPPPPP88 8b       88 8b       d8 88       88 88    )888(", 10
-db "  88       88 '8b,   ,aa  ,d8' '8b,  88,    ,88 '8a,   ,d88 '8a,   ,a8' 88       88 88  ,d8' '8b,", 10
-db "  88       88  `'Pbbd8'' 8P'     `P8 `'8bbdP'P8  `'PbbdP'P8  `'PbbdP''  88       88 88 8P'     `P8", 10
-db "                                                 aa,    ,88", 10
-db "                                                  'P8bbdP'", 0
+.linha1:
+db "88                                                                                88", 0
+.linha2:
+db "88                                                                                ''", 0
+.linha3:
+db "88", 0
+.linha4:
+db "88,dPPPba,   ,adPPPba, 8b,     ,d8 ,adPPPPba,  ,adPPPb,d8  ,adPPPba,  8b,dPPPba,  88 8b,     ,d8", 0
+.linha5:
+db "88P'    '88 a8P     88  `P8, ,8P'  ''     `P8 a8'    `P88 a8'     '8a 88P'   `'88 88  `P8, ,8P'", 0
+.linha6:
+db "88       88 8PP'''''''    )888(    ,adPPPPP88 8b       88 8b       d8 88       88 88    )888(", 0
+.linha7:
+db "88       88 '8b,   ,aa  ,d8' '8b,  88,    ,88 '8a,   ,d88 '8a,   ,a8' 88       88 88  ,d8' '8b,", 0
+.linha8:
+db "88       88  `'Pbbd8'' 8P'     `P8 `'8bbdP'P8  `'PbbdP'P8  `'PbbdP''  88       88 88 8P'     `P8", 0
+.linha9:
+db "                                               aa,    ,88", 0
+.linha10:
+db "                                                'P8bbdP'", 0
+
+Hexagonix.LogoResumido:
+
+.linha1:
+db "88", 0
+.linha2:
+db "88", 0
+.linha3:
+db "88", 0
+.linha4:
+db "88,dPPPba,", 0
+.linha5:
+db "88P'    '88", 0
+.linha6:
+db "88       88", 0
+.linha7:
+db "88       88", 0
+.linha8:
+db "88       88", 0
