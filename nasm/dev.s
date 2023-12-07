@@ -110,14 +110,14 @@ db "com4", 0
 
 Hexagon.LibASM.Dev.portasParalelas:
 
-;; Portas paralelas e impressoras
+;; Portas paralelas
 
-.imp0: ;; Primeira porta paralela
-db "imp0", 0
-.imp1: ;; Segunda porta paralela
-db "imp1", 0
-.imp2: ;; Terceira porta paralela
-db "imp2", 0
+.lpt0: ;; Primeira porta paralela
+db "lpt0", 0
+.lpt1: ;; Segunda porta paralela
+db "lpt1", 0
+.lpt2: ;; Terceira porta paralela
+db "lpt2", 0
 
 Hexagon.LibASM.Dev.video:
 
