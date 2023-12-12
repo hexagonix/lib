@@ -165,6 +165,21 @@ macro novaLinha
 
 }
 
+macro putNewLine
+{
+
+    push ebx
+
+    xor ebx, ebx
+
+    mov al, 10 ;; 10 é o caractere de nova linha
+
+    pop ebx
+
+    hx.syscall imprimirCaractere
+
+}
+
 ;; Macro para exibir um número inteiro no console
 
 macro imprimirInteiro
