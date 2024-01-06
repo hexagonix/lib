@@ -293,7 +293,7 @@ macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
 
     mov esi, mensagem
 
-    hx.syscall tamanhoString
+    hx.syscall hx.stringSize
 
 ;; Em AX, o tamanho da String
 

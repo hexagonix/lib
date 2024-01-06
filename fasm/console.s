@@ -243,7 +243,7 @@ macro gotoxy x, y
 
 }
 
-;; The xyfputs macro changes to a specific row and column and sends the content 
+;; The xyfputs macro changes to a specific row and column and sends the content
 ;; passed as a parameter to the console
 
 macro xyfputs x, y, string ;; Macro used to print content on the console
@@ -447,7 +447,7 @@ Lib.Console:
 .fontColor:       dd 0
 .resolution:      dd 0
 
-;; A quick guide to the resolution field, responsible for storing the code related to the resolution in 
+;; A quick guide to the resolution field, responsible for storing the code related to the resolution in
 ;; use or to be implemented. Options can be:
 ;;
 ;; 1 - Resolution of 800x600 pixels

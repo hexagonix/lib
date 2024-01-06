@@ -105,8 +105,8 @@ db "syslogd", 0
 macro systemLog message, errorCode, priority
 {
 
-    mov esi, message   
-    mov eax, errorCode 
+    mov esi, message
+    mov eax, errorCode
     mov ebx, priority  ;; Important!
 
     hx.syscall hx.sendMessageHexagon
@@ -115,7 +115,7 @@ macro systemLog message, errorCode, priority
 
 ;; syslogd should be the default mechanism for sending log messages when possible, by system utilities
 ;; that are not critical (as an example of critical utilities, we have init, login, power, etc.).
-;; For critical utilities directly involved in system startup and maintenance, direct access can 
+;; For critical utilities directly involved in system startup and maintenance, direct access can
 ;; still be performed, as the priority level can change depending on the application.
 
 macro syslogdX message, errorCode, priority
