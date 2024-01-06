@@ -68,130 +68,119 @@
 
 ;;************************************************************************************
 ;;
-;; Este e um template para a construcao de um app de modo grafico para
-;; o Hexagonix!
+;; This is a template for building a graphical app for Hexagonix!
 ;;
-;; Escrito por Felipe Miguel Nery Lunkes em 04/12/2020
+;; Written by Felipe Miguel Nery Lunkes on 12/04/2020
 ;;
-;; Voce pode gerar uma imagem HAPP executavel utilizando o montador
-;; FASM incluido. Para isso, utilize a linha de comando abaixo:
+;; You can generate an executable HAPP image using the fasm assembler
+;; included. To do this, use the command line below:
 ;;
 ;; fasmX gapp.asm
-;;       ou
+;; or
 ;; fasmX gapp.asm gapp.app
 
-;; Agora, vamos definir o formato da imagem gerada. Como o fasmX nao
-;; tem suporte nativo ao formato HAPP, vamos gerar uma imagem binaria
-;; simples e vamos adicionar as informacoes especificas do formato com
-;; o cabecalho que esta definido abaixo, gerando de forma indireta uma
-;; imagem HAPP completa. Tambem vamos definir que o nome da imagem gerada
-;; sera o mesmo do arquivo .asm, mas como a extensao .app, que deve ser
-;; reconhecida pelo shell. Para isso, devemos usar:
-;;
-;; format binary as "app". O formato binario ja e o padrao e, caso o
-;; usuario insira fasmx gapp.asm gapp.app, toda essa linha pode ser
-;; ignorada e a linha abaixo nao precisa estar no codigo.
+;; Now, let's define the format of the generated image. As fasmX doesn't
+;; has native support for the HAPP format, let's generate a simple binary image
+;; and add the format specific information with the header defined below,
+;; indirectly generating a valid HAPP image.
 
-format binary as " " ;; Especifica o formato e extensao do arquivo
+format binary as " " ;; Specifies the file format and extension
 
 use32
 
-cabecalhoAPP:
+headerHAPP:
 
-.assinatura:      db "HAPP"    ;; Assinatura
-.arquitetura:     db 01h       ;; Arquitetura (i386 = 01h)
-.versaoMinima:    db 1         ;; Versao minima do Hexagon(R)
-.subversaoMinima: db 00        ;; Subversao minima do Hexagon(R)
-.pontoEntrada:    dd inicioAPP ;; Offset do ponto de entrada
-.tipoImagem:      db 01h       ;; Imagem executavel
-.reservado0:      dd 0         ;; Reservado (Dword)
-.reservado1:      db 0         ;; Reservado (Byte)
-.reservado2:      db 0         ;; Reservado (Byte)
-.reservado3:      db 0         ;; Reservado (Byte)
-.reservado4:      dd 0         ;; Reservado (Dword)
-.reservado5:      dd 0         ;; Reservado (Dword)
-.reservado6:      dd 0         ;; Reservado (Dword)
-.reservado7:      db 0         ;; Reservado (Byte)
-.reservado8:      dw 0         ;; Reservado (Word)
-.reservado9:      dw 0         ;; Reservado (Word)
-.reservado10:     dw 0         ;; Reservado (Word)
+;; HAPP2 specification (HAPP 2.0 rev 0)
 
-;;*************************************************************
-
-include "hexagon.s" ;; Incluir as chamadas de sistema
-include "estelar.s" ;; Inclui funcoes de criacao de interfaces
+magicNumber:   db "HAPP" ;; Magic number
+architecture:  db 01h    ;; Image architecture (i386 = 01h)
+minVer:        db 1      ;; Minimum version of Hexagon(R)
+minMinorVer:   db 00     ;; Minimal subversion of Hexagon(R)
+entryPoint:    dd applicationStart ;; Image entry point
+imageType:     db 01h ;; Image type
+reserved0:     dd 0 ;; Reserved (Dword)
+reserved1:     db 0 ;; Reserved (Byte)
+reserved2:     db 0 ;; Reserved (Byte)
+reserved3:     db 0 ;; Reserved (Byte)
+reserved4:     dd 0 ;; Reserved (Dword)
+reserved5:     dd 0 ;; Reserved (Dword)
+reserved6:     dd 0 ;; Reserved (Dword)
+reserved7:     db 0 ;; Reserved (Byte)
+reserved8:     dw 0 ;; Reserved (Word)
+reserved9:     dw 0 ;; Reserved (Word)
+reserved10:    dw 0 ;; Reserved (Word)
 
 ;;*************************************************************
 
-;; Variaveis e constantes
+include "hexagon.s" ;; Include system calls
+include "estelar.s" ;; Includes interface creation functions
 
-VERSAO equ "2.0" ;; Versao do aplicativo
+;;*************************************************************
+
+;; Variables and constants
+
+VERSION equ "3.0" ;; Application version
 
 gapp:
 
-.mensagemOla: ;; Colocar os dbs abaixo para facilitar a organização
-db 10, 10, "Este e um exemplo de aplicativo HAPP grafico do Hexagonix!", 10, 10
-db 10, 10, "Pressione qualquer tecla para finalizar este programa...", 10, 10, 0
+.helloMessage: ;; Place the dbs below to facilitate organization
+db 10, 10, "This is an example of a graphical HAPP application from Hexagonix!", 10, 10
+db 10, 10, "Press any key to exit...", 10, 10, 0
 
-.TITULO:
-db "Seja bem-vindo!", 0
+.TITLE:
+db "Welcome!", 0
 
-.RODAPE:
-db "[", VERSAO, "] | Pressione qualquer tecla para continuar...", 0
+.FOOTER:
+db "[", VERSION, "] | Press any key to continue...", 0
 
 .tty0:
-db "tty0", 0 ;; Console principal
+db "tty0", 0 ;; Default console
 
 ;;************************************************************************************
 
-inicioAPP:
+applicationStart:
 
-;; Vamos definir que queremos saida direta para vd0 (similar a tty0 no Linux)
-;; Isso nem sempre e necessario. Se o shell foi utilizado para chamar o app,
-;; vd0 ja esta aberto. A menos que seja chamado por um app que esteja usando, por
-;; exemplo, vd1. vd0 é o console principal, enquanto vd1-vdn são consoles virtuais.
+;; Let's define that we want direct output to tty0 (similar to tty0 in Linux).
+;; This is not always necessary. If the shell was used to call the app, tty0 is already open.
+;; Unless it is called by an app that is using, for example, tty1.
+;; tty0 is the main console while tty1-ttyn are virtual consoles.
 
     mov esi, gapp.tty0
 
-    hx.syscall abrir ;; Abrir dispositivo
+    hx.syscall hx.open ;; Open dispositivo
 
-;; Pronto, agora vamos continuar. Primeiro, limpar a saida e obter informacoes
-;; de resolucao
+;; Okay, now let's continue. First, clear the console and get resolution information
 
     Andromeda.Estelar.obterInfoConsole
 
-    hx.syscall limparTela
+    hx.syscall hx.clearConsole
 
-;; Vamos criar a estrutura de interface com titulo e rodape
+;; Let's create the interface structure with title and footer
 
-;; Formato de recebimento de parametros da funcao de criar interfaces:
-;; Vale ressaltar que os parametros devem estar na ordem!
+;; Format for receiving parameters from the create interfaces function:
+;; It is worth mentioning that the parameters must be in order!
 ;;
-;; titulo, rodape, cor do titulo, cor do rodape, cor do texto no titulo,
-;; cor do texto no rodape, cor do texto inicial do app, cor de fundo inicial
+;; title, footer, title color, footer color, text color in the title,
+;; footer text color, app initial text color, initial background color
 ;;
-;; Voce pode utilizar '\' para quebrar a linha, caso esteja muito grande, como
-;; abaixo
+;; You can use '\' to break the line if it is too long, as below
 
-    Andromeda.Estelar.criarInterface gapp.TITULO, gapp.RODAPE, VERMELHO_TIJOLO,\
+    Andromeda.Estelar.criarInterface gapp.TITLE, gapp.FOOTER, VERMELHO_TIJOLO,\
     VERMELHO_TIJOLO, BRANCO_ANDROMEDA, BRANCO_ANDROMEDA,\
-    [Andromeda.Interface.corFonte], [Andromeda.Interface.corFundo]
+    [Andromeda.Interface.fontColor], [Andromeda.Interface.backgroundColor]
 
-;; Agora vamos imprimir na interface uma mensagem simples
+;; Now let's print a simple message on the interface
 
-    fputs gapp.mensagemOla
+    fputs gapp.helloMessage
 
-;; Vamos aguardar interacao do usuario para finalizar o app
+;; We will wait for user interaction to finalize the app
 
-    hx.syscall aguardarTeclado
+    hx.syscall hx.waitKeyboard
 
-;; Interagiu? Ok, vamos finalizar o app
+;; Did you interact? Ok, let's finish the app
 
-;; Formato:
+;; Format:
 ;;
-;; Codigo de erro (neste caso, 0), tipo de saida (neste caso, 0)
+;; Error code (in this case, 0), output type (in this case, 0)
 
-    Andromeda.Estelar.finalizarProcessoGrafico 0, 0
-
-;;************************************************************************************
-
+    Andromeda.Estelar.finishGraphicProcess 0, 0
