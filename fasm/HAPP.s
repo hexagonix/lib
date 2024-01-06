@@ -68,49 +68,49 @@
 
 ;;************************************************************************************
 ;;
-;; Macros para criação e manipulação de cabeçalhos e imagens HAPP
+;; Macros for creating and manipulating HAPP headers and images
 ;;
 ;; Compatibilidade: Hexagonix H1 ou superior
 ;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          1.1 rev 2 18/01/2023
+;; Versão:          1.2 rev 0 24/08/2023
 ;;
 ;;************************************************************************************
 
-struc cabecalhoHAPP ARQUITETURA, verMin, subVerMin, entrada, tipoImagem
+struc headerHAPP imageArchitecture, minVersion, minMinorVersion, entryPointHAPP, imageTypeHAPP
 {
 
-;; Especificação HAPP2 (HAPP 2.0 rev 0)
+;; HAPP2 specification (HAPP 2.0 rev 0)
 
-assinatura:      db "HAPP"
-arquitetura:     db ARQUITETURA
-versaoMinima:    db verMin
-subVersaoMinima: db subVerMin
-pontoEntrada:    dd entrada
-tipoImagemHAPP:  db tipoImagem
-reservado0:      dd 0 ;; Reservado (Dword)
-reservado1:      db 0 ;; Reservado (Byte)
-reservado2:      db 0 ;; Reservado (Byte)
-reservado3:      db 0 ;; Reservado (Byte)
-reservado4:      dd 0 ;; Reservado (Dword)
-reservado5:      dd 0 ;; Reservado (Dword)
-reservado6:      dd 0 ;; Reservado (Dword)
-reservado7:      db 0 ;; Reservado (Byte)
-reservado8:      dw 0 ;; Reservado (Word)
-reservado9:      dw 0 ;; Reservado (Word)
-reservado10:     dw 0 ;; Reservado (Word)
+magicNumber:   db "HAPP"
+architecture:  db imageArchitecture
+minVer:        db minVersion
+minMinorVer:   db minMinorVersion
+entryPoint:    dd entryPointHAPP
+imageType:     db imageTypeHAPP
+reserved0:     dd 0 ;; Reserved (Dword)
+reserved1:     db 0 ;; Reserved (Byte)
+reserved2:     db 0 ;; Reserved (Byte)
+reserved3:     db 0 ;; Reserved (Byte)
+reserved4:     dd 0 ;; Reserved (Dword)
+reserved5:     dd 0 ;; Reserved (Dword)
+reserved6:     dd 0 ;; Reserved (Dword)
+reserved7:     db 0 ;; Reserved (Byte)
+reserved8:     dw 0 ;; Reserved (Word)
+reserved9:     dw 0 ;; Reserved (Word)
+reserved10:    dw 0 ;; Reserved (Word)
 
 }
 
-HAPP.Arquiteturas:
+HAPP.Architectures:
 
-.i386  = 01h ;; Padrão
+.i386  = 01h ;; Default
 .amd64 = 02h
 
-;; Outras, um dia
+;; Others, one day
 
-HAPP.tipoImagem: ;; Tipos de imagem HAPP que podem ser declaradas no cabeçalho
+HAPP.imageType: ;; HAPP image types that can be declared in the header
 
 .exec      = 01h
-.lib       = 02h ;; Para bibliotecas (ainda em implementação)
-.dlib      = 03h ;; Uso futuro (bibliotecas dinamicamente carregadas)
-.reservado = 04h ;; Essa imagem armazena dados, não é executável
+.lib       = 02h ;; For libraries (still being implemented)
+.dlib      = 03h ;; Future use (dynamically loaded libraries)
+.reserved  = 04h ;; This image stores data, is not executable

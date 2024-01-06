@@ -68,11 +68,11 @@
 
 ;;************************************************************************************
 ;;
-;; Macros e dados de uso comum por componentes do Hexagonix
+;; Macros and data commonly used by Hexagonix components
 ;;
-;; Compatibilidade: Hexagonix H1 ou superior
-;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          0.6 rev 0 07/12/2023
+;; Compatibility: Hexagonix H1 System I or higher
+;;                Hexagon 1.01 or newer (kernel version required)
+;;                Version: 1.0 rev 1 01/05/2024
 ;;
 ;;************************************************************************************
 
@@ -99,7 +99,7 @@ db "                                               aa,    ,88", 0
 .linha10:
 db "                                                'P8bbdP'", 0
 
-Hexagonix.LogoResumido:
+Hexagon.flatLogo:
 
 .linha1:
 db "88", 0

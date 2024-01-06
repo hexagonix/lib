@@ -93,10 +93,10 @@ struc Andromeda.Estelar.Interface
 
 .numColunas:    db 0 ;; Total de colunas disponíveis no vídeo na resolução atual
 .numLinhas:     db 0 ;; Total de linhas disponíveis no vídeo na resolução atual
-.resolucao:     db 0 ;; Resolução atual do vídeo
+.resolution:     db 0 ;; Resolução atual do vídeo
 .tema:          db 0 ;; Tema
-.corFundo:      dd 0 ;; Cor do plano de fundo
-.corFonte:      dd 0 ;; Cor do texto
+.backgroundColor:      dd 0 ;; Cor do plano de fundo
+.fontColor:      dd 0 ;; Cor do texto
 .destaque:      dd 0 ;; Cor do destaque
 .destaqueFonte: dd 0 ;; Cor de destaque da fonte
 .posicaoX:      db 0 ;; Posição de X no vídeo
@@ -126,70 +126,70 @@ Andromeda.Estelar.Tema.Fonte: ;; Definições padrão de cores de plano de fundo
 macro Andromeda.Estelar.obterInfoConsole
 {
 
-    hx.syscall obterCor
+    hx.syscall hx.getColor
 
 ;; Retornar o esquema padrão de cores do console, não o atual
 
-    mov dword[Andromeda.Interface.corFonte], ecx
-    mov dword[Andromeda.Interface.corFundo], edx
+    mov dword[Andromeda.Interface.fontColor], ecx
+    mov dword[Andromeda.Interface.backgroundColor], edx
 
-    hx.syscall obterInfoTela
+    hx.syscall hx.getConsoleInfo
 
     mov byte[Andromeda.Interface.numColunas], bl
     mov byte[Andromeda.Interface.numLinhas], bh
 
 }
 
-macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, corTextoTitulo, corTextoRodape, corTexto, corFundo
+macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, corTextoTitulo, corTextoRodape, corTexto, backgroundColor
 {
 
-    hx.syscall limparTela
+    hx.syscall hx.clearConsole
 
     mov eax, corTextoTitulo
     mov ebx, corTitulo
 
-    hx.syscall definirCor
+    hx.syscall hx.setColor
 
     mov al, 0
 
-    hx.syscall limparLinha
+    hx.syscall hx.clearLine
 
     fputs titulo
 
     mov eax, corTextoRodape
     mov ebx, corRodape
 
-    hx.syscall definirCor
+    hx.syscall hx.setColor
 
     mov al, byte[Andromeda.Interface.numLinhas] ;; Última linha
 
     dec al
 
-    hx.syscall limparLinha
+    hx.syscall hx.clearLine
 
     fputs rodape
 
     mov eax, corTexto
-    mov ebx, corFundo
+    mov ebx, backgroundColor
 
-    hx.syscall definirCor
+    hx.syscall hx.setColor
 
     mov dl, 2
     mov dh, 1
 
-    hx.syscall definirCursor
+    hx.syscall hx.setCursor
 
 }
 
 macro Andromeda.Estelar.atualizarResolucao
 {
 
-    hx.syscall obterCor
+    hx.syscall hx.getColor
 
-    mov dword[Andromeda.Interface.corFonte], eax
-    mov dword[Andromeda.Interface.corFundo], ebx
+    mov dword[Andromeda.Interface.fontColor], eax
+    mov dword[Andromeda.Interface.backgroundColor], ebx
 
-    hx.syscall obterResolucao
+    hx.syscall hx.getResolution
 
     cmp eax, 1
     je .resolucao800x600
@@ -199,13 +199,13 @@ macro Andromeda.Estelar.atualizarResolucao
 
 .resolucao800x600:
 
-    mov byte[Andromeda.Interface.resolucao], 01h
+    mov byte[Andromeda.Interface.resolution], 01h
 
     jmp .fim
 
 .resolucao1024x768:
 
-    mov byte[Andromeda.Interface.resolucao], 02h
+    mov byte[Andromeda.Interface.resolution], 02h
 
     jmp .fim
 
@@ -228,7 +228,7 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
     mov edi, 150          ;; Altura
     mov edx, corLogotipo  ;; Cor
 
-    hx.syscall desenharBloco
+    hx.syscall hx.drawBlock
 
 .segundaLinha:
 
@@ -238,7 +238,7 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
     mov edi, 150          ;; Altura
     mov edx, corLogotipo  ;; Cor
 
-    hx.syscall desenharBloco
+    hx.syscall hx.drawBlock
 
 .terceiraLinha:
 
@@ -248,41 +248,41 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
     mov edi, 30           ;; Altura
     mov edx, corLogotipo  ;; Cor
 
-    hx.syscall desenharBloco
+    hx.syscall hx.drawBlock
 
     mov dh, 02
     mov dl, 14
 
-    hx.syscall definirCursor
+    hx.syscall hx.setCursor
 
     mov eax, corLogotipo
     mov ebx, corFundoAposLogotipo
 
-    hx.syscall definirCor
+    hx.syscall hx.setColor
 
     mov eax, corTextoAposLogotipo
     mov ebx, corFundoAposLogotipo
 
-    hx.syscall definirCor
+    hx.syscall hx.setColor
 
 }
 
-macro Andromeda.Estelar.finalizarProcessoGrafico codigoErroGrafico, tipoSaidaGrafico
+macro Andromeda.Estelar.finishGraphicProcess codigoErroGrafico, tipoSaidaGrafico
 {
 
-    hx.syscall limparTela
+    hx.syscall hx.clearConsole
 
     mov eax, codigoErroGrafico
     mov ebx, tipoSaidaGrafico
 
-    hx.syscall encerrarProcesso
+    hx.syscall hx.exit
 
 }
 
 macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
 {
 
-    hx.syscall obterInfoTela
+    hx.syscall hx.getConsoleInfo
 
 ;; BL - Número de colunas
 ;; BH - Número de linhas
@@ -306,7 +306,7 @@ macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
     mov dl, ah
     mov dh, linha
 
-    hx.syscall definirCursor
+    hx.syscall hx.setCursor
 
     fputs mensagem
 

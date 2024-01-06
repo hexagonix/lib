@@ -68,76 +68,76 @@
 
 ;;************************************************************************************
 ;;
-;; Lista de dispositivos que podem ser acessados pelo usuário
+;; List of devices that can be accessed by the user
 ;;
-;; Compatibilidade: Hexagonix H1 ou superior
-;;                  Hexagon 1.0.1 ou mais recente (versão do kernel necessária)
-;; Versão:          1.0.1 rev 3 26/10/2023
+;; Compatibility: Hexagonix H1 System I or higher
+;;                Hexagon 1.01 or newer (kernel version required)
+;;                Version: 1.0.2 rev 3 01/05/2024
 ;;
 ;;************************************************************************************
 
-Hexagon.LibASM.Dev.discos:
+Hexagon.LibASM.Dev.disks:
 
-;; Dispositivos de armazenamento
+;; Storage devices
 
-.hd0: ;; Primeiro disco rígido
+.hd0: ;; First hard drive
 db "hd0", 0
-.hd1: ;; Segundo disco rígido
+.hd1: ;; Second hard drive
 db "hd1", 0
-.hd2: ;; Terceiro disco rígido
+.hd2: ;; Third hard drive
 db "hd2", 0
-.hd3: ;; Quarto disco rígido
+.hd3: ;; Fourth hard drive
 db "hd3", 0
-.dsq0: ;; Disquete 1
+.dsq0: ;; Floppy disk 1
 db "dsq0", 0
-.dsq1: ;; Disquete 2
+.dsq1: ;; Floppy disk 2
 db "dsq1", 0
-.cdrom: ;; Primeiro drive de CD
+.cdrom: ;; First CD drive
 db "cdrom0", 0
 
-Hexagon.LibASM.Dev.portasSeriais:
+Hexagon.LibASM.Dev.serialPorts:
 
-;; Portas seriais
+;; Serial ports
 
-.com1: ;; Primeira porta serial
+.com1: ;; First serial port
 db "com1", 0
-.com2: ;; Segunda porta serial
+.com2: ;; Second serial port
 db "com2", 0
-.com3: ;; Terceira porta serial
+.com3: ;; Third serial port
 db "com3", 0
-.com4: ;; Quarta porta serial
+.com4: ;; Fourth serial port
 db "com4", 0
 
-Hexagon.LibASM.Dev.portasParalelas:
+Hexagon.LibASM.Dev.parallelPorts:
 
-;; Portas paralelas
+;; Parallel ports
 
-.lpt0: ;; Primeira porta paralela
+.lpt0: ;; First parallel port
 db "lpt0", 0
-.lpt1: ;; Segunda porta paralela
+.lpt1: ;; Second parallel port
 db "lpt1", 0
-.lpt2: ;; Terceira porta paralela
+.lpt2: ;; Third parallel port
 db "lpt2", 0
 
 Hexagon.LibASM.Dev.video:
 
-;; Dispositivos de saída
+;; Output devices
 
-.tty0: ;; Console padrão
+.tty0: ;; Default console
 db "tty0", 0
-.tty1: ;; Primeiro console virtual
+.tty1: ;; First virtual console
 db "tty1", 0
-.tty2: ;; Console de despejo de dados do kernel
+.tty2: ;; Kernel data dump Console
 db "tty2", 0
 
 Hexagon.LibASM.Dev.audio:
 
-.au0: ;; Saída de áudio
+.au0: ;; Audio output
 db "au0", 0
 
-Hexagon.LibASM.Dev.processadores:
+Hexagon.LibASM.Dev.processors:
 
-.proc0: ;; Primeiro processador
+.proc0: ;; First processor
 db "proc0", 0
-.proc1: ;; Processador auxiliar, caso exista
+.proc1: ;; Auxiliary processor, if any
 db "proc1", 0

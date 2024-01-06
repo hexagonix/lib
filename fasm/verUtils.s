@@ -81,11 +81,11 @@
 ;; Este arquivo contém definições úteis para o uso em todo o sistema
 ;;
 ;; Essas definições incluem a versão do sistema, assim como dados úteis a todos
-;; os aplicativos core do Hexagonix
+;; os aplicativos do Hexagonix
 ;;
 ;; Definições importantes para o uso destas funções
 ;;
-;; enderecoCarregamento: fim do código do programa
+;; appFileBuffer: fim do código do programa
 ;;
 ;; Formato do arquivo:
 ;;
@@ -95,7 +95,7 @@ use32
 
 limiteBusca = 8192
 
-obterVersaoDistribuicao:
+getHexagonixVersion:
 
     pusha
 
@@ -104,24 +104,24 @@ obterVersaoDistribuicao:
     push ds
     pop es
 
-    mov esi, arquivoVersao
-    mov edi, enderecoCarregamento
+    mov esi, versionFileVerUtils
+    mov edi, appFileBuffer
 
-    hx.syscall abrir
+    hx.syscall hx.open
 
-    jc .erro
+    jc .error
 
-    mov si, enderecoCarregamento ;; Aponta para o buffer com o conteúdo do arquivo
+    mov si, appFileBuffer ;; Aponta para o buffer com o conteúdo do arquivo
     mov bx, 0FFFFh ;; Inicia na posição -1, para que se possa encontrar os delimitadores
 
 .procurarEntreDelimitadores:
 
     inc bx
 
-    mov word[posicaoBXVerUtils], bx
+    mov word[positionBXVerUtils], bx
 
     cmp bx, limiteBusca
-    je .erro ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .error ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
 
     mov al, [ds:si+bx]
 
@@ -133,9 +133,9 @@ obterVersaoDistribuicao:
     push ds
     pop es
 
-    mov di, versaoObtida ;; A versão será copiado para ES:DI
+    mov di, versionObtained ;; A versão será copiado para ES:DI
 
-    mov si, enderecoCarregamento
+    mov si, appFileBuffer
 
     add si, bx ;; Mover SI para aonde BX aponta
 
@@ -146,12 +146,12 @@ obterVersaoDistribuicao:
     inc bx
 
     cmp bx, 64
-    je .erro ;; Se versão maior que 64 caracteres, a mesma é inválida
+    je .error ;; Se versão maior que 64 caracteres, a mesma é inválida
 
     mov al, [ds:si+bx]
 
     cmp al, ']' ;; Se encontrar outro delimitador, a versão foi recuperada
-    je .versaoObtida
+    je .versionObtained
 
 ;; Se não estiver pronto, armazenar o caractere obtido
 
@@ -159,7 +159,7 @@ obterVersaoDistribuicao:
 
     jmp .obterVersao
 
-.versaoObtida:
+.versionObtained:
 
     pop es
 
@@ -169,7 +169,7 @@ obterVersaoDistribuicao:
 
     ret
 
-.erro:
+.error:
 
     pop es
 
@@ -192,15 +192,15 @@ obterCodigoDistribuicao:
     push ds
     pop es
 
-    mov esi, arquivoVersao
-    mov edi, enderecoCarregamento
+    mov esi, versionFileVerUtils
+    mov edi, appFileBuffer
 
-    hx.syscall abrir
+    hx.syscall hx.open
 
-    jc .erro
+    jc .error
 
-    mov si, enderecoCarregamento     ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [posicaoBXVerUtils] ;; Continua de onde a opção anterior parou
+    mov si, appFileBuffer     ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [positionBXVerUtils] ;; Continua de onde a opção anterior parou
 
     dec bx
 
@@ -208,11 +208,11 @@ obterCodigoDistribuicao:
 
     inc bx
 
-    mov word[posicaoBXVerUtils], bx
+    mov word[positionBXVerUtils], bx
 
     cmp bx, limiteBusca
 
-    je .erro ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .error ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
 
     mov al, [ds:si+bx]
 
@@ -224,9 +224,9 @@ obterCodigoDistribuicao:
     push ds
     pop es
 
-    mov di, codigoObtido ;; O nome de código será copiado para ES:DI
+    mov di, codeObtained ;; O nome de código será copiado para ES:DI
 
-    mov si, enderecoCarregamento
+    mov si, appFileBuffer
 
     add si, bx ;; Mover SI para onde BX aponta
 
@@ -237,12 +237,12 @@ obterCodigoDistribuicao:
     inc bx
 
     cmp bx, 64
-    je .erro ;; Se maior que 64, o mesmo é inválida
+    je .error ;; Se maior que 64, o mesmo é inválida
 
     mov al, [ds:si+bx]
 
     cmp al, '"' ;; Se encontrar outro delimitador,o nome de código
-    je .codigoObtido ;; foi completamente recuperado
+    je .codeObtained ;; foi completamente recuperado
 
 ;; Se não estiver pronto, armazenar o caractere obtido
 
@@ -250,7 +250,7 @@ obterCodigoDistribuicao:
 
     jmp .obterCodigo
 
-.codigoObtido:
+.codeObtained:
 
     pop es
 
@@ -260,7 +260,7 @@ obterCodigoDistribuicao:
 
     ret
 
-.erro:
+.error:
 
     pop es
 
@@ -283,15 +283,15 @@ obterPacoteDistribuicao:
     push ds
     pop es
 
-    mov esi, arquivoVersao
-    mov edi, enderecoCarregamento
+    mov esi, versionFileVerUtils
+    mov edi, appFileBuffer
 
-    hx.syscall abrir
+    hx.syscall hx.open
 
-    jc .erro
+    jc .error
 
-    mov si, enderecoCarregamento     ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [posicaoBXVerUtils] ;; Continua de onde a opção anterior parou
+    mov si, appFileBuffer     ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [positionBXVerUtils] ;; Continua de onde a opção anterior parou
 
     dec bx
 
@@ -299,11 +299,11 @@ obterPacoteDistribuicao:
 
     inc bx
 
-    mov word[posicaoBXVerUtils], bx
+    mov word[positionBXVerUtils], bx
 
     cmp bx, limiteBusca
 
-    je .erro ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .error ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
 
     mov al, [ds:si+bx]
 
@@ -315,9 +315,9 @@ obterPacoteDistribuicao:
     push ds
     pop es
 
-    mov di, pacoteAtualizacoes ;; O pacote será copiado para ES:DI
+    mov di, updatePackage ;; O pacote será copiado para ES:DI
 
-    mov si, enderecoCarregamento
+    mov si, appFileBuffer
 
     add si, bx ;; Mover SI para aonde BX aponta
 
@@ -328,7 +328,7 @@ obterPacoteDistribuicao:
     inc bx
 
     cmp bx, 64
-    je .erro ;; Se maior que 64, é inválido
+    je .error ;; Se maior que 64, é inválido
 
     mov al, [ds:si+bx]
 
@@ -349,7 +349,7 @@ obterPacoteDistribuicao:
 
     jmp obterRelease
 
-.erro:
+.error:
 
     pop es
 
@@ -372,15 +372,15 @@ obterRelease:
     push ds
     pop es
 
-    mov esi, arquivoVersao
-    mov edi, enderecoCarregamento
+    mov esi, versionFileVerUtils
+    mov edi, appFileBuffer
 
-    hx.syscall abrir
+    hx.syscall hx.open
 
-    jc .erro
+    jc .error
 
-    mov si, enderecoCarregamento     ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [posicaoBXVerUtils] ;; Continua de onde a opção anterior parou
+    mov si, appFileBuffer     ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [positionBXVerUtils] ;; Continua de onde a opção anterior parou
 
     dec bx
 
@@ -388,11 +388,11 @@ obterRelease:
 
     inc bx
 
-    mov word[posicaoBXVerUtils], bx
+    mov word[positionBXVerUtils], bx
 
     cmp bx, limiteBusca
 
-    je .erro ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .error ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
 
     mov al, [ds:si+bx]
 
@@ -406,7 +406,7 @@ obterRelease:
 
     mov di, release ;; Será copiado para ES:DI
 
-    mov si, enderecoCarregamento
+    mov si, appFileBuffer
 
     add si, bx ;; Mover SI para aonde BX aponta
 
@@ -417,7 +417,7 @@ obterRelease:
     inc bx
 
     cmp bx, 64
-    je .erro ;; Se maior que 64, é inválido
+    je .error ;; Se maior que 64, é inválido
 
     mov al, [ds:si+bx]
 
@@ -440,7 +440,7 @@ obterRelease:
 
     ret
 
-.erro:
+.error:
 
     pop es
 
@@ -463,15 +463,15 @@ obterBuildDistribuicao:
     push ds
     pop es
 
-    mov esi, arquivoVersao
-    mov edi, enderecoCarregamento
+    mov esi, versionFileVerUtils
+    mov edi, appFileBuffer
 
-    hx.syscall abrir
+    hx.syscall hx.open
 
-    jc .erro
+    jc .error
 
-    mov si, enderecoCarregamento     ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [posicaoBXVerUtils] ;; Continua de onde a opção anterior parou
+    mov si, appFileBuffer     ;; Aponta para o buffer com o conteúdo do arquivo
+    mov bx, word [positionBXVerUtils] ;; Continua de onde a opção anterior parou
 
     dec bx
 
@@ -479,11 +479,11 @@ obterBuildDistribuicao:
 
     inc bx
 
-    mov word[posicaoBXVerUtils], bx
+    mov word[positionBXVerUtils], bx
 
     cmp bx, limiteBusca
 
-    je .erro ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .error ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
 
     mov al, [ds:si+bx]
 
@@ -495,9 +495,9 @@ obterBuildDistribuicao:
     push ds
     pop es
 
-    mov di, buildObtida ;; Será copiado ES:DI
+    mov di, buildObtained ;; Será copiado ES:DI
 
-    mov si, enderecoCarregamento
+    mov si, appFileBuffer
 
     add si, bx ;; Mover SI para aonde BX aponta
 
@@ -508,12 +508,12 @@ obterBuildDistribuicao:
     inc bx
 
     cmp bx, 64
-    je .erro ;; Se nome de arquivo maior que 64, é inválido
+    je .error ;; Se nome de arquivo maior que 64, é inválido
 
     mov al, [ds:si+bx]
 
     cmp al, '>' ;; Se encontrar outro delimitador, foi carregado com sucesso
-    je .buildObtida
+    je .buildObtained
 
 ;; Se não estiver pronto, armazenar o caractere obtido
 
@@ -521,7 +521,7 @@ obterBuildDistribuicao:
 
     jmp .recuperarBuild
 
-.buildObtida:
+.buildObtained:
 
     pop es
 
@@ -529,7 +529,7 @@ obterBuildDistribuicao:
 
     ret
 
-.erro:
+.error:
 
     pop es
 
@@ -543,11 +543,17 @@ obterBuildDistribuicao:
 
 ;;************************************************************************************
 
-arquivoVersao:
+versionFileVerUtils:
 db "HEXGNIX.OCL", 0
-versaoObtida:       times 64 db 0
-codigoObtido:       times 64 db 0
-pacoteAtualizacoes: times 64 db 0
-release:            times 64 db 0
-buildObtida:        times 64 db 0
-posicaoBXVerUtils:           dw 0
+versionObtained:
+times 64 db 0
+codeObtained:
+times 64 db 0
+updatePackage:
+times 64 db 0
+release:
+times 64 db 0
+buildObtained:
+times 64 db 0
+positionBXVerUtils:
+dw 0

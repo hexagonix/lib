@@ -80,33 +80,33 @@
 ;;
 ;;************************************************************************************
 
-macro tocarNota frequencia
+macro playNote frequencia
 {
 
     mov ax, frequencia
     mov bx, 00h
 
-    hx.syscall emitirSom
+    hx.syscall hx.emitSound
 
 }
 
-macro tocarNotaT frequencia, temporizador
+macro playNoteWithTimer frequencia, temporizador
 {
 
     mov ax, frequencia
     mov bx, 00h
 
-    hx.syscall emitirSom
+    hx.syscall hx.emitSound
 
     mov ecx, temporizador
 
     hx.syscall causarAtraso
 
-    hx.syscall desligarSom
+    hx.syscall hx.offSound
 
 }
 
-macro pausar tempo
+macro delay tempo
 {
 
     mov ecx, tempo
@@ -115,9 +115,9 @@ macro pausar tempo
 
 }
 
-macro finalizarNota
+macro finishNote
 {
 
-    hx.syscall desligarSom
+    hx.syscall hx.offSound
 
 }

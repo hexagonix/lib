@@ -68,93 +68,88 @@
 
 ;;************************************************************************************
 ;;
-;; Macros para desenvolvimento de utilitários do Hexagonix
+;; Macros for Hexagonix utility development
 ;;
-;; Compatibilidade: Hexagonix H1 ou superior
-;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          2.1 rev 0 02/09/2023
+;; Compatibility: Hexagonix H1 System I or higher
+;;                Hexagon 1.01 or newer (kernel version required)
+;;                Version: 2.2 rev 1 01/05/2024
 ;;
 ;;************************************************************************************
 
-;; Utilize o macro Abrir para carregar um arquivo ou então para estabelecer comunicação
-;; com um dispositivo conectado ao computador.
-;; Para arquivo, o endereço de destino  deve ser fornecido. Já para dispositivo, o nome
-;; deve ser seguido de 0.
-
-macro Abrir nome, endereco
+macro Open filename, address
 {
 
-    mov esi, nome
-    mov edi, endereco
+    mov esi, filename
+    mov edi, address
 
-    hx.syscall abrir
+    hx.syscall hx.open
 
 }
 
-macro finalizarProcesso codigoErro, tipoSaida
+macro finishProcess errorCode, exitType
 {
 
-    mov eax, codigoErro
-    mov ebx, tipoSaida
+    mov eax, errorCode
+    mov ebx, exitType
 
-    hx.syscall encerrarProcesso
+    hx.syscall hx.exit
 
 }
 
-macro finalizarProcessoGrafico codigoErroGrafico, tipoSaidaGrafico
+macro finishGraphicProcess errorCode, exitType
 {
 
-    hx.syscall limparTela
+    hx.syscall hx.clearConsole
 
-    finalizarProcesso codigoErroGrafico, tipoSaidaGrafico
+    finishProcess errorCode, exitType
 
 }
 
-macro tocarNota frequencia
+macro playNote frequency
 {
 
-    mov ax, frequencia
+    mov ax, frequency
     mov bx, 00h
 
-    hx.syscall emitirSom
+    hx.syscall hx.emitSound
 
 }
 
-macro tocarNotaT frequencia, temporizador
+macro playNoteWithTimer frequency, timer
 {
 
-    mov ax, frequencia
+    mov ax, frequency
     mov bx, 00h
 
-    hx.syscall emitirSom
+    hx.syscall hx.emitSound
 
-    mov ecx, temporizador
+    mov ecx, timer
 
-    hx.syscall causarAtraso
+    hx.syscall hx.sleep
 
-    hx.syscall desligarSom
+    hx.syscall hx.offSound
 
 }
 
-macro pausar tempo
+macro delay tempo
 {
 
     mov ecx, tempo
 
-    hx.syscall causarAtraso
+    hx.syscall hx.sleep
 
 }
 
-macro finalizarNota
+macro finishNote
 {
 
-    hx.syscall desligarSom
+    hx.syscall hx.offSound
 
 }
 
 ;;************************************************************************************
 
-;; O código abaixo extrai e cria strings com informações sobre a build do software
+;; The code below extracts and creates strings with information about the software build
 
 __tempoatual            = %t
 __quadvalorano          = (__tempoatual+31536000)/126230400

@@ -68,26 +68,26 @@
 
 ;;************************************************************************************
 ;;
-;; Lista de prioridades e macros para envio de mensagens do sistema
+;; List of priorities and macros for sending system messages
 ;;
-;; Compatibilidade: Hexagonix H1 ou superior
-;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          1.0 rev 1 18/01/2023
+;; Compatibility: Hexagonix H1 System I or higher
+;;                Hexagon 1.01 or newer (kernel version required)
+;;                Version: 1.0 rev 1 01/05/2024
 ;;
 ;;************************************************************************************
 
-;; Lista de prioridades do Kernel:
-;;
-;; 0 - Interromper a execução do processo atual e exibir uma mensagem (a ser implementado).
-;; 1 - Não interromper o processamento e exibir a mensagem apenas, interrompendo a execução de
-;;     qualquer processo (a ser implementado).
-;; 2 - Exibir a mensagem apenas de algum utilitário realizar uma chamada de solicitação
-;;     (a ser implementado).
-;; 3 - Mensagem relevante apenas ao Kernel (a ser implementado).
-;; 4 - Enviar a mensagem apenas via serial, para fins de debug (verbose).
-;; 5 - Enviar a mensagem na saída padrão e por via serial (padrão).
 
-Log.Prioridades:
+;; Kernel priority list:
+;;
+;; 0 - Stop the execution of the current process and display a message (to be implemented).
+;; 1 - Do not interrupt processing and only display the message, interrupting the
+;;     execution of any process (to be implemented).
+;; 2 - Display the message only if a utility makes a request call (to be implemented).
+;; 3 - Message relevant only to the Kernel (to be implemented).
+;; 4 - Send the message only via serial, for debugging purposes (verbose).
+;; 5 - Send the message to standard output and via serial (standard).
+
+Log.Priorities:
 
 .p0 = 0
 .p1 = 1
@@ -100,36 +100,31 @@ Log.Prioridades:
 .syslogd:
 db "syslogd", 0
 
-;; Um macro simples para enviar mensagens para o log do sistema
+;; A simple macro to send messages to the system log
 
-macro logSistema mensagem, codigoErro, prioridade
+macro systemLog message, errorCode, priority
 {
 
-    mov esi, mensagem   ;; Mensagem a ser enviada
-    mov eax, codigoErro ;; Código de erro
-    mov ebx, prioridade ;; Importante!
+    mov esi, message   
+    mov eax, errorCode 
+    mov ebx, priority  ;; Important!
 
-    hx.syscall enviarMensagemHexagon
+    hx.syscall hx.sendMessageHexagon
 
 }
 
-;; syslogd deverá ser o mecanismo padrão para envio de mensagens de log quando
-;; possível, por utilitários do sistema que não são críticos (como exemplo de
-;; utilitários críticos, temos init, login, energia, etc). Os utilitários
-;; de ambiente Andromeda deverão usar preferencialmente o syslogd, para evitar
-;; acesso direto a interfaces expostas pelo Hexagon, impedindo também o mau
-;; uso da interface, uma vez que as mensagens são tratadas previamente pelo syslogd.
-;; Para utilitários críticos envolvidos diretamente na inicialização e manutenção do
-;; sistema, o acesso direto ainda pode ser executado, uma vez que o nível de prioridade
-;; pode mudar de acordo com a aplicação.
+;; syslogd should be the default mechanism for sending log messages when possible, by system utilities
+;; that are not critical (as an example of critical utilities, we have init, login, power, etc.).
+;; For critical utilities directly involved in system startup and maintenance, direct access can 
+;; still be performed, as the priority level can change depending on the application.
 
-macro syslogdX mensagem, codigoErro, prioridade
+macro syslogdX message, errorCode, priority
 {
 
-    mov esi, Log.Prioridades.syslogd
-    mov edi, mensagem
-    mov eax, 01h ;; Não deixar em branco
+    mov esi, Log.Priorities.syslogd
+    mov edi, message
+    mov eax, 01h ;; Do not leave blank
 
-    hx.syscall iniciarProcesso
+    hx.syscall hx.exec
 
 }

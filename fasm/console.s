@@ -68,100 +68,83 @@
 
 ;;************************************************************************************
 ;;
-;; Macros para manipulação do console
+;; Macros for console manipulation
 ;;
-;; Compatibilidade: Hexagonix H1 R1.2 (05/06/2022) ou superior
-;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          0.9.1 rev 0 17/11/2023
+;; Compatibility: Hexagonix H1 System I or higher
+;;                Hexagon 1.01 or newer (kernel version required)
+;;                Version: 1.0 rev 1 01/05/2024
 ;;
 ;;************************************************************************************
 
-;; Salvar as informações sobre o console em uso
+;; Save information about the console in use
 
-macro salvarConsole
+macro saveConsole
 {
 
-    hx.syscall obterInfoTela
+    hx.syscall hx.getConsoleInfo
 
-    mov byte[Lib.Console.maxColunas], bl
-    mov byte[Lib.Console.maxLinhas], bh
+    mov byte[Lib.Console.maxColumns], bl
+    mov byte[Lib.Console.maxLines], bh
 
-    hx.syscall obterCor
+    hx.syscall hx.getColor
 
-    mov dword[Lib.Console.corFonte], eax
-    mov dword[Lib.Console.corFundo], ebx
+    mov dword[Lib.Console.fontColor], eax
+    mov dword[Lib.Console.backgroundColor], ebx
 
-    hx.syscall obterResolucao
+    hx.syscall hx.getResolution
 
-    mov dword[Lib.Console.resolucao], eax
+    mov dword[Lib.Console.resolution], eax
 
 }
 
-;; Restaurar informações sobre o console atual
+;; Restore information about the current console
 
-macro restaurarConsole
+macro restoreConsole
 {
 
-    mov eax, dword[Lib.Console.corFonte]
-    mov ebx, dword[Lib.Console.corFundo]
+    mov eax, dword[Lib.Console.fontColor]
+    mov ebx, dword[Lib.Console.backgroundColor]
 
-    hx.syscall definirCor
+    hx.syscall hx.setColor
 
-    mov eax, dword[Lib.Console.resolucao]
+    mov eax, dword[Lib.Console.resolution]
 
-    hx.syscall definirResolucao
+    hx.syscall hx.setResolution
 
 }
 
-;; Macro para alterar o conjunto de cores do console
+;; Macro to change console color set
 
-macro definirCorConsole consoleCorFonte, consoleCorFundo
+macro setConsoleColor consoleFontColor, consoleBackgroundColor
 {
 
-    mov eax, consoleCorFonte
-    mov ebx, consoleCorFundo
+    mov eax, consoleFontColor
+    mov ebx, consoleBackgroundColor
 
-    hx.syscall definirCor
+    hx.syscall hx.setColor
 
 }
 
-;; Restaurar o conjunto de cores do console
+;; Restore the console color set
 
-macro restaurarCorConsole
+macro restoreConsoleColor
 {
 
-    mov eax, dword[Lib.Console.corFonte]
-    mov ebx, dword[Lib.Console.corFundo]
+    mov eax, dword[Lib.Console.fontColor]
+    mov ebx, dword[Lib.Console.backgroundColor]
 
-    hx.syscall definirCor
+    hx.syscall hx.setColor
 
 }
 
-;; Restaura o comportamento padrão do console e limpar o terminal
+;; Restores default console behavior and clears the console
 
-macro restaurarConsoleLimpar
+macro restoreAndClearConsole
 {
 
-    restaurarConsole
+    restoreConsole
 
-    hx.syscall limparTela
-
-}
-
-;; Macro para enviar um caractere de nova linha para o console
-
-macro novaLinha
-{
-
-    push ebx
-
-    xor ebx, ebx
-
-    mov al, 10 ;; 10 é o caractere de nova linha
-
-    pop ebx
-
-    hx.syscall imprimirCaractere
+    hx.syscall hx.clearConsole
 
 }
 
@@ -172,83 +155,83 @@ macro putNewLine
 
     xor ebx, ebx
 
-    mov al, 10 ;; 10 é o caractere de nova linha
+    mov al, 10 ;; 10 is the newline character
 
     pop ebx
 
-    hx.syscall imprimirCaractere
+    hx.syscall hx.printCharacter
 
 }
 
-;; Macro para exibir um número inteiro no console
+;; Macro to display an integer in the console
 
-macro imprimirInteiro
+macro printInteger
 {
 
     mov ebx, 01h
 
-    hx.syscall imprimir
+    hx.syscall hx.print
 
 }
 
-;; Macro para exibir um número hexadecimal no console
+;; Macro to display a hexadecimal number in the console
 
-macro imprimirHexadecimal
+macro printHexadecimal
 {
 
     mov ebx, 02h
 
-    hx.syscall imprimir
+    hx.syscall hx.print
 
 }
 
-;; Macro para exibir um número binário no console
+;; Macro to display a binary number in the console
 
-macro imprimirBinario
+macro printBinary
 {
 
     mov ebx, 03h
 
-    hx.syscall imprimir
+    hx.syscall hx.print
 
 }
 
-;; Macro para exibir uma string no console
+;; Macro to display a string in the console
 
-macro imprimirString
+macro printString
 {
 
     mov ebx, 04h
 
-    hx.syscall imprimir
+    hx.syscall hx.print
 
 }
 
-;; O macro fputs não adiciona uma nova linha após enviar o conteúdo para o console
+;; fputs macro does not add a new line after sending content to the console
 
-macro fputs string ;; Macro utilizado para imprimir determinado conteúdo no console
+macro fputs string ;; Macro used to print content on the console
 {
 
     mov esi, string
 
-    imprimirString
+    printString
 
 }
 
-;; O macro puts adiciona uma nova linha após enviar o conteúdo para o console
+;; The puts macro adds a new line after sending the content to the console
 
-macro puts string ;; Macro utilizado para imprimir determinado conteúdo no console
+macro puts string ;; Macro used to print content on the console
 {
 
     mov esi, string
 
-    imprimirString
+    printString
 
-    novaLinha
+    putNewLine
 
 }
 
-;; O macro gotoxy é utilizado para alterar para uma linha ou coluna específica no console
+;; The gotoxy macro is used to change to a specific row or column in the console
 
 macro gotoxy x, y
 {
@@ -256,36 +239,36 @@ macro gotoxy x, y
     mov dl, x
     mov dh, y
 
-    hx.syscall definirCursor
+    hx.syscall hx.setCursor
 
 }
 
-;; O macro xyfputs altera para uma linha e coluna específicas e envia o conteúdo passado
-;; como parâmetro para o console
+;; The xyfputs macro changes to a specific row and column and sends the content 
+;; passed as a parameter to the console
 
-macro xyfputs x, y, string ;; Macro utilizado para imprimir determinado conteúdo no console
+macro xyfputs x, y, string ;; Macro used to print content on the console
 {
 
     gotoxy x, y
 
     mov esi, string
 
-    imprimirString
+    printString
 
 }
 
 ;;************************************************************************************
 
-;; Temas do Hexagonix, utilizados desde a inicialização
+;; Hexagonix themes, used since startup
 
-;; Cor            | Código HEX
+;; Color | HEX code
 
-;; Tema padrão do Hexagonix
+;; Hexagonix Default Theme
 
-HEXAGONIX_PADRAO_FUNDO = HEXAGONIX_BLOSSOM_CINZA
-HEXAGONIX_PADRAO_FONTE = HEXAGONIX_BLOSSOM_AMARELO
+HEXAGONIX_DEFAULT_BACKGROUND = HEXAGONIX_BLOSSOM_CINZA
+HEXAGONIX_DEFAULT_FONT_COLOR = HEXAGONIX_BLOSSOM_AMARELO
 
-;; Tema Blossom (padrão do sistema)
+;; Blossom Theme (System Default)
 
 HEXAGONIX_BLOSSOM_CINZA          = 0x29282928
 HEXAGONIX_BLOSSOM_AMARELO        = 0x00C7B898
@@ -309,18 +292,18 @@ HEXAGONIX_BLOSSOM_VERMELHO       = 0x00E5665D
 HEXAGONIX_BLOSSOM_ROSA           = 0x00FFCCEA
 HEXAGONIX_BLOSSOM_ROXO           = 0x00C38CA7
 
-;; Tema clássico do Hexagonix (descontinuado)
+;; Classic Hexagonix Theme (deprecated)
 
 HEXAGONIX_CLASSICO_PRETO  = 0x00000000
 HEXAGONIX_CLASSICO_BRANCO = 0xFFFFFFFF
 
 ;;************************************************************************************
 
-;; Lista de cores que podem ser utilizadas no design de interfaces do sistema
+;; List of colors that can be used in system interface design
 
-;; Cor            | Código HEX
+;; Color | HEX code
 
-;; Cores padrão do Hexagonix (extraídas do logo do sistema)
+;; Hexagonix default colors (taken from the system logo)
 
 MARROM_HEXAGONIX   = 0xC3765B
 CAQUI_HEXAGONIX    = 0xF2D2BE
@@ -332,7 +315,7 @@ AMARELO_HEXAGONIX  = 0xFBCB04
 OURO_HEXAGONIX     = 0xAF7F11
 CINZENTO_HEXAGONIX = 0xCBB5B9
 
-;; Escala de cinza
+;; Grey scale
 
 PRETO            = 0x000000
 CINZA            = 0x808080
@@ -343,7 +326,7 @@ PRATA            = 0xC0C0C0
 BRANCO_ANDROMEDA = 0xFFFFFF
 BRANCO_PURO      = 0xFDFEFE
 
-;; Escala de azul
+;; Blue scale
 
 AZUL_PURO         = 0x0000FF
 AZUL_80           = 0x9999FF
@@ -366,7 +349,7 @@ AZUL_CADET        = 0x5F9EA0
 AZUL_NOTURNO      = 0x191970
 AZUL_CALMANTE     = 0x2980B9
 
-;; Escala de verde
+;; Green scale
 
 VERDE_75         = 0x80FFAA
 VERDE_60         = 0x33FF77
@@ -385,7 +368,7 @@ LIMA             = 0x00FF00
 OLIVA            = 0x808000
 OLIVA_ESCURO     = 0x556B2F
 
-;; Escala do marrom
+;; Brown scale
 
 CAQUI_ESCURO  = 0xBDB76B
 MARROM        = 0x8B4513
@@ -396,7 +379,7 @@ TRIGO         = 0xF5DEB3
 MARROM_PERU   = 0xCD853F
 BRONZE        = 0xD35400
 
-;; Escala do roxo
+;; Purple scale
 
 ROXO_PURO        = 0x660066
 ROXO_70          = 0xFF66FF
@@ -411,7 +394,7 @@ MAGENTA          = 0xFF00FF
 ROXO_ESCURO      = 0x9932CC
 LAVANDA_SURPRESA = 0x4A235A
 
-;; Escala do vermelho
+;; Red scale
 
 CORAL            = 0xFF7F50
 VERMELHO         = 0xFF0000
@@ -423,23 +406,23 @@ TOMATE           = 0xFF6347
 VERMELHO_HEXA    = 0xB03A2E
 VERMELHO_GABRIEL = 0xD4553A
 
-;; Escala do rosa
+;; Pink scale
 
 ROSA_CHOQUE = 0xFF0080
 ROSA_70     = 0xFF66B3
 ROSA_60     = 0xFF3399
 ROSA_35     = 0xB30059
 
-;; Escala do laranja
+;; Orange scale
 
 LARANJA_PURO     = 0xFF6600
 LARANJA_70       = 0xFFA366
 LARANJA_55       = 0xFF751A
 LARANJA          = 0xFFA500
-LARANJA_ESCURO   = 0xFF8C00 ;; Cor padrão do Hexagonix
+LARANJA_ESCURO   = 0xFF8C00 ;; Hexagonix default color
 LARANJA_VERMELHO = 0xFF4500
 
-;; Escala do amarelo
+;; Yellow scale
 
 OURO              = 0xFFCC00
 GEMA              = 0xE6B800
@@ -458,17 +441,17 @@ AMARELO_ANDROMEDA = 0xF5A700
 
 Lib.Console:
 
-.maxColunas: db 0
-.maxLinhas:  db 0
-.corFundo:   dd 0
-.corFonte:   dd 0
-.resolucao:  dd 0
+.maxColumns:      db 0
+.maxLines:        db 0
+.backgroundColor: dd 0
+.fontColor:       dd 0
+.resolution:      dd 0
 
-;; Um guia rápido sobre o campo resolução, responsável por armazenar o código relativo
-;; à resolução em uso ou a ser implementada. As opções podem ser:
+;; A quick guide to the resolution field, responsible for storing the code related to the resolution in 
+;; use or to be implemented. Options can be:
 ;;
-;; 1 - Resolução de 800x600 pixels
-;; 2 - Resolução de 1024x768 pixels
-;; 3 - Modo texto
+;; 1 - Resolution of 800x600 pixels
+;; 2 - Resolution of 1024x768 pixels
+;; 3 - Text mode
 
-;; Fim deste arquivo
+;; End of this file

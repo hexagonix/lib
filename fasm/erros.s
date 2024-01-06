@@ -68,7 +68,7 @@
 
 ;;************************************************************************************
 ;;
-;; Lista de erros lançados pelo Hexagon ou outros componentes do Hexagonix
+;; List of errors thrown by Hexagon or other Hexagonix components
 ;;
 ;; Compatibilidade: Hexagonix H1 ou superior
 ;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
@@ -76,24 +76,24 @@
 ;;
 ;;************************************************************************************
 
-;; Erros de entrada e saída (I/O), VFS e Hexagon
+;; Input and output (I/O), VFS and Hexagon errors
 
 IO:
 
-.escritaNegada   = 1
-.leituraNegada   = 2
-.erroLeitura     = 3
-.erroEscrita     = 4
-.operacaoNegada  = 5
-.naoEncontrado   = 6
+.writingDenied   = 1
+.readingDenied   = 2
+.readingError    = 3
+.writingError    = 4
+.operationDenied = 5
+.notFound        = 6
 
 VFS:
 
-.fsInvalido      = 200h
+.invalidFS       = 200h
 
 Hexagon:
 
-.imagemAusente   = 1
-.erroCarregando  = 2
-.limiteProcessos = 3
-.imagemInvalida  = 4
+.imageNotFound   = 1
+.loadError       = 2
+.processesLimit  = 3
+.invalidImage    = 4
