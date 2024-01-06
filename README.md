@@ -46,7 +46,7 @@ As bibliotecas `Hexagonix` compreendem vários componentes que permitem ao aplic
 * `erros.s`: funções e códigos para manipulação de erros, bem como definições de erros padrão;
 * `HAPP.s`: funções para criação de cabeçalhos HAPP sob demanda e manipulação de imagens HAPP em modo usuário;
 * `log.s`: macros e dados para enviar mensagens pelo sistema de mensagens do Hexagon;
-* `macros.s`: macros úteis para uso global ao realizar chamadas de sistema em assembly, como abrir();
+* `macros.s`: macros úteis para uso global ao realizar chamadas de sistema em assembly, como open();
 * `verUtils.s`: funções para processar arquivos no formato OCL e obter dados de versão e atualização do sistema de forma dinâmica pelos utilitários compatíveis.
 
 > Uma lista de chamadas de sistema disponíveis está disponível [aqui](https://github.com/hexagonix/Doc/blob/main/Hexagon/SYSCALL.pt.md).
