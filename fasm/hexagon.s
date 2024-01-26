@@ -166,7 +166,7 @@ macro hx.syscall syscallHexagon ;; Macro used to request a service from Hexagon
 
     push syscallHexagon
 
-    int 69h
+    int 80h
 
 }
 
