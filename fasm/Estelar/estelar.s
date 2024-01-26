@@ -68,41 +68,37 @@
 
 ;;************************************************************************************
 ;;
-;; Cabeçalho de macros, estruturas, funções e chamadas para o desenvolvimento de
-;; aplicativos e utilitários
+;; Estelar development library for Hexagonix
 ;;
-;;************************************************************************************
-;;
-;;              Biblioteca de desenvolvimento Estelar para Hexagonix
-;;
-;; Versão:  1.7-CURRENT (01/03/2023)
-;; Compatibilidade: Hexagonix H1 (22/11/2020)
+;; Compatibility: Hexagonix H1 System I or higher
+;;                Hexagon 1.01 or newer (kernel version required)
+;;                Version: 2.0 rev 1 01/26/2024
 ;;
 ;;************************************************************************************
 
 include "console.s"
 
-Andromeda.Estelar.Versao:
+Andromeda.Estelar.Version:
 
-.versao: db 1
+.verion: db 1
 .subver: db 0
-.string: db "Estelar versao 1.7-CURRENT", 0
+.string: db "Estelar version 2.0 rev 1", 0
 
 struc Andromeda.Estelar.Interface
 {
 
-.numColunas:    db 0 ;; Total de colunas disponíveis no vídeo na resolução atual
-.numLinhas:     db 0 ;; Total de linhas disponíveis no vídeo na resolução atual
-.resolution:     db 0 ;; Resolução atual do vídeo
-.tema:          db 0 ;; Tema
-.backgroundColor:      dd 0 ;; Cor do plano de fundo
-.fontColor:      dd 0 ;; Cor do texto
-.destaque:      dd 0 ;; Cor do destaque
-.destaqueFonte: dd 0 ;; Cor de destaque da fonte
-.posicaoX:      db 0 ;; Posição de X no vídeo
-.posicaoY:      db 0 ;; Posição de Y no vídeo
-.cursorX:       db 0 ;; Posição horizontal do cursor
-.cursorY:       db 0 ;; Posição vertical do cursor
+.numColumns:      db 0 ;; Total columns available in the video at the current resolution
+.numRows:         db 0 ;; Total lines available in the video at the current resolution
+.resolution:      db 0 ;; Current video resolution
+.theme:           db 0 ;; Theme
+.backgroundColor: dd 0 ;; Background color
+.fontColor:       dd 0 ;; Text color
+.highlight:       dd 0 ;; Highlight color
+.fontHighlight:   dd 0 ;; Font accent color
+.positionX:       db 0 ;; X position in the console
+.positionY:       db 0 ;; Y position in the console
+.cursorX:         db 0 ;; Horizontal cursor position
+.cursorY:         db 0 ;; Vertical cursor position
 
 }
 
@@ -110,43 +106,43 @@ Andromeda.Interface Andromeda.Estelar.Interface
 
 ;;************************************************************************************
 ;;
-;;            Definições de tamanho de fonte utilizada pelo Hexagonix
+;;                     Font size settings used by Hexagonix
 ;;
 ;;************************************************************************************
 
-Andromeda.Estelar.Tema.Fonte: ;; Definições padrão de cores de plano de fundo e fonte
+Andromeda.Estelar.Theme.Font: ;; Default background and font color settings
 
-.fundoPadrao = HEXAGONIX_BLOSSOM_CINZA
-.fontePadrao = HEXAGONIX_BLOSSOM_AMARELO
-.tamanho = 8
-.altura  = 16
+.defaultBackgroundColor = HEXAGONIX_BLOSSOM_CINZA
+.defaultFontColor       = HEXAGONIX_BLOSSOM_AMARELO
+.length = 8
+.height = 16
 
 ;;************************************************************************************
 
-macro Andromeda.Estelar.obterInfoConsole
+macro Andromeda.Estelar.getConsoleInfo
 {
 
     hx.syscall hx.getColor
 
-;; Retornar o esquema padrão de cores do console, não o atual
+;; Return the console's default color scheme, not the current one
 
     mov dword[Andromeda.Interface.fontColor], ecx
     mov dword[Andromeda.Interface.backgroundColor], edx
 
     hx.syscall hx.getConsoleInfo
 
-    mov byte[Andromeda.Interface.numColunas], bl
-    mov byte[Andromeda.Interface.numLinhas], bh
+    mov byte[Andromeda.Interface.numColumns], bl
+    mov byte[Andromeda.Interface.numRows], bh
 
 }
 
-macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, corTextoTitulo, corTextoRodape, corTexto, backgroundColor
+macro Andromeda.Estelar.createInterface title, footer, titleColor, footerColor, titleTextColor, footerTextColor, textColor, backgroundColor
 {
 
     hx.syscall hx.clearConsole
 
-    mov eax, corTextoTitulo
-    mov ebx, corTitulo
+    mov eax, titleTextColor
+    mov ebx, titleColor
 
     hx.syscall hx.setColor
 
@@ -154,22 +150,22 @@ macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, cor
 
     hx.syscall hx.clearLine
 
-    fputs titulo
+    fputs title
 
-    mov eax, corTextoRodape
-    mov ebx, corRodape
+    mov eax, footerTextColor
+    mov ebx, footerColor
 
     hx.syscall hx.setColor
 
-    mov al, byte[Andromeda.Interface.numLinhas] ;; Última linha
+    mov al, byte[Andromeda.Interface.numRows] ;; Last line
 
     dec al
 
     hx.syscall hx.clearLine
 
-    fputs rodape
+    fputs footer
 
-    mov eax, corTexto
+    mov eax, textColor
     mov ebx, backgroundColor
 
     hx.syscall hx.setColor
@@ -181,7 +177,7 @@ macro Andromeda.Estelar.criarInterface titulo, rodape, corTitulo, corRodape, cor
 
 }
 
-macro Andromeda.Estelar.atualizarResolucao
+macro Andromeda.Estelar.updateResolution
 {
 
     hx.syscall hx.getColor
@@ -192,61 +188,61 @@ macro Andromeda.Estelar.atualizarResolucao
     hx.syscall hx.getResolution
 
     cmp eax, 1
-    je .resolucao800x600
+    je .resolution800x600
 
     cmp eax, 2
-    je .resolucao1024x768
+    je .resolution1024x768
 
-.resolucao800x600:
+.resolution800x600:
 
     mov byte[Andromeda.Interface.resolution], 01h
 
-    jmp .fim
+    jmp .end
 
-.resolucao1024x768:
+.resolution1024x768:
 
     mov byte[Andromeda.Interface.resolution], 02h
 
-    jmp .fim
+    jmp .end
 
-.fim:
+.end:
 
 }
 
-macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoAposLogotipo, corFundoAposLogotipo
+macro Andromeda.Estelar.buildLogo logoColor, logoBackgroundColor, textColorAfterLogo, backgroundColorAfterLogo
 {
 
-;; Desenhar um bloco de cor específica
-;; Entrada: EAX - X; EBX - Y; ESI - Comprimento
-;; Entrada: EDI - Altura; EDX - Cor em hexadecimal
+;; Draw a specific color block
+;; Input: EAX - X; EBX - Y; ESI - Length
+;; Input: EDI - Height; EDX - Color in hexadecimal
 
-.primeiraLinha:
+.firstLine:
 
-    mov eax, 20           ;; Posição X
-    mov ebx, 30           ;; Posição Y
-    mov esi, 20           ;; Comprimento
-    mov edi, 150          ;; Altura
-    mov edx, corLogotipo  ;; Cor
-
-    hx.syscall hx.drawBlock
-
-.segundaLinha:
-
-    mov eax, 89           ;; Posição X
-    mov ebx, 30           ;; Posição Y
-    mov esi, 20           ;; Comprimento
-    mov edi, 150          ;; Altura
-    mov edx, corLogotipo  ;; Cor
+    mov eax, 20           ;; X position
+    mov ebx, 30           ;; Y position
+    mov esi, 20           ;; Length
+    mov edi, 150          ;; Height
+    mov edx, logoColor    ;; Color
 
     hx.syscall hx.drawBlock
 
-.terceiraLinha:
+.secondLine:
 
-    mov eax, 39           ;; Posição X
-    mov ebx, 90           ;; Posição Y
-    mov esi, 50           ;; Comprimento
-    mov edi, 30           ;; Altura
-    mov edx, corLogotipo  ;; Cor
+    mov eax, 89           ;; X position
+    mov ebx, 30           ;; Y position
+    mov esi, 20           ;; Length
+    mov edi, 150          ;; Height
+    mov edx, logoColor    ;; Color
+
+    hx.syscall hx.drawBlock
+
+.thirdLine:
+
+    mov eax, 39           ;; X position
+    mov ebx, 90           ;; Y position
+    mov esi, 50           ;; Length
+    mov edi, 30           ;; Height
+    mov edx, logoColor    ;; Color
 
     hx.syscall hx.drawBlock
 
@@ -255,13 +251,13 @@ macro Andromeda.Estelar.criarLogotipo corLogotipo, corFundoLogotipo, corTextoApo
 
     hx.syscall hx.setCursor
 
-    mov eax, corLogotipo
-    mov ebx, corFundoAposLogotipo
+    mov eax, logoColor
+    mov ebx, backgroundColorAfterLogo
 
     hx.syscall hx.setColor
 
-    mov eax, corTextoAposLogotipo
-    mov ebx, corFundoAposLogotipo
+    mov eax, textColorAfterLogo
+    mov ebx, backgroundColorAfterLogo
 
     hx.syscall hx.setColor
 
@@ -279,23 +275,23 @@ macro Andromeda.Estelar.finishGraphicProcess codigoErroGrafico, tipoSaidaGrafico
 
 }
 
-macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
+macro Andromeda.Estelar.printCentered message, line
 {
 
     hx.syscall hx.getConsoleInfo
 
-;; BL - Número de colunas
-;; BH - Número de linhas
+;; BL - Number of columns
+;; BH - Number of lines
 
     movxz bx, bl
 
     push ebx
 
-    mov esi, mensagem
+    mov esi, message
 
     hx.syscall hx.stringSize
 
-;; Em AX, o tamanho da String
+;; In AX, the size of the string
 
     pop ebx
 
@@ -304,14 +300,14 @@ macro Andromeda.Estelar.imprimirCentralizado mensagem, linha
     div ax, 2
 
     mov dl, ah
-    mov dh, linha
+    mov dh, line
 
     hx.syscall hx.setCursor
 
-    fputs mensagem
+    fputs message
 
 }
 
 ;;************************************************************************************
 
-;; Fim deste arquivo
+;; End of file

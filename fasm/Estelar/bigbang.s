@@ -68,56 +68,52 @@
 
 ;;************************************************************************************
 ;;
-;; Cabeçalho de macros, estruturas, funções e chamadas para o desenvolvimento de
-;; aplicativos e utilitários
+;; Big-Bang Development Library for Hexagonix
 ;;
-;;************************************************************************************
-;;
-;;              Biblioteca de desenvolvimento Big-Bang para Hexagonix
-;;
-;; Versão:  1 rev 0 (22/11/2020)
-;; Compatibilidade: Hexagonix 1.14+ (22/11/2020)
+;; Compatibility: Hexagonix H1 System I or higher
+;;                Hexagon 1.01 or newer (kernel version required)
+;;                Version: 2.0 rev 1 01/26/2024
 ;;
 ;;************************************************************************************
 
-macro playNote frequencia
+macro playNote frequency
 {
 
-    mov ax, frequencia
+    mov ax, frequency
     mov bx, 00h
 
     hx.syscall hx.emitSound
 
 }
 
-macro playNoteWithTimer frequencia, temporizador
+macro playNoteWithTimer frequency, timer
 {
 
-    mov ax, frequencia
+    mov ax, frequency
     mov bx, 00h
 
     hx.syscall hx.emitSound
 
-    mov ecx, temporizador
+    mov ecx, timer
 
-    hx.syscall causarAtraso
+    hx.syscall hx.delay
 
     hx.syscall hx.offSound
 
 }
 
-macro delay tempo
+macro delay time
 {
 
-    mov ecx, tempo
+    mov ecx, time
 
-    hx.syscall causarAtraso
+    hx.syscall hx.delay
 
 }
 
 macro finishNote
 {
 
-    hx.syscall hx.offSound
+    hx.syscall hx.turnOffSound
 
 }

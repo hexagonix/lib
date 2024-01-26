@@ -127,7 +127,7 @@ macro playNoteWithTimer frequency, timer
 
     hx.syscall hx.sleep
 
-    hx.syscall hx.offSound
+    hx.syscall hx.turnOffSound
 
 }
 
@@ -143,7 +143,7 @@ macro delay tempo
 macro finishNote
 {
 
-    hx.syscall hx.offSound
+    hx.syscall hx.turnOffSound
 
 }
 

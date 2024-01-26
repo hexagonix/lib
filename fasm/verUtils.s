@@ -68,32 +68,32 @@
 
 ;;************************************************************************************
 ;;
-;; Macros e funções para manipulação de dados de versão do Hexagonix
+;; Macros and functions for handling Hexagonix version data
 ;;
-;; Compatibilidade: Hexagonix H1 ou superior
-;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          1.1 rev 0 27/11/2023
+;; Compatibility: Hexagonix H1 System I or higher
+;;                Hexagon 1.01 or newer (kernel version required)
+;;                Version: 2.0 rev 1 01/26/2024
 ;;
 ;;************************************************************************************
 
 ;;************************************************************************************
 ;;
-;; Este arquivo contém definições úteis para o uso em todo o sistema
+;; This file contains useful definitions for system-wide use
 ;;
-;; Essas definições incluem a versão do sistema, assim como dados úteis a todos
-;; os aplicativos do Hexagonix
+;; These settings include the system version as well as data useful to all
+;;  Hexagonix applications
 ;;
-;; Definições importantes para o uso destas funções
+;; Important settings for using these functions
 ;;
-;; appFileBuffer: fim do código do programa
+;; appFileBuffer: end of program code
 ;;
-;; Formato do arquivo:
+;; File format:
 ;;
-;; [Versao]Nome de código"Build#Data e Hora!Build>
+;; [Version]Code name"Build#Date and Time!Build>
 
 use32
 
-limiteBusca = 8192
+searchLimit = 8192
 
 getHexagonixVersion:
 
@@ -111,53 +111,53 @@ getHexagonixVersion:
 
     jc .error
 
-    mov si, appFileBuffer ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, 0FFFFh ;; Inicia na posição -1, para que se possa encontrar os delimitadores
+    mov si, appFileBuffer ;; Points to the buffer with the file contents
+    mov bx, 0FFFFh ;; Starts at position -1, so you can find the delimiters
 
-.procurarEntreDelimitadores:
+.searchBetweenDelimiters:
 
     inc bx
 
     mov word[positionBXVerUtils], bx
 
-    cmp bx, limiteBusca
-    je .error ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    cmp bx, searchLimit
+    je .error ;; If nothing is found within the size limit, cancel the search
 
     mov al, [ds:si+bx]
 
     cmp al, '['
-    jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
+    jne .searchBetweenDelimiters ;; The initial limiter has been found
 
-;; BX agora aponta para o primeiro caractere da versão do sistema
+;; BX now points to the first character of the system version
 
     push ds
     pop es
 
-    mov di, versionObtained ;; A versão será copiado para ES:DI
+    mov di, versionObtained ;; The version will be copied to ES:DI
 
     mov si, appFileBuffer
 
-    add si, bx ;; Mover SI para aonde BX aponta
+    add si, bx ;; Move SI to where BX points
 
-    mov bx, 0 ;; Iniciar em 0
+    mov bx, 0 ;; Start at 0
 
-.obterVersao:
+.getVersion:
 
     inc bx
 
     cmp bx, 64
-    je .error ;; Se versão maior que 64 caracteres, a mesma é inválida
+    je .error ;; If the version is longer than 64 characters, it is invalid
 
     mov al, [ds:si+bx]
 
-    cmp al, ']' ;; Se encontrar outro delimitador, a versão foi recuperada
+    cmp al, ']' ;; If another delimiter is found, the version has been recovered
     je .versionObtained
 
-;; Se não estiver pronto, armazenar o caractere obtido
+;; If not ready, store the obtained character
 
     stosb
 
-    jmp .obterVersao
+    jmp .getVersion
 
 .versionObtained:
 
@@ -165,7 +165,7 @@ getHexagonixVersion:
 
     popa
 
-    jmp obterCodigoDistribuicao
+    jmp getDistributionCode
 
     ret
 
@@ -183,7 +183,7 @@ getHexagonixVersion:
 
 ;;************************************************************************************
 
-obterCodigoDistribuicao:
+getDistributionCode:
 
     pusha
 
@@ -199,56 +199,56 @@ obterCodigoDistribuicao:
 
     jc .error
 
-    mov si, appFileBuffer     ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [positionBXVerUtils] ;; Continua de onde a opção anterior parou
+    mov si, appFileBuffer     ;; Points to the buffer with the file contents
+    mov bx, word [positionBXVerUtils] ;; Continue where the previous option left off
 
     dec bx
 
-.procurarEntreDelimitadores:
+.searchBetweenDelimiters:
 
     inc bx
 
     mov word[positionBXVerUtils], bx
 
-    cmp bx, limiteBusca
+    cmp bx, searchLimit
 
-    je .error ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .error ;; If nothing is found within the size limit, cancel the search
 
     mov al, [ds:si+bx]
 
     cmp al, ']'
-    jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
+    jne .searchBetweenDelimiters ;; The initial limiter has been found
 
-;; BX agora aponta para o primeiro caractere do nome de código recuperado do arquivo
+;; BX now points to the first character of the codename retrieved from the file
 
     push ds
     pop es
 
-    mov di, codeObtained ;; O nome de código será copiado para ES:DI
+    mov di, codeObtained ;; The code name will be copied to ES:DI
 
     mov si, appFileBuffer
 
-    add si, bx ;; Mover SI para onde BX aponta
+    add si, bx ;; Move SI to where BX points
 
-    mov bx, 0 ;; Iniciar em 0
+    mov bx, 0 ;; Start at 0
 
-.obterCodigo:
+.getCode:
 
     inc bx
 
     cmp bx, 64
-    je .error ;; Se maior que 64, o mesmo é inválida
+    je .error ;; If greater than 64, it is invalid
 
     mov al, [ds:si+bx]
 
-    cmp al, '"' ;; Se encontrar outro delimitador,o nome de código
-    je .codeObtained ;; foi completamente recuperado
+    cmp al, '"' ;; If another delimiter is found, the code name
+    je .codeObtained ;; has been completely recovered
 
-;; Se não estiver pronto, armazenar o caractere obtido
+;; If not ready, store the obtained character
 
     stosb
 
-    jmp .obterCodigo
+    jmp .getCode
 
 .codeObtained:
 
@@ -256,7 +256,7 @@ obterCodigoDistribuicao:
 
     popa
 
-    jmp obterPacoteDistribuicao
+    jmp getUpdatePackage
 
     ret
 
@@ -274,7 +274,7 @@ obterCodigoDistribuicao:
 
 ;;************************************************************************************
 
-obterPacoteDistribuicao:
+getUpdatePackage:
 
     pusha
 
@@ -290,64 +290,64 @@ obterPacoteDistribuicao:
 
     jc .error
 
-    mov si, appFileBuffer     ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [positionBXVerUtils] ;; Continua de onde a opção anterior parou
+    mov si, appFileBuffer     ;; Points to the buffer with the file contents
+    mov bx, word [positionBXVerUtils] ;; Continue where the previous option left off
 
     dec bx
 
-.procurarEntreDelimitadores:
+.searchBetweenDelimiters:
 
     inc bx
 
     mov word[positionBXVerUtils], bx
 
-    cmp bx, limiteBusca
+    cmp bx, searchLimit
 
-    je .error ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .error ;; If nothing is found within the size limit, cancel the search
 
     mov al, [ds:si+bx]
 
     cmp al, '"'
-    jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
+    jne .searchBetweenDelimiters ;; The initial limiter has been found
 
-;; BX agora aponta para o primeiro caractere do pacote de atualizações do sistema
+;; BX now points to the first character of the system update package
 
     push ds
     pop es
 
-    mov di, updatePackage ;; O pacote será copiado para ES:DI
+    mov di, updatePackage ;; The package will be copied to ES:DI
 
     mov si, appFileBuffer
 
-    add si, bx ;; Mover SI para aonde BX aponta
+    add si, bx ;; Move SI to where BX points
 
-    mov bx, 0 ;; Iniciar em 0
+    mov bx, 0 ;; Start at 0
 
-.obterPacote:
+.getPackage:
 
     inc bx
 
     cmp bx, 64
-    je .error ;; Se maior que 64, é inválido
+    je .error ;; If greater than 64, it is invalid
 
     mov al, [ds:si+bx]
 
-    cmp al, '#' ;; Se encontrar outro delimitador, foi carregado com sucesso
-    je .pacoteObtido
+    cmp al, '#' ;; If it finds another delimiter, it has been loaded successfully
+    je .packageObtained
 
-;; Se não estiver pronto, armazenar o caractere obtido
+;; If not ready, store the obtained character
 
     stosb
 
-    jmp .obterPacote
+    jmp .getPackage
 
-.pacoteObtido:
+.packageObtained:
 
     pop es
 
     popa
 
-    jmp obterRelease
+    jmp getDistributionRelease
 
 .error:
 
@@ -363,7 +363,7 @@ obterPacoteDistribuicao:
 
 ;;************************************************************************************
 
-obterRelease:
+getDistributionRelease:
 
     pusha
 
@@ -379,64 +379,64 @@ obterRelease:
 
     jc .error
 
-    mov si, appFileBuffer     ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [positionBXVerUtils] ;; Continua de onde a opção anterior parou
+    mov si, appFileBuffer     ;; Points to the buffer with the file contents
+    mov bx, word [positionBXVerUtils] ;; Continue where the previous option left off
 
     dec bx
 
-.procurarEntreDelimitadores:
+.searchBetweenDelimiters:
 
     inc bx
 
     mov word[positionBXVerUtils], bx
 
-    cmp bx, limiteBusca
+    cmp bx, searchLimit
 
-    je .error ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .error ;; If nothing is found within the size limit, cancel the search
 
     mov al, [ds:si+bx]
 
     cmp al, '#'
-    jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
+    jne .searchBetweenDelimiters ;; The initial limiter has been found
 
-;; BX agora aponta para o primeiro caractere do lançamento
+;; BX now points to the first character of the release
 
     push ds
     pop es
 
-    mov di, release ;; Será copiado para ES:DI
+    mov di, release ;; It will be copied to ES:DI
 
     mov si, appFileBuffer
 
-    add si, bx ;; Mover SI para aonde BX aponta
+    add si, bx ;; Move SI to where BX points
 
-    mov bx, 0 ;; Iniciar em 0
+    mov bx, 0 ;; Start at 0
 
-.recuperarRelease:
+.getRelease:
 
     inc bx
 
     cmp bx, 64
-    je .error ;; Se maior que 64, é inválido
+    je .error ;; If greater than 64, it is invalid
 
     mov al, [ds:si+bx]
 
-    cmp al, '!' ;; Se encontrar outro delimitador, foi carregado com sucesso
-    je .releaseObtida
+    cmp al, '!' ;; If it finds another delimiter, it has been loaded successfully
+    je .releaseObtained
 
-;; Se não estiver pronto, armazenar o caractere obtido
+;; If not ready, store the obtained character
 
     stosb
 
-    jmp .recuperarRelease
+    jmp .getRelease
 
-.releaseObtida:
+.releaseObtained:
 
     pop es
 
     popa
 
-    jmp obterBuildDistribuicao
+    jmp getDistributionBuild
 
     ret
 
@@ -454,7 +454,7 @@ obterRelease:
 
 ;;************************************************************************************
 
-obterBuildDistribuicao:
+getDistributionBuild:
 
     pusha
 
@@ -470,56 +470,56 @@ obterBuildDistribuicao:
 
     jc .error
 
-    mov si, appFileBuffer     ;; Aponta para o buffer com o conteúdo do arquivo
-    mov bx, word [positionBXVerUtils] ;; Continua de onde a opção anterior parou
+    mov si, appFileBuffer     ;; Points to the buffer with the file contents
+    mov bx, word [positionBXVerUtils] ;; Continue where the previous option left off
 
     dec bx
 
-.procurarEntreDelimitadores:
+.searchBetweenDelimiters:
 
     inc bx
 
     mov word[positionBXVerUtils], bx
 
-    cmp bx, limiteBusca
+    cmp bx, searchLimit
 
-    je .error ;; Caso nada seja encontrado até o tamanho limite, cancele a busca
+    je .error ;; If nothing is found within the size limit, cancel the search
 
     mov al, [ds:si+bx]
 
     cmp al, '!'
-    jne .procurarEntreDelimitadores ;; O limitador inicial foi encontrado
+    jne .searchBetweenDelimiters ;; The initial limiter has been found
 
-;; BX agora aponta para o primeiro caractere da build do sistema
+;; BX now points to the first character of the system build
 
     push ds
     pop es
 
-    mov di, buildObtained ;; Será copiado ES:DI
+    mov di, buildObtained ;; ES:DI will be copied
 
     mov si, appFileBuffer
 
-    add si, bx ;; Mover SI para aonde BX aponta
+    add si, bx ;; Move SI to where BX points
 
-    mov bx, 0 ;; Iniciar em 0
+    mov bx, 0 ;; Start at 0
 
-.recuperarBuild:
+.getBuild:
 
     inc bx
 
     cmp bx, 64
-    je .error ;; Se nome de arquivo maior que 64, é inválido
+    je .error ;; If file name greater than 64, it is invalid
 
     mov al, [ds:si+bx]
 
-    cmp al, '>' ;; Se encontrar outro delimitador, foi carregado com sucesso
+    cmp al, '>' ;; If it finds another delimiter, it has been loaded successfully
     je .buildObtained
 
-;; Se não estiver pronto, armazenar o caractere obtido
+;; If not ready, store the obtained character
 
     stosb
 
-    jmp .recuperarBuild
+    jmp .getBuild
 
 .buildObtained:
 
