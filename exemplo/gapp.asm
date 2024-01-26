@@ -119,7 +119,7 @@ include "estelar.s" ;; Includes interface creation functions
 
 ;; Variables and constants
 
-VERSION equ "3.0" ;; Application version
+VERSION equ "3.1" ;; Application version
 
 gapp:
 
@@ -151,7 +151,7 @@ applicationStart:
 
 ;; Okay, now let's continue. First, clear the console and get resolution information
 
-    Andromeda.Estelar.obterInfoConsole
+    Andromeda.Estelar.getConsoleInfo
 
     hx.syscall hx.clearConsole
 
@@ -165,7 +165,7 @@ applicationStart:
 ;;
 ;; You can use '\' to break the line if it is too long, as below
 
-    Andromeda.Estelar.criarInterface gapp.TITLE, gapp.FOOTER, VERMELHO_TIJOLO,\
+    Andromeda.Estelar.createInterface gapp.TITLE, gapp.FOOTER, VERMELHO_TIJOLO,\
     VERMELHO_TIJOLO, BRANCO_ANDROMEDA, BRANCO_ANDROMEDA,\
     [Andromeda.Interface.fontColor], [Andromeda.Interface.backgroundColor]
 
