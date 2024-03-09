@@ -81,7 +81,7 @@ struc headerHAPP imageArchitecture, minVersion, minMinorVersion, entryPointHAPP,
 
 ;; HAPP2 specification (HAPP 2.0 rev 0)
 
-magicNumber:   db "HAPP"
+sinature:      db "HAPP"
 architecture:  db imageArchitecture
 minVer:        db minVersion
 minMinorVer:   db minMinorVersion
