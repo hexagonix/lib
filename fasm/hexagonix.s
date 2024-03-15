@@ -78,42 +78,42 @@
 
 Hexagonix.Logo:
 
-.linha1:
+.line1:
 db "88                                                                                88", 0
-.linha2:
+.line2:
 db "88                                                                                ''", 0
-.linha3:
+.line3:
 db "88", 0
-.linha4:
+.line4:
 db "88,dPPPba,   ,adPPPba, 8b,     ,d8 ,adPPPPba,  ,adPPPb,d8  ,adPPPba,  8b,dPPPba,  88 8b,     ,d8", 0
-.linha5:
+.line5:
 db "88P'    '88 a8P     88  `P8, ,8P'  ''     `P8 a8'    `P88 a8'     '8a 88P'   `'88 88  `P8, ,8P'", 0
-.linha6:
+.line6:
 db "88       88 8PP'''''''    )888(    ,adPPPPP88 8b       88 8b       d8 88       88 88    )888(", 0
-.linha7:
+.line7:
 db "88       88 '8b,   ,aa  ,d8' '8b,  88,    ,88 '8a,   ,d88 '8a,   ,a8' 88       88 88  ,d8' '8b,", 0
-.linha8:
+.line8:
 db "88       88  `'Pbbd8'' 8P'     `P8 `'8bbdP'P8  `'PbbdP'P8  `'PbbdP''  88       88 88 8P'     `P8", 0
-.linha9:
+.line9:
 db "                                               aa,    ,88", 0
-.linha10:
+.line10:
 db "                                                'P8bbdP'", 0
 
 Hexagon.flatLogo:
 
-.linha1:
+.line1:
 db "88", 0
-.linha2:
+.line2:
 db "88", 0
-.linha3:
+.line3:
 db "88", 0
-.linha4:
+.line4:
 db "88,dPPPba,", 0
-.linha5:
+.line5:
 db "88P'    '88", 0
-.linha6:
+.line6:
 db "88       88", 0
-.linha7:
+.line7:
 db "88       88", 0
-.linha8:
+.line8:
 db "88       88", 0
