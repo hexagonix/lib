@@ -77,12 +77,12 @@
 ;;************************************************************************************
 
 ;; Input:
-;; 
+;;
 ;; ECX - Memory use, in bytes
 ;;
 ;; Output:
 ;;
-;; EAX - Memory use, in megabytes 
+;; EAX - Memory use, in megabytes
 
 convertToMegabytes:
 
@@ -101,12 +101,12 @@ convertToMegabytes:
 ;;************************************************************************************
 
 ;; Input:
-;; 
+;;
 ;; ECX - Memory use, in bytes
 ;;
 ;; Output:
 ;;
-;; EAX - Memory use, in megabytes 
+;; EAX - Memory use, in megabytes
 
 convertToKbytes:
 
