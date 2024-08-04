@@ -82,7 +82,7 @@ Andromeda.Estelar.Version:
 
 .verion: db 1
 .subver: db 0
-.string: db "Estelar version 2.0 rev 1", 0
+.string: db "Estelar version 2.0 rev 2", 0
 
 struc Andromeda.Estelar.Interface
 {
@@ -263,13 +263,13 @@ macro Andromeda.Estelar.buildLogo logoColor, logoBackgroundColor, textColorAfter
 
 }
 
-macro Andromeda.Estelar.finishGraphicProcess codigoErroGrafico, tipoSaidaGrafico
+macro Andromeda.Estelar.finishGraphicProcess errorCode, exitType
 {
 
     hx.syscall hx.clearConsole
 
-    mov eax, codigoErroGrafico
-    mov ebx, tipoSaidaGrafico
+    mov eax, errorCode
+    mov ebx, exitType
 
     hx.syscall hx.exit
 
