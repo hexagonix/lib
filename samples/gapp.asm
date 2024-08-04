@@ -119,7 +119,7 @@ include "estelar.s" ;; Includes interface creation library
 
 ;; Variables and constants
 
-VERSION equ "3.1" ;; Application version
+VERSION equ "3.2" ;; Application version
 
 gapp:
 
@@ -181,6 +181,6 @@ applicationStart:
 
 ;; Format:
 ;;
-;; Error code (in this case, 0), output type (in this case, 0)
+;; Error code (in this case, 0), exit type (read documentation in macro - in this case, 0)
 
     Andromeda.Estelar.finishGraphicProcess 0, 0
