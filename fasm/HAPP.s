@@ -70,9 +70,9 @@
 ;;
 ;; Macros for creating and manipulating HAPP headers and images
 ;;
-;; Compatibilidade: Hexagonix H1 ou superior
-;;                  Hexagon 1.0 ou mais recente (versão do kernel necessária)
-;; Versão:          1.2 rev 0 24/08/2023
+;; Compatibility: Hexagonix System I or higher
+;;                Hexagon 1.0 or newer (kernel version required)
+;;                Version: 1.22 rev 1 29/08/2024
 ;;
 ;;************************************************************************************
 

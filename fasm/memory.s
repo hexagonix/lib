@@ -70,9 +70,9 @@
 ;;
 ;; Macros for memory manipulation
 ;;
-;; Compatibility: Hexagonix H1 System I or higher
+;; Compatibility: Hexagonix System I or higher
 ;;                Hexagon 1.0.1 or newer (kernel version required)
-;;                Version: 7.0 rev 1 07/29/2024
+;;                Version: 7.0 rev 2 29/08/2024
 ;;
 ;;************************************************************************************
 

@@ -70,9 +70,9 @@
 ;;
 ;; List of devices that can be accessed by the user
 ;;
-;; Compatibility: Hexagonix H1 System I or higher
+;; Compatibility: Hexagonix System I or higher
 ;;                Hexagon 1.01 or newer (kernel version required)
-;;                Version: 1.0.2 rev 3 01/05/2024
+;;                Version: 1.0.2 rev 4 29/08/2024
 ;;
 ;;************************************************************************************
 

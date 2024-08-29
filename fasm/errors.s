@@ -70,9 +70,9 @@
 ;;
 ;; List of errors thrown by Hexagon or other Hexagonix components
 ;;
-;; Compatibility: Hexagonix H1 System I or higher
+;; Compatibility: Hexagonix System I or higher
 ;;                Hexagon 1.0 or newer (kernel version required)
-;;                Version: 1.1 rev 0 24/08/2024
+;;                Version: 1.1 rev 1 29/08/2024
 ;;
 ;;************************************************************************************
 

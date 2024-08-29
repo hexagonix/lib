@@ -70,9 +70,9 @@
 ;;
 ;; Macros for Hexagonix utility development
 ;;
-;; Compatibility: Hexagonix H1 System I or higher
+;; Compatibility: Hexagonix System I or higher
 ;;                Hexagon 1.01 or newer (kernel version required)
-;;                Version: 2.2 rev 1 01/05/2024
+;;                Version: 2.2 rev 2 29/08/2024
 ;;
 ;;************************************************************************************
 
