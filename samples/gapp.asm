@@ -70,7 +70,7 @@
 ;;
 ;; This is a template for building a graphical app for Hexagonix!
 ;;
-;; Written by Felipe Miguel Nery Lunkes on 12/04/2020
+;; Written by Felipe Miguel Nery Lunkes on 04/12/2020
 ;;
 ;; You can generate an executable HAPP image using the fasm assembler
 ;; included. To do this, use the command line below:
@@ -119,7 +119,7 @@ include "estelar.s" ;; Includes interface creation library
 
 ;; Variables and constants
 
-VERSION equ "3.2" ;; Application version
+VERSION equ "3.3" ;; Application version
 
 gapp:
 
