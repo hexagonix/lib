@@ -70,7 +70,7 @@
 ;;
 ;; This is a template for building a simple console app for Hexagonix!
 ;;
-;; Written by Felipe Miguel Nery Lunkes on 12/04/2020
+;; Written by Felipe Miguel Nery Lunkes on 04/12/2020
 ;;
 ;; You can generate an executable HAPP image using the fasm assembler
 ;; included. To do this, use the command line below:
@@ -118,6 +118,8 @@ include "console.s"
 ;;*************************************************************
 
 ;; Variables and constants
+
+VERSION equ "2.0"
 
 msg:
 db 10, 10, "This is a template with an example of a simple HAPP application!", 10, 0
