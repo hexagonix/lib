@@ -42,8 +42,8 @@ As bibliotecas da libasm são classificadas em bibliotecas `Hexagonix` e bibliot
 As bibliotecas `Hexagonix` compreendem vários componentes que permitem ao aplicativo interagir com o Hexagon, outros aplicativos e com dispositivos padrão. Até o momento, as bibliotecas Hexagonix são constituídas pelos seguintes arquivos:
 
 * `hexagon.s`: biblioteca que permite ao aplicativo realizar chamadas de sistema ao Hexagon, usando a API exposta pelo kernel;
-* `dispositivos.s`: fornece nomes e dados de dispositivos utilizados em chamadas de sistema;
-* `erros.s`: funções e códigos para manipulação de erros, bem como definições de erros padrão;
+* `dev.s`: fornece nomes e dados de dispositivos utilizados em chamadas de sistema;
+* `errors.s`: funções e códigos para manipulação de erros, bem como definições de erros padrão;
 * `HAPP.s`: funções para criação de cabeçalhos HAPP sob demanda e manipulação de imagens HAPP em modo usuário;
 * `log.s`: macros e dados para enviar mensagens pelo sistema de mensagens do Hexagon;
 * `macros.s`: macros úteis para uso global ao realizar chamadas de sistema em assembly, como open();
@@ -96,8 +96,8 @@ Libasm libraries are classified into `Hexagonix` libraries and `Estelar` librari
 The `Hexagonix` libraries comprise several components that allow the application to interact with Hexagon, other applications and standard devices. So far, Hexagonix libraries consist of the following files:
 
 * `hexagon.s`: library that allows the application to make system calls to Hexagon, using the API exposed by the kernel;
-* `dispositivos.s`: provides device names and data used in system calls;
-* `erros.s`: functions and code for error handling, as well as standard error definitions;
+* `dev.s`: provides device names and data used in system calls;
+* `errors.s`: functions and code for error handling, as well as standard error definitions;
 * `HAPP.s`: functions for creating HAPP headers on demand and manipulating HAPP images in user mode;
 * `log.s`: macros and data for sending messages through the Hexagon messaging system;
 * `macros.s`: useful macros for global use when making assembly system calls, such as open();
