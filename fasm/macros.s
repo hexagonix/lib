@@ -72,7 +72,7 @@
 ;;
 ;; Compatibility: Hexagonix System I or higher
 ;;                Hexagon 1.01 or newer (kernel version required)
-;;                Version: 2.2 rev 2 29/08/2025
+;;                Version: 2.2 rev 2 29/08/2024
 ;;
 ;;************************************************************************************
 
@@ -203,7 +203,7 @@ __stringYear    equ (__year/1000+'0'),((__year mod 1000)/100+'0'),((__year mod 1
 __stringMonth   equ (__month/10+'0'),((__month mod 10)+'0')
 __stringDay     equ (__day/10+'0'),((__day mod 10)+'0')
 __stringHour    equ (__hour/10+'0'),((__hour mod 10)+'0')
-__stringMinutes  equ (__minute/10+'0'),((__minute mod 10)+'0')
+__stringMinutes equ (__minute/10+'0'),((__minute mod 10)+'0')
 __stringSeconds equ (__second/10+'0'),((__second mod 10)+'0')
 
 ;;************************************************************************************

@@ -72,7 +72,7 @@
 ;;
 ;; Compatibility: Hexagonix System I or higher
 ;;                Hexagon 1.01 or newer (kernel version required)
-;;                Version: 1.0.2 rev 4 29/08/2025
+;;                Version: 1.0.2 rev 4 29/08/2024
 ;;
 ;;************************************************************************************
 

@@ -72,7 +72,7 @@
 ;;
 ;; Compatibility: Hexagonix System I or higher
 ;;                Hexagon 1.0.1 or newer (kernel version required)
-;;                Version: 7.0 rev 2 29/08/2025
+;;                Version: 7.0 rev 3 20/04/2025
 ;;
 ;;************************************************************************************
 
@@ -88,8 +88,8 @@ convertToMegabytes:
 
     ;; Now let's transform bytes into megabytes
 
-    shr ecx, 10
-    shr ecx, 10
+    shr ecx, 10 ;; ECX = ECX / 1024
+    shr ecx, 10 ;; ECX = ECX / 1024
 
     ;; Return in EAX
 
@@ -112,7 +112,7 @@ convertToKbytes:
 
     ;; Now let's transform bytes into megabytes
 
-    shr ecx, 10
+    shr ecx, 10 ;; ECX = ECX / 1024
 
     ;; Return in EAX
 

@@ -72,9 +72,9 @@
 ;;
 ;; Compatibility: Hexagonix System I or higher
 ;;                Hexagon 1.0.1 or newer (kernel version required)
-;;                Version: 7.0 rev 2 29/08/2025
+;;                Version: 7.0 rev 2 29/08/2024
 ;;
-;; Total calls: 68 (04/26/2020) - This number is not final and may decrease (or increase)
+;; Total calls: 68 (at 04/26/2020)
 ;;
 ;;************************************************************************************
 
