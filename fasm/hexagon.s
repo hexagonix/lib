@@ -70,9 +70,9 @@
 ;;
 ;; Header of Hexagonix Macros, Functions and System Calls
 ;;
-;; Compatibility: Hexagonix System I or higher
-;;                Hexagon 1.0.1 or newer (kernel version required)
-;;                Version: 7.0 rev 2 29/08/2024
+;; Compatibility: Hexagonix Dormin development branch or higher
+;;                Hexagon 1.3.0 or newer (kernel version required)
+;;                Version: 7.1 rev 0 21/04/2025
 ;;
 ;; Total calls: 68 (at 04/26/2020)
 ;;
@@ -151,6 +151,7 @@ hx.turnOffSound           = 65 ;; Hexagon Sound Output Services
 hx.sendMessageHexagon     = 66 ;; Hexagon Messaging Services
 hx.date                   = 67 ;; Hexagon Real Time Clock Service
 hx.time                   = 68 ;; Hexagon Real Time Clock Service
+hx.changeDirectory        = 69 ;; Dormin development branch syscall
 
 ;;************************************************************************************
 
