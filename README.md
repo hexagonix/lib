@@ -22,6 +22,7 @@
 
 <details title="Português (Brasil)" align='left'>
 <summary align='left'><strong>:brazil: Português (Brasil)</strong></summary>
+<br>
 
 # libasm - Bibliotecas para desenvolvimento em Assembly do Hexagonix
 
@@ -76,6 +77,7 @@ Você pode encontrar exemplos de implementação de utilitários em [modo texto]
 
 <details title="English" align='left'>
 <summary align='left'><strong>:uk: English</strong></summary>
+<br>
 
 # libasm - Libraries for Hexagonix Assembly Development
 
@@ -129,8 +131,8 @@ You can find utility implementation examples in [text mode](example/tapp.asm) an
 </details>
 
 <details title="libasm License" align='left'>
-<br>
 <summary align='left'>Licença da libasm/libasm License</summary>
+<br>
 
 <div align="justify">
 
