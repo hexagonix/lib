@@ -71,10 +71,10 @@
 ;; Header of Hexagonix Macros, Functions and System Calls
 ;;
 ;; Compatibility: Hexagonix Dormin development branch or higher
-;;                Hexagon 1.3.0 or newer (kernel version required)
-;;                Version: 7.1 rev 0 21/04/2025
+;;                Hexagon 1.5.0 or newer (kernel version required)
+;;                Version: 8.0 rev 0 30/07/2026
 ;;
-;; Total calls: 68 (at 04/26/2020)
+;; Total calls: 70 (at 30/07/2026)
 ;;
 ;;************************************************************************************
 
@@ -152,7 +152,8 @@ hx.sendMessageHexagon     = 66 ;; Hexagon Messaging Services
 hx.date                   = 67 ;; Hexagon Real Time Clock Service
 hx.time                   = 68 ;; Hexagon Real Time Clock Service
 hx.changeDirectory        = 69 ;; Dormin development branch syscall
-hx.spawn                  = 70 ;; Hexagon memory and process management services (non-blocking)
+hx.spawn                  = 70 ;; Hexagon memory and process management services
+hx.kill                   = 71 ;; Hexagon memory and process management services
 
 ;;************************************************************************************
 

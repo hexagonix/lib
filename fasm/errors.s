@@ -70,9 +70,9 @@
 ;;
 ;; List of errors thrown by Hexagon or other Hexagonix components
 ;;
-;; Compatibility: Hexagonix System I or higher
-;;                Hexagon 1.0 or newer (kernel version required)
-;;                Version: 1.1 rev 1 29/08/2024
+;; Compatibility: Hexagonix Dormin development branch or higher
+;;                Hexagon 1.5.0 or newer (kernel version required)
+;;                Version: 8.0 rev 0 30/07/2026
 ;;
 ;;************************************************************************************
 
@@ -97,3 +97,4 @@ Hexagon:
 .loadError       = 2
 .processesLimit  = 3
 .invalidImage    = 4
+.processNotFound = 5
