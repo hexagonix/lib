@@ -154,6 +154,8 @@ hx.time                   = 68 ;; Hexagon Real Time Clock Service
 hx.changeDirectory        = 69 ;; Dormin development branch syscall
 hx.spawn                  = 70 ;; Hexagon memory and process management services
 hx.kill                   = 71 ;; Hexagon memory and process management services
+hx.mkdir                  = 72 ;; Hexagon File System and Volume Management Services
+hx.rmdir                  = 73 ;; Hexagon File System and Volume Management Services
 
 ;;************************************************************************************
 
