@@ -74,8 +74,8 @@
 ;; declare its own "appFileBuffer" label, the same scratch buffer
 ;; convention each of them already uses for hx.open
 ;;
-;; Compatibility: Hexagonix Dormin development branch or higher
-;;                Hexagon 1.6.2 or newer (kernel version required)
+;; Compatibility: Hexagonix Mineru development branch or higher
+;;                Hexagon 1.7.0 or newer (kernel version required)
 ;;                Version: 1.0 rev 0 07/08/2026
 ;;
 ;;************************************************************************************
@@ -501,6 +501,58 @@ Shell.checkShebang.nameStart: dd 0
 
 ;;************************************************************************************
 
+;; Copies a command's argument string to a private buffer before
+;; Shell.checkShebang runs. Shell.checkShebang opens the resolved
+;; command's own file into the caller's shared appFileBuffer to look at
+;; its first line, which is also where the caller's getArguments-style
+;; split already stashed the typed arguments, so calling it between
+;; splitting the arguments and actually using them would silently
+;; replace those arguments with the command's own file content instead
+;;
+;; Input:
+;;
+;; EDI - Argument string to protect, or 0 if there are none
+;;
+;; Output:
+;;
+;; EDI - Pointer to the protected copy, or 0 if the input was 0
+
+Shell.protectArguments:
+
+    push esi
+    push eax
+
+    cmp edi, 0
+    je .end
+
+    mov esi, edi
+    mov edi, Shell.protectArguments.buffer
+
+.copyLoop:
+
+    mov al, byte[esi]
+    mov byte[edi], al
+
+    inc esi
+    inc edi
+
+    cmp al, 0
+    jne .copyLoop
+
+    mov edi, Shell.protectArguments.buffer
+
+.end:
+
+    pop eax
+    pop esi
+
+    ret
+
+Shell.protectArguments.buffer:
+times 512 db 0
+
+;;************************************************************************************
+
 ;; Runs a file as a batch of shell commands, one per line. Blank lines
 ;; and lines starting with '#' (including a "#!" shebang line) are
 ;; skipped. Each command is resolved via Shell.resolveCommandPath and
@@ -662,9 +714,9 @@ Shell.runScriptFile:
 
     ret
 
-Shell.runScriptFile.lineEnd:   dd 0
-Shell.runScriptFile.savedChar: dd 0
-Shell.runScriptFile.argsPtr:   dd 0
-Shell.runScriptFile.hasArgsFlag:   dd 0
+Shell.runScriptFile.lineEnd:     dd 0
+Shell.runScriptFile.savedChar:   dd 0
+Shell.runScriptFile.argsPtr:     dd 0
+Shell.runScriptFile.hasArgsFlag: dd 0
 
 ;; End of this file
