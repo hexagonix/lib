@@ -156,6 +156,10 @@ hx.spawn                  = 70 ;; Hexagon memory and process management services
 hx.kill                   = 71 ;; Hexagon memory and process management services
 hx.mkdir                  = 72 ;; Hexagon File System and Volume Management Services
 hx.rmdir                  = 73 ;; Hexagon File System and Volume Management Services
+hx.getenv                 = 74 ;; Hexagon memory and process management services
+hx.setenv                 = 75 ;; Hexagon memory and process management services
+hx.unsetenv               = 76 ;; Hexagon memory and process management services
+hx.environ                = 77 ;; Hexagon memory and process management services
 
 ;;************************************************************************************
 
