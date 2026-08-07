@@ -68,7 +68,7 @@
 
 ;;************************************************************************************
 ;;
-;; Shared password hashing and /shadow lookup, used by login, su, adduser,
+;; Shared password hashing and /etc/shadow lookup, used by login, su, adduser,
 ;; passwd and deluser
 ;;
 ;; Compatibility: Hexagonix Dormin development branch or higher
@@ -78,7 +78,7 @@
 ;;************************************************************************************
 
 Hexagon.LibASM.PasswdHash.file:
-db "shadow", 0
+db "/etc/shadow", 0
 
 Hexagon.LibASM.PasswdHash.searchSizeLimit = 8192
 Hexagon.LibASM.PasswdHash.lineBufferSize  = 128
@@ -88,7 +88,7 @@ Hexagon.LibASM.PasswdHash.lineBufferSize  = 128
 ;; Computes a DJB2 hash of a plaintext string and writes it as an 8-digit
 ;; lowercase hex string to Hexagon.LibASM.PasswdHash.hashBuffer. Not a
 ;; cryptographic hash. No salt, reversible by brute force, but the password
-;; is no longer sitting in /shadow as plain readable text.
+;; is no longer sitting in /etc/shadow as plain readable text.
 ;;
 ;; Input:
 ;;
@@ -157,7 +157,7 @@ times 9 db 0
 
 ;;************************************************************************************
 
-;; Looks up a username's record in /shadow (username:passwordhash:code:shell:theme)
+;; Looks up a username's record in /etc/shadow (username:passwordhash:code:shell:theme)
 ;;
 ;; Input:
 ;;
@@ -165,7 +165,7 @@ times 9 db 0
 ;;
 ;; Output:
 ;;
-;; CF set if not found (including if /shadow itself is missing)
+;; CF set if not found (including if /etc/shadow itself is missing)
 ;; CF clear if found, with these filled in:
 ;;
 ;; Hexagon.LibASM.PasswdHash.hashFound  - password hash, 8 hex chars + NUL
@@ -448,7 +448,7 @@ Hexagon.LibASM.PasswdHash.appendString:
 
 ;;************************************************************************************
 
-;; Rewrites /shadow: the line whose first field matches ESI is either
+;; Rewrites /etc/shadow: the line whose first field matches ESI is either
 ;; replaced with the NUL-terminated content at EDI (Apps/Unix/passwd, to
 ;; change a hash field) or dropped entirely if EDI is 0 (Apps/Unix/deluser).
 ;; Every other line is copied through unchanged
@@ -461,7 +461,7 @@ Hexagon.LibASM.PasswdHash.appendString:
 ;;
 ;; Output:
 ;;
-;; CF set if the user wasn't found in /shadow, or the write failed
+;; CF set if the user wasn't found in /etc/shadow, or the write failed
 
 Hexagon.LibASM.PasswdHash.rewriteUser:
 
