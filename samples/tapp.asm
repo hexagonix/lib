@@ -95,7 +95,7 @@ headerHAPP:
 signature:     db "HAPP" ;; Image signature
 architecture:  db 01h    ;; Image architecture (i386 = 01h)
 minVer:        db 1      ;; Minimum version of Hexagon(R)
-minMinorVer:   db 00     ;; Minimal subversion of Hexagon(R)
+minMinorVer:   db 7      ;; Minimal subversion of Hexagon(R)
 entryPoint:    dd applicationStart ;; Image entry point
 imageType:     db 01h ;; Image type
 reserved0:     dd 0 ;; Reserved (Dword)
