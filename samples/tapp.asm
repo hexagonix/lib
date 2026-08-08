@@ -112,8 +112,8 @@ reserved10:    dw 0 ;; Reserved (Word)
 
 ;;*************************************************************
 
-include "hexagon.s" ;; Include system calls
-include "console.s"
+include "/lib/asm/hexagon.s" ;; Include system calls
+include "/lib/asm/console.s"
 
 ;;*************************************************************
 
