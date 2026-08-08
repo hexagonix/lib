@@ -112,8 +112,8 @@ reserved10:    dw 0 ;; Reserved (Word)
 
 ;;*************************************************************
 
-include "hexagon.s" ;; Include system calls
-include "estelar.s" ;; Includes interface creation library
+include "/lib/asm/hexagon.s" ;; Include system calls
+include "/lib/asm/estelar.s" ;; Includes interface creation library
 
 ;;*************************************************************
 

@@ -76,7 +76,7 @@
 ;;
 ;; Compatibility: Hexagonix Mineru or higher
 ;;                Hexagon 1.7.0 or newer (kernel version required)
-;;                Version: 1.0 rev 0 07/08/2026
+;;                Version: 1.1 rev 0 08/08/2026
 ;;
 ;;************************************************************************************
 
@@ -287,7 +287,6 @@ Shell.handleSet:
     je .end
 
     printString
-    putNewLine
 
 .skipEntry:
 
