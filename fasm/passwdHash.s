@@ -71,9 +71,9 @@
 ;; Shared password hashing and /etc/shadow lookup, used by login, su, adduser,
 ;; passwd and deluser
 ;;
-;; Compatibility: Hexagonix Dormin development branch or higher
-;;                Hexagon 1.5.0 or newer (kernel version required)
-;;                Version: 1.0 rev 0 31/07/2026
+;; Compatibility: Hexagonix Mineru or higher
+;;                Hexagon 1.7.0 or newer (kernel version required)
+;;                Version: 1.1 rev 0 07/08/2026
 ;;
 ;;************************************************************************************
 
@@ -184,6 +184,8 @@ Hexagon.LibASM.PasswdHash.findUser:
 
     mov esi, Hexagon.LibASM.PasswdHash.file
     mov edi, Hexagon.LibASM.PasswdHash.fileBuffer
+
+    xor ecx, ecx
 
     hx.syscall hx.open
 
@@ -477,6 +479,8 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
 
     mov esi, Hexagon.LibASM.PasswdHash.file
     mov edi, Hexagon.LibASM.PasswdHash.fileBuffer
+
+    xor ecx, ecx
 
     hx.syscall hx.open
 

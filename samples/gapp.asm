@@ -95,7 +95,7 @@ headerHAPP:
 signature:     db "HAPP" ;; Image signature
 architecture:  db 01h    ;; Image architecture (i386 = 01h)
 minVer:        db 1      ;; Minimum version of Hexagon(R)
-minMinorVer:   db 00     ;; Minimal subversion of Hexagon(R)
+minMinorVer:   db 7      ;; Minimal subversion of Hexagon(R)
 entryPoint:    dd applicationStart ;; Image entry point
 imageType:     db 01h ;; Image type
 reserved0:     dd 0 ;; Reserved (Dword)
@@ -119,7 +119,7 @@ include "estelar.s" ;; Includes interface creation library
 
 ;; Variables and constants
 
-VERSION equ "3.3" ;; Application version
+VERSION equ "3.4" ;; Application version
 
 gapp:
 
@@ -146,6 +146,8 @@ applicationStart:
 ;; tty0 is the main console while tty1-ttyn are virtual consoles.
 
     mov esi, gapp.tty0
+
+    xor ecx, ecx
 
     hx.syscall hx.open ;; Open device
 

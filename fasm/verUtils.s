@@ -70,9 +70,9 @@
 ;;
 ;; Macros and functions for handling Hexagonix version data
 ;;
-;; Compatibility: Hexagonix System I or higher
-;;                Hexagon 1.01 or newer (kernel version required)
-;;                Version: 2.0 rev 2 29/08/2024
+;; Compatibility: Hexagonix Mineru or higher
+;;                Hexagon 1.7.0 or newer (kernel version required)
+;;                Version: 3.0 rev 2 07/08/2026
 ;;
 ;;************************************************************************************
 
@@ -106,6 +106,8 @@ getHexagonixVersion:
 
     mov esi, versionFileVerUtils
     mov edi, appFileBuffer
+
+    xor ecx, ecx
 
     hx.syscall hx.open
 
@@ -194,6 +196,8 @@ getDistributionCode:
 
     mov esi, versionFileVerUtils
     mov edi, appFileBuffer
+
+    xor ecx, ecx
 
     hx.syscall hx.open
 
@@ -286,6 +290,8 @@ getUpdatePackage:
     mov esi, versionFileVerUtils
     mov edi, appFileBuffer
 
+    xor ecx, ecx
+
     hx.syscall hx.open
 
     jc .error
@@ -374,6 +380,8 @@ getDistributionRelease:
 
     mov esi, versionFileVerUtils
     mov edi, appFileBuffer
+
+    xor ecx, ecx
 
     hx.syscall hx.open
 
@@ -466,6 +474,8 @@ getDistributionBuild:
     mov esi, versionFileVerUtils
     mov edi, appFileBuffer
 
+    xor ecx, ecx
+
     hx.syscall hx.open
 
     jc .error
@@ -544,7 +554,7 @@ getDistributionBuild:
 ;;************************************************************************************
 
 versionFileVerUtils:
-db "HEXGNIX.OCL", 0
+db "/etc/hexgnix.ocl", 0
 versionObtained:
 times 64 db 0
 codeObtained:

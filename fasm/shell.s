@@ -74,7 +74,7 @@
 ;; declare its own "appFileBuffer" label, the same scratch buffer
 ;; convention each of them already uses for hx.open
 ;;
-;; Compatibility: Hexagonix Mineru development branch or higher
+;; Compatibility: Hexagonix Mineru or higher
 ;;                Hexagon 1.7.0 or newer (kernel version required)
 ;;                Version: 1.0 rev 0 07/08/2026
 ;;
@@ -168,9 +168,23 @@ Shell.resolveCommandPath:
 
     mov [Shell.resolveCommandPath.cursor], esi
 
+;; Only insert a separator if this PATH entry didn't already end with one.
+;; PATH=/ (the system default) already ends in '/', and joining it with
+;; another '/' before the command name produced "//name" instead of "/name"
+
+    cmp edi, Shell.resolveCommandPath.candidate
+    je .needSlash
+
+    cmp byte[edi - 1], '/'
+    je .noSlash
+
+.needSlash:
+
     mov byte[edi], '/'
 
     inc edi
+
+.noSlash:
 
     push edi
 
@@ -314,6 +328,8 @@ Shell.loadRc:
     mov esi, Shell.loadRc.path
     mov edi, appFileBuffer
 
+    xor ecx, ecx
+
     hx.syscall hx.open
 
     jc .end ;; No /etc/shrc, nothing to do
@@ -435,10 +451,25 @@ Shell.checkShebang:
 
     push eax
     push edi
+    push ecx
+
+;; appFileBuffer has no reserved space of its own, it relies on whatever
+;; free slack happens to sit past this shell's own compiled image, per the
+;; convention documented alongside Hexagon.Kern.Proc.allocateAndLoadImage.
+;; A shebang line only ever needs the first handful of bytes, so cap the
+;; read well under that slack instead of pulling in the resolved command's
+;; entire file. For a large executable (fasmX, ~110 KB, being the one that
+;; actually exposed this) hx.open's old unconditional full read overflowed
+;; straight past this process's own allocated block and crashed the VM,
+;; every time, before hx.exec was ever reached
 
     mov edi, appFileBuffer
 
+    mov ecx, 512
+
     hx.syscall hx.open
+
+    pop ecx
 
     jc .notShebang
 
@@ -570,6 +601,8 @@ Shell.runScriptFile:
     push edi
 
     mov edi, appFileBuffer
+
+    xor ecx, ecx
 
     hx.syscall hx.open
 

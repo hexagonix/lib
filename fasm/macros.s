@@ -70,9 +70,9 @@
 ;;
 ;; Macros for Hexagonix utility development
 ;;
-;; Compatibility: Hexagonix System I or higher
-;;                Hexagon 1.01 or newer (kernel version required)
-;;                Version: 2.2 rev 2 29/08/2024
+;; Compatibility: Hexagonix Mineru or higher
+;;                Hexagon 1.7.0 or newer (kernel version required)
+;;                Version: 2.3 rev 2 07/08/2026
 ;;
 ;;************************************************************************************
 
@@ -81,6 +81,8 @@ macro Open filename, address
 
     mov esi, filename
     mov edi, address
+
+    xor ecx, ecx
 
     hx.syscall hx.open
 
