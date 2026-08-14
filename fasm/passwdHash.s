@@ -397,7 +397,7 @@ times 8192 db 0
 
 ;;************************************************************************************
 
-;; Input: 
+;; Input:
 ;;
 ;; ESI - Source string (NUL-terminated)
 ;; EDI - Destination buffer
@@ -423,12 +423,12 @@ Hexagon.LibASM.PasswdHash.copyString:
 
 ;;************************************************************************************
 
-;; Input: 
+;; Input:
 ;;
 ;; ESI - Source string (NUL-terminated)
 ;; EDI - Current write position
 ;;
-;; Output: 
+;; Output:
 ;;
 ;; EDI advanced past the copied bytes, not NUL-terminated, since
 ;; callers use this to build up a larger buffer piece by piece. Clobbers
