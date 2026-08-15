@@ -76,7 +76,6 @@
 ;;
 ;;************************************************************************************
 
-
 ;; Kernel priority list:
 ;;
 ;; 0 - Stop the execution of the current process and display a message (to be implemented).

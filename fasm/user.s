@@ -68,121 +68,47 @@
 
 ;;************************************************************************************
 ;;
-;; This is a template for building a graphical app for Hexagonix!
+;; Current-user lookup helper, built on top of passwdHash.s's /etc/shadow access.
+;; The kernel only ever hands out the logged in user's numeric id (hx.getUser);
+;; resolving that id to a username is a userland concern, done fresh on every call
+;; here instead of trusting any cached copy.
 ;;
-;; Written by Felipe Miguel Nery Lunkes on 04/12/2020
+;; Include hexagon.s and passwdHash.s before this file
 ;;
-;; You can generate an executable HAPP image using the fasm assembler
-;; included. To do this, use the command line below:
+;; Compatibility: Hexagonix Mineru or higher
+;;                Hexagon 1.7.0 or newer (kernel version required)
+;;                Version: 1.0 rev 0 13/08/2026
 ;;
-;; fasmX gapp.asm
-;; or
-;; fasmX gapp.asm gapp.app
+;;************************************************************************************
 
-;; Now, let's define the format of the generated image. As fasmX doesn't
-;; has native support for the HAPP format, let's generate a simple binary image
-;; and add the format specific information with the header defined below,
-;; indirectly generating a valid HAPP image.
+;; Resolves the currently logged in user's name
+;;
+;; Output:
+;;
+;; CF set if the logged in user's id is no longer in /etc/shadow (the account
+;; was removed, or renamed to a different code, after login)
+;; ESI - Username, NUL-terminated, if CF is clear
 
-format binary as " " ;; Specifies the file format and extension
+Hexagon.LibASM.User.currentUsername:
 
-use32
+    hx.syscall hx.getUser
 
-headerHAPP:
+    call Hexagon.LibASM.PasswdHash.findUserById
 
-;; HAPP2 specification (HAPP 2.0 rev 0)
+    jc .notFound
 
-signature:     db "HAPP" ;; Image signature
-architecture:  db 01h    ;; Image architecture (i386 = 01h)
-minVer:        db 1      ;; Minimum version of Hexagon(R)
-minMinorVer:   db 7      ;; Minimal subversion of Hexagon(R)
-entryPoint:    dd applicationStart ;; Image entry point
-imageType:     db 01h ;; Image type
-reserved0:     dd 0 ;; Reserved (Dword)
-reserved1:     db 0 ;; Reserved (Byte)
-reserved2:     db 0 ;; Reserved (Byte)
-reserved3:     db 0 ;; Reserved (Byte)
-reserved4:     dd 0 ;; Reserved (Dword)
-reserved5:     dd 0 ;; Reserved (Dword)
-reserved6:     dd 0 ;; Reserved (Dword)
-reserved7:     db 0 ;; Reserved (Byte)
-reserved8:     dw 0 ;; Reserved (Word)
-reserved9:     dw 0 ;; Reserved (Word)
-reserved10:    dw 0 ;; Reserved (Word)
+    mov esi, Hexagon.LibASM.PasswdHash.usernameFound
 
-;;*************************************************************
+    clc
 
-include "/lib/asm/hexagon.s" ;; Include system calls
-include "/lib/asm/estelar.s" ;; Includes interface creation library
+    ret
 
-;;*************************************************************
+.notFound:
 
-;; Variables and constants
+    stc
 
-VERSION equ "3.4" ;; Application version
-
-gapp:
-
-.helloMessage: ;; Place the dbs below to facilitate organization
-db 10, 10, "This is an example of a graphical HAPP application from Hexagonix!", 10, 10
-db 10, 10, "Press any key to exit...", 10, 10, 0
-
-.TITLE:
-db "Welcome!", 0
-
-.FOOTER:
-db "[", VERSION, "] | Press any key to continue...", 0
-
-.tty0:
-db "tty0", 0 ;; Default console
+    ret
 
 ;;************************************************************************************
 
-applicationStart:
-
-;; Let's define that we want direct output to tty0 (similar to tty0 in Linux).
-;; This is not always necessary. If the shell was used to call the app, tty0 is already open.
-;; Unless it is called by an app that is using, for example, tty1.
-;; tty0 is the main console while tty1-ttyn are virtual consoles.
-
-    mov esi, gapp.tty0
-
-    xor ecx, ecx
-
-    hx.syscall hx.open ;; Open device
-
-;; Okay, now let's continue. First, clear the console and get resolution information
-
-    Andromeda.Estelar.getConsoleInfo
-
-    hx.syscall hx.clearConsole
-
-;; Let's create the interface structure with title and footer
-
-;; Format for receiving parameters from the create interfaces function:
-;; It is worth mentioning that the parameters must be in order!
-;;
-;; title, footer, title color, footer color, text color in the title,
-;; footer text color, app initial text color, initial background color
-;;
-;; You can use '\' to break the line if it is too long, as below
-
-    Andromeda.Estelar.createInterface gapp.TITLE, gapp.FOOTER, VERMELHO_TIJOLO,\
-    VERMELHO_TIJOLO, BRANCO_ANDROMEDA, BRANCO_ANDROMEDA,\
-    [Andromeda.Interface.fontColor], [Andromeda.Interface.backgroundColor]
-
-;; Now let's print a simple message on the interface
-
-    fputs gapp.helloMessage
-
-;; We will wait for user interaction to finalize the app
-
-    hx.syscall hx.waitKeyboard
-
-;; Did you interact? Ok, let's finish the application
-
-;; Format:
-;;
-;; Error code (in this case, 0), exit type (read documentation in macro - in this case, 0)
-
-    Andromeda.Estelar.finishGraphicProcess 0, 0
+;; End of file

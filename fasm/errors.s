@@ -80,12 +80,14 @@
 
 IO:
 
-.writingDenied   = 1
-.readingDenied   = 2
-.readingError    = 3
-.writingError    = 4
-.operationDenied = 5
-.notFound        = 6
+.writingDenied     = 1
+.readingDenied     = 2
+.readingError      = 3
+.writingError      = 4
+.operationDenied   = 5
+.notFound          = 6
+.pathNotFound      = 7
+.directoryNotEmpty = 8
 
 VFS:
 

@@ -68,17 +68,17 @@
 
 ;;************************************************************************************
 ;;
-;; Shared password hashing and /shadow lookup, used by login, su, adduser,
+;; Shared password hashing and /etc/shadow lookup, used by login, su, adduser,
 ;; passwd and deluser
 ;;
-;; Compatibility: Hexagonix Dormin development branch or higher
-;;                Hexagon 1.5.0 or newer (kernel version required)
-;;                Version: 1.0 rev 0 31/07/2026
+;; Compatibility: Hexagonix Mineru or higher
+;;                Hexagon 1.7.0 or newer (kernel version required)
+;;                Version: 1.1 rev 0 07/08/2026
 ;;
 ;;************************************************************************************
 
 Hexagon.LibASM.PasswdHash.file:
-db "shadow", 0
+db "/etc/shadow", 0
 
 Hexagon.LibASM.PasswdHash.searchSizeLimit = 8192
 Hexagon.LibASM.PasswdHash.lineBufferSize  = 128
@@ -88,7 +88,7 @@ Hexagon.LibASM.PasswdHash.lineBufferSize  = 128
 ;; Computes a DJB2 hash of a plaintext string and writes it as an 8-digit
 ;; lowercase hex string to Hexagon.LibASM.PasswdHash.hashBuffer. Not a
 ;; cryptographic hash. No salt, reversible by brute force, but the password
-;; is no longer sitting in /shadow as plain readable text.
+;; is no longer sitting in /etc/shadow as plain readable text.
 ;;
 ;; Input:
 ;;
@@ -157,7 +157,7 @@ times 9 db 0
 
 ;;************************************************************************************
 
-;; Looks up a username's record in /shadow (username:passwordhash:code:shell:theme)
+;; Looks up a username's record in /etc/shadow (username:passwordhash:code:shell:theme)
 ;;
 ;; Input:
 ;;
@@ -165,11 +165,11 @@ times 9 db 0
 ;;
 ;; Output:
 ;;
-;; CF set if not found (including if /shadow itself is missing)
+;; CF set if not found (including if /etc/shadow itself is missing)
 ;; CF clear if found, with these filled in:
 ;;
 ;; Hexagon.LibASM.PasswdHash.hashFound  - password hash, 8 hex chars + NUL
-;; Hexagon.LibASM.PasswdHash.codeFound  - user code (555/777), as an integer
+;; Hexagon.LibASM.PasswdHash.codeFound  - user code (0 for root), as an integer
 ;; Hexagon.LibASM.PasswdHash.shellFound - shell filename
 ;; Hexagon.LibASM.PasswdHash.themeFound - theme name ("dark"/"light")
 
@@ -182,14 +182,25 @@ Hexagon.LibASM.PasswdHash.findUser:
 
     mov [.wantedUser], esi
 
+    mov ebx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.malloc
+
+    cmp eax, 0
+    je .mallocFailed
+
+    mov [.fileBufferPtr], ebx
+
     mov esi, Hexagon.LibASM.PasswdHash.file
-    mov edi, Hexagon.LibASM.PasswdHash.fileBuffer
+    mov edi, ebx
+
+    xor ecx, ecx
 
     hx.syscall hx.open
 
-    jc .notFound
+    jc .cleanupNotFound
 
-    mov esi, Hexagon.LibASM.PasswdHash.fileBuffer
+    mov esi, [.fileBufferPtr]
 
     mov dword[.readPos], 0
 
@@ -204,7 +215,7 @@ Hexagon.LibASM.PasswdHash.findUser:
     inc dword[.readPos]
 
     cmp dword[.readPos], Hexagon.LibASM.PasswdHash.searchSizeLimit
-    jae .notFound
+    jae .cleanupNotFound
 
     cmp al, 0
     je .lastLine
@@ -239,11 +250,7 @@ Hexagon.LibASM.PasswdHash.findUser:
 
     jc .lineLoop
 
-    pop es
-
-    clc
-
-    ret
+    jmp .cleanupFound
 
 .lastLine: ;; End of the file, possibly without a trailing newline
 
@@ -251,7 +258,16 @@ Hexagon.LibASM.PasswdHash.findUser:
 
     call .tryLine
 
-    jc .notFound
+    jc .cleanupNotFound
+
+    jmp .cleanupFound
+
+.cleanupFound:
+
+    mov ebx, [.fileBufferPtr]
+    mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.free
 
     pop es
 
@@ -259,7 +275,14 @@ Hexagon.LibASM.PasswdHash.findUser:
 
     ret
 
-.notFound:
+.cleanupNotFound:
+
+    mov ebx, [.fileBufferPtr]
+    mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.free
+
+.mallocFailed:
 
     pop es
 
@@ -368,9 +391,10 @@ Hexagon.LibASM.PasswdHash.findUser:
 
     ret
 
-.wantedUser: dd 0
-.cursor:     dd 0
-.readPos:    dd 0
+.wantedUser:     dd 0
+.cursor:         dd 0
+.readPos:        dd 0
+.fileBufferPtr:  dd 0
 
 .fieldBuffer:
 times 32 db 0
@@ -390,12 +414,269 @@ times 8 db 0
 Hexagon.LibASM.PasswdHash.lineBuffer:
 times Hexagon.LibASM.PasswdHash.lineBufferSize db 0
 
-Hexagon.LibASM.PasswdHash.fileBuffer:
-times 8192 db 0
+;;************************************************************************************
+
+;; Looks up a user's record in /etc/shadow by numeric code, the reverse of
+;; findUser above (username:passwordhash:code:shell:theme)
+;;
+;; Input:
+;;
+;; EAX - User code to search for
+;;
+;; Output:
+;;
+;; CF set if not found (including if /etc/shadow itself is missing)
+;; CF clear if found, with these filled in:
+;;
+;; Hexagon.LibASM.PasswdHash.usernameFound - username
+;; Hexagon.LibASM.PasswdHash.hashFound     - password hash, 8 hex chars + NUL
+;; Hexagon.LibASM.PasswdHash.codeFound     - user code, same value as the EAX input
+;; Hexagon.LibASM.PasswdHash.shellFound    - shell filename
+;; Hexagon.LibASM.PasswdHash.themeFound    - theme name ("dark"/"light")
+
+Hexagon.LibASM.PasswdHash.findUserById:
+
+    push es
+
+    push ds ;; User mode data segment (38h selector)
+    pop es
+
+    mov [.wantedId], eax
+
+    mov ebx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.malloc
+
+    cmp eax, 0
+    je .mallocFailed
+
+    mov [.fileBufferPtr], ebx
+
+    mov esi, Hexagon.LibASM.PasswdHash.file
+    mov edi, ebx
+
+    xor ecx, ecx
+
+    hx.syscall hx.open
+
+    jc .cleanupNotFound
+
+    mov esi, [.fileBufferPtr]
+
+    mov dword[.readPos], 0
+
+.lineLoop:
+
+    mov edi, Hexagon.LibASM.PasswdHash.lineBuffer
+
+.copyChar:
+
+    lodsb
+
+    inc dword[.readPos]
+
+    cmp dword[.readPos], Hexagon.LibASM.PasswdHash.searchSizeLimit
+    jae .cleanupNotFound
+
+    cmp al, 0
+    je .lastLine
+
+    cmp al, 10
+    je .lineComplete
+
+    cmp al, 13
+    je .copyChar
+
+    mov byte[edi], al
+
+    inc edi
+
+    cmp edi, Hexagon.LibASM.PasswdHash.lineBuffer + Hexagon.LibASM.PasswdHash.lineBufferSize - 1
+    jae .lineComplete
+
+    jmp .copyChar
+
+.lineComplete:
+
+    mov byte[edi], 0
+
+    push esi
+
+    call .tryLine
+
+    pop esi
+
+    jc .lineLoop
+
+    jmp .cleanupFound
+
+.lastLine: ;; End of the file, possibly without a trailing newline
+
+    mov byte[edi], 0
+
+    call .tryLine
+
+    jc .cleanupNotFound
+
+    jmp .cleanupFound
+
+.cleanupFound:
+
+    mov ebx, [.fileBufferPtr]
+    mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.free
+
+    pop es
+
+    clc
+
+    ret
+
+.cleanupNotFound:
+
+    mov ebx, [.fileBufferPtr]
+    mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.free
+
+.mallocFailed:
+
+    pop es
+
+    stc
+
+    ret
 
 ;;************************************************************************************
 
-;; Input: 
+;; Splits Hexagon.LibASM.PasswdHash.lineBuffer on ':' and, if the third field
+;; (user code) matches .wantedId, fills in usernameFound/hashFound/codeFound/
+;; shellFound/themeFound. Fields 1 and 2 are held in scratch buffers until the
+;; code is confirmed, since the code comes after them on the line
+;;
+;; Output: CF set if this line's code didn't match
+
+.tryLine:
+
+    mov dword[.cursor], Hexagon.LibASM.PasswdHash.lineBuffer
+
+    mov edi, .userBuffer
+
+    call .copyField ;; Field 1: username, held until the code is known
+
+    mov edi, .hashBuffer
+
+    call .copyField ;; Field 2: password hash, held until the code is known
+
+    mov edi, .fieldBuffer
+
+    call .copyField ;; Field 3: user code, arrives as text
+
+    mov esi, .fieldBuffer
+
+    hx.syscall hx.stringToInt
+
+    cmp eax, [.wantedId]
+    jne .noMatch
+
+    mov [Hexagon.LibASM.PasswdHash.codeFound], eax
+
+;; Code matches, commit the buffered fields and parse the rest straight into
+;; their real destinations
+
+    mov esi, .userBuffer
+    mov edi, Hexagon.LibASM.PasswdHash.usernameFound
+
+    call Hexagon.LibASM.PasswdHash.copyString
+
+    mov esi, .hashBuffer
+    mov edi, Hexagon.LibASM.PasswdHash.hashFound
+
+    call Hexagon.LibASM.PasswdHash.copyString
+
+    mov edi, Hexagon.LibASM.PasswdHash.shellFound
+
+    call .copyField ;; Field 4: shell
+
+    mov edi, Hexagon.LibASM.PasswdHash.themeFound
+
+    call .copyField ;; Field 5: theme
+
+    clc
+
+    ret
+
+.noMatch:
+
+    stc
+
+    ret
+
+;;************************************************************************************
+
+;; Copies characters from .cursor into [EDI] until ':' or NUL is reached,
+;; NUL-terminating the destination, and advances .cursor past the ':' (or
+;; leaves it on the NUL if this was the last field on the line)
+;;
+;; Input: EDI - Destination buffer
+
+.copyField:
+
+    mov esi, [.cursor]
+
+.copyFieldLoop:
+
+    lodsb
+
+    cmp al, 0
+    je .copyFieldEnd
+
+    cmp al, ':'
+    je .copyFieldColon
+
+    stosb
+
+    jmp .copyFieldLoop
+
+.copyFieldColon:
+
+    mov byte[edi], 0
+
+    mov [.cursor], esi
+
+    ret
+
+.copyFieldEnd:
+
+    mov byte[edi], 0
+
+    dec esi
+
+    mov [.cursor], esi
+
+    ret
+
+.wantedId:       dd 0
+.cursor:         dd 0
+.readPos:        dd 0
+.fileBufferPtr:  dd 0
+
+.fieldBuffer:
+times 32 db 0
+
+.userBuffer:
+times 32 db 0
+
+.hashBuffer:
+times 9 db 0
+
+Hexagon.LibASM.PasswdHash.usernameFound:
+times 32 db 0
+
+;;************************************************************************************
+
+;; Input:
 ;;
 ;; ESI - Source string (NUL-terminated)
 ;; EDI - Destination buffer
@@ -421,12 +702,12 @@ Hexagon.LibASM.PasswdHash.copyString:
 
 ;;************************************************************************************
 
-;; Input: 
+;; Input:
 ;;
 ;; ESI - Source string (NUL-terminated)
 ;; EDI - Current write position
 ;;
-;; Output: 
+;; Output:
 ;;
 ;; EDI advanced past the copied bytes, not NUL-terminated, since
 ;; callers use this to build up a larger buffer piece by piece. Clobbers
@@ -448,7 +729,7 @@ Hexagon.LibASM.PasswdHash.appendString:
 
 ;;************************************************************************************
 
-;; Rewrites /shadow: the line whose first field matches ESI is either
+;; Rewrites /etc/shadow: the line whose first field matches ESI is either
 ;; replaced with the NUL-terminated content at EDI (Apps/Unix/passwd, to
 ;; change a hash field) or dropped entirely if EDI is 0 (Apps/Unix/deluser).
 ;; Every other line is copied through unchanged
@@ -461,7 +742,7 @@ Hexagon.LibASM.PasswdHash.appendString:
 ;;
 ;; Output:
 ;;
-;; CF set if the user wasn't found in /shadow, or the write failed
+;; CF set if the user wasn't found in /etc/shadow, or the write failed
 
 Hexagon.LibASM.PasswdHash.rewriteUser:
 
@@ -475,8 +756,28 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
 
     mov dword[.rwFound], 0
 
+    mov ebx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.malloc
+
+    cmp eax, 0
+    je .rwMallocFailed
+
+    mov [.fileBufferPtr], ebx
+
+    mov ebx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.malloc
+
+    cmp eax, 0
+    je .rwSecondMallocFailed
+
+    mov [.rwOutputPtr], ebx
+
     mov esi, Hexagon.LibASM.PasswdHash.file
-    mov edi, Hexagon.LibASM.PasswdHash.fileBuffer
+    mov edi, [.fileBufferPtr]
+
+    xor ecx, ecx
 
     hx.syscall hx.open
 
@@ -484,7 +785,8 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
 
     mov dword[.readPos], 0
 
-    mov dword[.rwOutPos], Hexagon.LibASM.PasswdHash.rwOutput
+    mov eax, [.rwOutputPtr]
+    mov [.rwOutPos], eax
 
 .rwLineLoop:
 
@@ -492,7 +794,7 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
 
 .rwCopyChar:
 
-    mov esi, Hexagon.LibASM.PasswdHash.fileBuffer
+    mov esi, [.fileBufferPtr]
 
     add esi, [.readPos]
 
@@ -549,16 +851,26 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
 
     hx.syscall hx.unlink
 
-    mov esi, Hexagon.LibASM.PasswdHash.rwOutput
+    mov esi, [.rwOutputPtr]
 
     hx.syscall hx.stringSize
 
     mov esi, Hexagon.LibASM.PasswdHash.file
-    mov edi, Hexagon.LibASM.PasswdHash.rwOutput
+    mov edi, [.rwOutputPtr]
 
     hx.syscall hx.create
 
     jc .rwFailed
+
+    mov ebx, [.fileBufferPtr]
+    mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.free
+
+    mov ebx, [.rwOutputPtr]
+    mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.free
 
     pop es
 
@@ -566,7 +878,32 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
 
     ret
 
+;; Every path below is reached with at least the fileBuffer allocation live,
+;; so each frees exactly what was actually allocated before falling through
+;; to the shared pop es/stc/ret tail
+
 .rwFailed:
+
+    mov ebx, [.fileBufferPtr]
+    mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.free
+
+    mov ebx, [.rwOutputPtr]
+    mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.free
+
+    jmp .rwMallocFailed
+
+.rwSecondMallocFailed:
+
+    mov ebx, [.fileBufferPtr]
+    mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.free
+
+.rwMallocFailed:
 
     pop es
 
@@ -654,9 +991,187 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
 .rwFound:        dd 0
 .rwOutPos:       dd 0
 .readPos:        dd 0
+.fileBufferPtr:  dd 0
+.rwOutputPtr:    dd 0
 
 .rwLineUser:
 times 32 db 0
 
-Hexagon.LibASM.PasswdHash.rwOutput:
-times 8192 db 0
+;;************************************************************************************
+
+;; Scans every existing /etc/shadow line and returns one greater than the
+;; highest user code found there, so a newly created user never collides
+;; with one that already exists. Root's own code (0) never raises this, so
+;; new users start at 1
+;;
+;; Output:
+;;
+;; EAX - Next unused user code (1 if /etc/shadow doesn't exist yet)
+
+Hexagon.LibASM.PasswdHash.nextCode:
+
+    push es
+
+    push ds ;; User mode data segment (38h selector)
+    pop es
+
+    mov dword[.highestCode], 0
+
+    mov ebx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.malloc
+
+    cmp eax, 0
+    je .ncNoBuffer
+
+    mov [.fileBufferPtr], ebx
+
+    mov esi, Hexagon.LibASM.PasswdHash.file
+    mov edi, ebx
+
+    xor ecx, ecx
+
+    hx.syscall hx.open
+
+    jc .ncDone
+
+    mov esi, [.fileBufferPtr]
+
+    mov dword[.readPos], 0
+
+.ncLineLoop:
+
+    mov edi, Hexagon.LibASM.PasswdHash.lineBuffer
+
+.ncCopyChar:
+
+    lodsb
+
+    inc dword[.readPos]
+
+    cmp dword[.readPos], Hexagon.LibASM.PasswdHash.searchSizeLimit
+    jae .ncDone
+
+    cmp al, 0
+    je .ncLastLine
+
+    cmp al, 10
+    je .ncLineComplete
+
+    cmp al, 13
+    je .ncCopyChar
+
+    mov byte[edi], al
+
+    inc edi
+
+    cmp edi, Hexagon.LibASM.PasswdHash.lineBuffer + Hexagon.LibASM.PasswdHash.lineBufferSize - 1
+    jae .ncLineComplete
+
+    jmp .ncCopyChar
+
+.ncLineComplete:
+
+    mov byte[edi], 0
+
+    push esi
+
+    call .ncTrackLine
+
+    pop esi
+
+    jmp .ncLineLoop
+
+.ncLastLine:
+
+    mov byte[edi], 0
+
+    cmp edi, Hexagon.LibASM.PasswdHash.lineBuffer
+    je .ncDone ;; Nothing after the last newline
+
+    call .ncTrackLine
+
+.ncDone:
+
+    mov ebx, [.fileBufferPtr]
+    mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
+
+    hx.syscall hx.free
+
+.ncNoBuffer:
+
+    mov eax, [.highestCode]
+
+    inc eax
+
+    pop es
+
+    ret
+
+;;************************************************************************************
+
+;; Reads field 3 (user code) out of Hexagon.LibASM.PasswdHash.lineBuffer and
+;; raises .highestCode if it's the largest seen so far
+
+.ncTrackLine:
+
+    mov esi, Hexagon.LibASM.PasswdHash.lineBuffer
+
+    call .ncSkipField ;; Field 1: username
+    call .ncSkipField ;; Field 2: password hash
+
+    mov edi, .ncCodeText
+
+.ncCopyCode:
+
+    lodsb
+
+    cmp al, ':'
+    je .ncCodeExtracted
+
+    cmp al, 0
+    je .ncCodeExtracted
+
+    stosb
+
+    jmp .ncCopyCode
+
+.ncCodeExtracted:
+
+    mov byte[edi], 0
+
+    mov esi, .ncCodeText
+
+    hx.syscall hx.stringToInt
+
+    cmp eax, [.highestCode]
+    jbe .ncTrackDone
+
+    mov [.highestCode], eax
+
+.ncTrackDone:
+
+    ret
+
+.ncSkipField:
+
+    lodsb
+
+    cmp al, ':'
+    je .ncSkipDone
+
+    cmp al, 0
+    je .ncSkipDone
+
+    jmp .ncSkipField
+
+.ncSkipDone:
+
+    ret
+
+.readPos:        dd 0
+.highestCode:    dd 0
+.fileBufferPtr:  dd 0
+
+.ncCodeText:
+times 9 db 0
