@@ -203,7 +203,6 @@ hx.sendMessageHexagon     = 75 ;; Hexagon Messaging Services
 hx.date                   = 76 ;; Hexagon Real Time Clock Service
 hx.time                   = 77 ;; Hexagon Real Time Clock Service
 
-
 ;;************************************************************************************
 
 ;;************************************************************************************
