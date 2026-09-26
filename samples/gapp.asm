@@ -133,25 +133,11 @@ db "Welcome!", 0
 .FOOTER:
 db "[", VERSION, "] | Press any key to continue...", 0
 
-.tty0:
-db "tty0", 0 ;; Default console
-
 ;;************************************************************************************
 
 applicationStart:
 
-;; Let's define that we want direct output to tty0 (similar to tty0 in Linux).
-;; This is not always necessary. If the shell was used to call the app, tty0 is already open.
-;; Unless it is called by an app that left the console switched to its secondary
-;; (double buffering) buffer via hx.ioctl
-
-    mov esi, gapp.tty0
-
-    xor ecx, ecx
-
-    hx.syscall hx.open ;; Open device
-
-;; Okay, now let's continue. First, clear the console and get resolution information
+;; First, clear the console and get resolution information
 
     Andromeda.Estelar.getConsoleInfo
 

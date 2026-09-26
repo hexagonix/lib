@@ -76,6 +76,37 @@
 ;;
 ;;************************************************************************************
 
+;; Selects which console the process draws to, 0 for the main one and 1 for the
+;; secondary one presented by hx.updateScreen
+
+macro activateConsole console
+{
+
+local ..done
+
+    mov esi, Hexagon.LibASM.Dev.video.tty
+
+    xor ecx, ecx
+
+    hx.syscall hx.open
+
+    jc ..done
+
+    push eax ;; The descriptor
+
+    mov ebx, 1
+    mov ecx, console
+
+    hx.syscall hx.ioctl
+
+    pop eax
+
+    hx.syscall hx.close
+
+..done:
+
+}
+
 ;; Save information about the console in use
 
 macro saveConsole
