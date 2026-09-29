@@ -205,6 +205,10 @@ hx.chown                  = 68 ;; Hexagon File System and Volume Management Serv
 hx.getTTY                 = 69 ;; Hexagon Process Management Service
 hx.sysctl                 = 70 ;; Hexagon Kernel Diagnostics Service
 
+;; Hexagon File and Device Management Services
+
+hx.read                   = 71 ;; Hexagon File and Device Management Services
+
 ;;************************************************************************************
 
 ;;************************************************************************************
