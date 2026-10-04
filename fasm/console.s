@@ -148,7 +148,7 @@ macro setConsoleColor consoleFontColor, consoleBackgroundColor
     mov eax, consoleFontColor
     mov ebx, consoleBackgroundColor
 
-    hx.syscall hx.setColor
+    call Lib.Console.setColor
 
 }
 
@@ -160,7 +160,7 @@ macro restoreConsoleColor
     mov eax, dword[Lib.Console.fontColor]
     mov ebx, dword[Lib.Console.backgroundColor]
 
-    hx.syscall hx.setColor
+    call Lib.Console.setColor
 
 }
 
@@ -171,22 +171,14 @@ macro restoreAndClearConsole
 
     restoreConsole
 
-    hx.syscall hx.clearConsole
+    call Lib.Console.clear
 
 }
 
 macro putNewLine
 {
 
-    push ebx
-
-    xor ebx, ebx
-
-    mov al, 10 ;; 10 is the newline character
-
-    pop ebx
-
-    hx.syscall hx.printCharacter
+    call Lib.Console.writeNewLine
 
 }
 
@@ -195,9 +187,9 @@ macro putNewLine
 macro printInteger
 {
 
-    mov ebx, 01h
+    mov ebx, 10
 
-    hx.syscall hx.print
+    call Lib.Console.writeNumber
 
 }
 
@@ -206,9 +198,9 @@ macro printInteger
 macro printHexadecimal
 {
 
-    mov ebx, 02h
+    mov ebx, 16
 
-    hx.syscall hx.print
+    call Lib.Console.writeNumber
 
 }
 
@@ -217,9 +209,9 @@ macro printHexadecimal
 macro printBinary
 {
 
-    mov ebx, 03h
+    mov ebx, 2
 
-    hx.syscall hx.print
+    call Lib.Console.writeNumber
 
 }
 
@@ -228,9 +220,7 @@ macro printBinary
 macro printString
 {
 
-    mov ebx, 04h
-
-    hx.syscall hx.print
+    call Lib.Console.writeString
 
 }
 
@@ -275,7 +265,7 @@ macro gotoxy x, y
     mov dl, x
     mov dh, y
 
-    hx.syscall hx.setCursor
+    call Lib.Console.gotoxy
 
 }
 
@@ -292,6 +282,397 @@ macro xyfputs x, y, string ;; Macro used to print content on the console
     printString
 
 }
+
+;;************************************************************************************
+;;
+;; Console output written to descriptor 1, as escape sequences where it is not
+;; text. Every routine preserves all registers
+;;
+;;************************************************************************************
+
+;; Input:
+;;
+;; ESI - String
+
+if used Lib.Console.writeString
+
+Lib.Console.writeString:
+
+    pushad
+
+    xor ecx, ecx
+
+.measure:
+
+    cmp byte[esi + ecx], 0
+
+    je .write
+
+    inc ecx
+
+    jmp .measure
+
+.write:
+
+    mov eax, 1
+
+    hx.syscall hx.write
+
+    popad
+
+    ret
+
+end if
+
+;;************************************************************************************
+
+if used Lib.Console.writeNewLine
+
+Lib.Console.writeNewLine:
+
+    pushad
+
+    mov esi, Lib.Console.newLine
+    mov ecx, 1
+    mov eax, 1
+
+    hx.syscall hx.write
+
+    popad
+
+    ret
+
+end if
+
+;;************************************************************************************
+
+;; Writes a signed integer: decimal as is, hexadecimal after 0x, binary
+;; followed by b
+;;
+;; Input:
+;;
+;; EAX - Integer
+;; EBX - Base, 10, 16 or 2
+
+if used Lib.Console.writeNumber
+
+Lib.Console.writeNumber:
+
+    pushad
+
+    mov edi, Lib.Console.sequence
+
+    cmp eax, 0
+
+    jge .positive
+
+    mov byte[edi], '-'
+
+    inc edi
+
+    neg eax
+
+.positive:
+
+    cmp ebx, 16
+
+    jne .convert
+
+    mov byte[edi], '0'
+    mov byte[edi + 1], 'x'
+
+    add edi, 2
+
+.convert:
+
+    xor ecx, ecx
+
+.divide:
+
+    xor edx, edx
+
+    div ebx
+
+    add dl, '0'
+
+    cmp dl, '9'
+
+    jbe .digit
+
+    add dl, 7
+
+.digit:
+
+    push edx
+
+    inc ecx
+
+    cmp eax, 0
+
+    jne .divide
+
+.store:
+
+    pop edx
+
+    mov byte[edi], dl
+
+    inc edi
+
+    loop .store
+
+    cmp ebx, 2
+
+    jne .write
+
+    mov byte[edi], 'b'
+
+    inc edi
+
+.write:
+
+    call Lib.Console.writeSequence
+
+    popad
+
+    ret
+
+end if
+
+;;************************************************************************************
+
+;; Input:
+;;
+;; DL - Column
+;; DH - Row
+
+if used Lib.Console.gotoxy
+
+Lib.Console.gotoxy:
+
+    pushad
+
+    mov edi, Lib.Console.sequence
+
+    mov byte[edi], 27
+    mov byte[edi + 1], '['
+
+    add edi, 2
+
+    movzx eax, dh
+    inc eax
+
+    call Lib.Console.appendDecimal
+
+    mov byte[edi], ';'
+
+    inc edi
+
+    movzx eax, dl
+    inc eax
+
+    call Lib.Console.appendDecimal
+
+    mov byte[edi], 'H'
+
+    inc edi
+
+    call Lib.Console.writeSequence
+
+    popad
+
+    ret
+
+end if
+
+;;************************************************************************************
+
+;; Input:
+;;
+;; EAX - Font color, as 0RRGGBBh
+;; EBX - Background color, the same way
+
+if used Lib.Console.setColor
+
+Lib.Console.setColor:
+
+    pushad
+
+    mov ecx, '3'
+
+    call .component
+
+    mov eax, ebx
+    mov ecx, '4'
+
+    call .component
+
+    popad
+
+    ret
+
+;; Writes ESC [ c 8 ; 2 ; r ; g ; b m, CL being the c
+
+.component:
+
+    push eax
+
+    mov edi, Lib.Console.sequence
+
+    mov byte[edi], 27
+    mov byte[edi + 1], '['
+    mov byte[edi + 2], cl
+    mov byte[edi + 3], '8'
+    mov byte[edi + 4], ';'
+    mov byte[edi + 5], '2'
+
+    add edi, 6
+
+    mov edx, dword[esp]
+
+    shr edx, 16
+
+    call .channel
+
+    mov edx, dword[esp]
+
+    shr edx, 8
+
+    call .channel
+
+    mov edx, dword[esp]
+
+    call .channel
+
+    mov byte[edi], 'm'
+
+    inc edi
+
+    call Lib.Console.writeSequence
+
+    pop eax
+
+    ret
+
+.channel:
+
+    mov byte[edi], ';'
+
+    inc edi
+
+    movzx eax, dl
+
+    call Lib.Console.appendDecimal
+
+    ret
+
+end if
+
+;;************************************************************************************
+
+if used Lib.Console.clear
+
+Lib.Console.clear:
+
+    pushad
+
+    mov esi, Lib.Console.clearSequence
+    mov ecx, Lib.Console.clearSequence.size
+    mov eax, 1
+
+    hx.syscall hx.write
+
+    popad
+
+    ret
+
+end if
+
+;;************************************************************************************
+
+;; Input:
+;;
+;; EAX - Value
+;; EDI - Where its digits go
+;;
+;; Output:
+;;
+;; EDI - Past the last digit
+
+if used Lib.Console.appendDecimal
+
+Lib.Console.appendDecimal:
+
+    push eax
+    push ecx
+    push edx
+
+    mov ecx, 10
+
+    push 0FFh ;; Marks where the digits end
+
+.divide:
+
+    xor edx, edx
+
+    div ecx
+
+    push edx
+
+    cmp eax, 0
+
+    jne .divide
+
+.store:
+
+    pop edx
+
+    cmp edx, 0FFh
+
+    je .done
+
+    add dl, '0'
+
+    mov byte[edi], dl
+
+    inc edi
+
+    jmp .store
+
+.done:
+
+    pop edx
+    pop ecx
+    pop eax
+
+    ret
+
+end if
+
+;;************************************************************************************
+
+;; Writes Lib.Console.sequence up to EDI
+
+if used Lib.Console.writeSequence
+
+Lib.Console.writeSequence:
+
+    pushad
+
+    mov esi, Lib.Console.sequence
+    mov ecx, edi
+    sub ecx, esi
+    mov eax, 1
+
+    hx.syscall hx.write
+
+    popad
+
+    ret
+
+end if
+
+;;************************************************************************************
 
 ;;************************************************************************************
 
@@ -482,6 +863,11 @@ Lib.Console:
 .backgroundColor: dd 0
 .fontColor:       dd 0
 .resolution:      dd 0
+.newLine:         db 10
+.sequence:        times 40 db 0
+
+.clearSequence:   db 27, "[2J", 27, "[H"
+.clearSequence.size = $ - .clearSequence
 
 ;; A quick guide to the resolution field, responsible for storing the code related to the resolution in
 ;; use or to be implemented. Options can be:
