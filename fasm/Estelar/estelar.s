@@ -70,9 +70,9 @@
 ;;
 ;; Estelar development library for Hexagonix
 ;;
-;; Compatibility: Hexagonix System I or higher
-;;                Hexagon 1.01 or newer (kernel version required)
-;;                Version: 2.0 rev 2 29/08/2024
+;; Compatibility: Hexagonix 1.1 or higher
+;;                Hexagon 1.8.0 or newer (kernel version required)
+;;                Version: 2.0 rev 13/09/2026
 ;;
 ;;************************************************************************************
 
@@ -289,7 +289,7 @@ macro Andromeda.Estelar.printCentered message, line
 
     mov esi, message
 
-    hx.syscall hx.stringSize
+    call stringSize
 
 ;; In AX, the size of the string
 

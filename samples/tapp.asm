@@ -90,7 +90,7 @@ use32
 
 headerHAPP:
 
-;; HAPP2 specification (HAPP 2.0 rev 0)
+;; HAPP2 specification (HAPP 2.0 rev 1)
 
 signature:     db "HAPP" ;; Image signature
 architecture:  db 01h    ;; Image architecture (i386 = 01h)
@@ -98,7 +98,7 @@ minVer:        db 1      ;; Minimum version of Hexagon(R)
 minMinorVer:   db 7      ;; Minimal subversion of Hexagon(R)
 entryPoint:    dd applicationStart ;; Image entry point
 imageType:     db 01h ;; Image type
-reserved0:     dd 0 ;; Reserved (Dword)
+bssSize:       dd 0 ;; BSS size (Dword)
 reserved1:     db 0 ;; Reserved (Byte)
 reserved2:     db 0 ;; Reserved (Byte)
 reserved3:     db 0 ;; Reserved (Byte)

@@ -70,34 +70,67 @@
 ;;
 ;; Macros for creating and manipulating HAPP headers and images
 ;;
-;; Compatibility: Hexagonix System I or higher
-;;                Hexagon 1.0 or newer (kernel version required)
-;;                Version: 1.22 rev 1 29/08/2024
+;; Compatibility: Hexagonix 1.1 or higher
+;;                Hexagon 1.8.0 or newer (kernel version required)
+;;                Version: 2.0 rev 1 13/09/2026
 ;;
 ;;************************************************************************************
 
-struc headerHAPP imageArchitecture, minVersion, minMinorVersion, entryPointHAPP, imageTypeHAPP
+;; Bytes of zeroed space the image wants past its own end, for buffers it
+;; declares but emits no bytes for. Zero cannot mean "none": every image built
+;; before this field existed carries zero there and depends on the margin the
+;; kernel handed out regardless, so zero goes on meaning exactly that margin.
+;; An image that wants nothing says so with HAPP.bss.none
+
+;; What an image asks for when it wants nothing past its own end, which is the
+;; same as leaving the parameter out. Saying it has a point anyway: it
+;; marks an image as one that has been looked at and reads through the
+;; allocator, and not one nobody has got to yet
+
+HAPP.bss.none = 0
+
+;; What an image that still reads a file into a bare label past its own end
+;; needs. Each one drops to HAPP.bss.none as it moves to asking the allocator
+;; for room instead, so grepping for this name is what is left to do
+
+HAPP.bss.trailingBuffer = 65536 ;; 64 Kb
+
+macro headerHAPP imageArchitecture, minVersion, minMinorVersion, entryPointHAPP, imageTypeHAPP, bssSizeHAPP
 {
 
-;; HAPP2 specification (HAPP 2.0 rev 0)
+;; HAPP2 specification (HAPP 2.0 rev 1)
 
-sinature:      db "HAPP"
-architecture:  db imageArchitecture
-minVer:        db minVersion
-minMinorVer:   db minMinorVersion
-entryPoint:    dd entryPointHAPP
-imageType:     db imageTypeHAPP
-reserved0:     dd 0 ;; Reserved (Dword)
-reserved1:     db 0 ;; Reserved (Byte)
-reserved2:     db 0 ;; Reserved (Byte)
-reserved3:     db 0 ;; Reserved (Byte)
-reserved4:     dd 0 ;; Reserved (Dword)
-reserved5:     dd 0 ;; Reserved (Dword)
-reserved6:     dd 0 ;; Reserved (Dword)
-reserved7:     db 0 ;; Reserved (Byte)
-reserved8:     dw 0 ;; Reserved (Word)
-reserved9:     dw 0 ;; Reserved (Word)
-reserved10:    dw 0 ;; Reserved (Word)
+HAPP.image.signature:    db "HAPP"
+HAPP.image.architecture: db imageArchitecture
+HAPP.image.minVer:       db minVersion
+HAPP.image.minMinorVer:  db minMinorVersion
+HAPP.image.entryPoint:   dd entryPointHAPP
+HAPP.image.imageType:    db imageTypeHAPP
+
+;; Zeroed space the image wants past its own end, as described above
+
+HAPP.image.bssSize:
+
+if bssSizeHAPP eq
+
+dd 0 ;; Written without saying, and so given nothing
+
+else
+
+dd bssSizeHAPP
+
+end if
+
+HAPP.image.reserved1:    db 0 ;; Reserved (Byte)
+HAPP.image.reserved2:    db 0 ;; Reserved (Byte)
+HAPP.image.reserved3:    db 0 ;; Reserved (Byte)
+HAPP.image.reserved4:    dd 0 ;; Reserved (Dword)
+HAPP.image.reserved5:    dd 0 ;; Reserved (Dword)
+HAPP.image.reserved6:    dd 0 ;; Reserved (Dword)
+HAPP.image.reserved7:    db 0 ;; Reserved (Byte)
+HAPP.image.reserved8:    dw 0 ;; Reserved (Word)
+HAPP.image.reserved9:    dw 0 ;; Reserved (Word)
+HAPP.image.reserved10:   dw 0 ;; Reserved (Word)
 
 }
 

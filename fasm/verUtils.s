@@ -70,9 +70,9 @@
 ;;
 ;; Macros and functions for handling Hexagonix version data
 ;;
-;; Compatibility: Hexagonix Mineru or higher
-;;                Hexagon 1.7.0 or newer (kernel version required)
-;;                Version: 3.0 rev 2 07/08/2026
+;; Compatibility: Hexagonix 1.1 or higher
+;;                Hexagon 1.8.0 or newer (kernel version required)
+;;                Version: 5.0 rev 0 13/09/2026
 ;;
 ;;************************************************************************************
 
@@ -81,103 +81,174 @@
 ;; This file contains useful definitions for system-wide use
 ;;
 ;; These settings include the system version as well as data useful to all
-;;  Hexagonix applications
-;;
-;; Important settings for using these functions
-;;
-;; appFileBuffer: end of program code
+;; Hexagonix applications
 ;;
 ;; File format:
 ;;
-;; [Version]Code name"Build#Date and Time!Build>
+;; One key=value pair per line. Blank lines and lines starting with '#' are ignored,
+;; and a key the file carries that nothing here asks for is ignored too:
+;;
+;; version=1.1
+;; codename=Hylia
+;; updatePack=1.1
+;; branch=Hylia
+;; buildId=f89a32d5-d3db-49a5-a3b7-29bba177c6f5
 
 use32
 
-searchLimit = 8192
+;; Room each field below holds, terminator included
+
+VERUTILS_FIELD = 64
+
+;; Error codes returned in EAX when CF comes back set
+
+VERUTILS_UNREADABLE = 01h ;; The file is not on the volume, or is empty
+VERUTILS_NOMEMORY   = 02h ;; Not enough memory to hold the file
+VERUTILS_READERROR  = 03h ;; The file is there but could not be read
+VERUTILS_MISSINGKEY = 04h ;; The file does not carry one of the keys below
+
+;;************************************************************************************
+
+;; Reads /etc/hexgnix.cfg into memory it allocates and fills every field below
+;; from it. Nothing is left allocated once it returns
+;;
+;; Output:
+;;
+;; CF - Set if the version data could not be read, with the code in EAX
 
 getHexagonixVersion:
 
     pusha
-
     push es
 
     push ds
     pop es
 
-    mov esi, versionFileVerUtils
-    mov edi, appFileBuffer
+    mov esi, verUtils.versionFile
 
-    xor ecx, ecx
+    hx.syscall hx.stat
+
+    jc .unreadable
+
+    cmp eax, 0
+    je .unreadable
+
+    mov dword[verUtils.fileSize], eax
+
+    inc eax ;; Room for the terminator the parser stops on
+
+    mov dword[verUtils.allocated], eax
+    mov ebx, eax
+
+    call malloc
+
+    cmp eax, 0
+    je .noMemory
+
+    mov dword[verUtils.buffer], ebx
+    mov edi, ebx
+    mov esi, verUtils.versionFile
+    mov ecx, dword[verUtils.fileSize]
 
     hx.syscall hx.open
 
-    jc .error
+    jc .readError
 
-    mov si, appFileBuffer ;; Points to the buffer with the file contents
-    mov bx, 0FFFFh ;; Starts at position -1, so you can find the delimiters
+    mov edi, dword[verUtils.buffer]
 
-.searchBetweenDelimiters:
+    add edi, dword[verUtils.fileSize]
 
-    inc bx
+    mov byte[edi], 0
+    mov esi, verUtils.keyVersion
+    mov edi, versionObtained
 
-    mov word[positionBXVerUtils], bx
+    call verUtils.readKey
 
-    cmp bx, searchLimit
-    je .error ;; If nothing is found within the size limit, cancel the search
+    jc .missingKey
 
-    mov al, [ds:si+bx]
+    mov esi, verUtils.keyCodename
+    mov edi, codeObtained
 
-    cmp al, '['
-    jne .searchBetweenDelimiters ;; The initial limiter has been found
+    call verUtils.readKey
 
-;; BX now points to the first character of the system version
+    jc .missingKey
 
-    push ds
-    pop es
+    mov esi, verUtils.keyUpdatePack
+    mov edi, updatePackage
 
-    mov di, versionObtained ;; The version will be copied to ES:DI
+    call verUtils.readKey
 
-    mov si, appFileBuffer
+    jc .missingKey
 
-    add si, bx ;; Move SI to where BX points
+    mov esi, verUtils.keyBranch
+    mov edi, release
 
-    mov bx, 0 ;; Start at 0
+    call verUtils.readKey
 
-.getVersion:
+    jc .missingKey
 
-    inc bx
+    mov esi, verUtils.keyBuildId
+    mov edi, buildObtained
 
-    cmp bx, 64
-    je .error ;; If the version is longer than 64 characters, it is invalid
+    call verUtils.readKey
 
-    mov al, [ds:si+bx]
+    jc .missingKey
 
-    cmp al, ']' ;; If another delimiter is found, the version has been recovered
-    je .versionObtained
-
-;; If not ready, store the obtained character
-
-    stosb
-
-    jmp .getVersion
-
-.versionObtained:
+    call verUtils.releaseBuffer
 
     pop es
-
     popa
 
-    jmp getDistributionCode
+    clc
 
     ret
 
-.error:
+.missingKey:
+
+    call verUtils.releaseBuffer
+
+    pop es
+    popa
+
+    mov eax, VERUTILS_MISSINGKEY
+
+    stc
+
+    ret
+
+.readError:
+
+    call verUtils.releaseBuffer
 
     pop es
 
     popa
 
-    mov eax, 01h
+    mov eax, VERUTILS_READERROR
+
+    stc
+
+    ret
+
+.noMemory:
+
+    pop es
+
+    popa
+
+    mov eax, VERUTILS_NOMEMORY
+
+    stc
+
+    ret
+
+.unreadable:
+
+    pop es
+
+    popa
+
+    mov eax, VERUTILS_UNREADABLE
 
     stc
 
@@ -185,276 +256,168 @@ getHexagonixVersion:
 
 ;;************************************************************************************
 
-getDistributionCode:
+;; Gives back the memory the file was read into
 
-    pusha
+verUtils.releaseBuffer:
 
-    push es
+    push eax
+    push ebx
+    push ecx
 
-    push ds
-    pop es
+    mov ebx, dword[verUtils.buffer]
+    mov ecx, dword[verUtils.allocated]
 
-    mov esi, versionFileVerUtils
-    mov edi, appFileBuffer
+    call free
 
-    xor ecx, ecx
+    mov dword[verUtils.buffer], 0
 
-    hx.syscall hx.open
-
-    jc .error
-
-    mov si, appFileBuffer     ;; Points to the buffer with the file contents
-    mov bx, word [positionBXVerUtils] ;; Continue where the previous option left off
-
-    dec bx
-
-.searchBetweenDelimiters:
-
-    inc bx
-
-    mov word[positionBXVerUtils], bx
-
-    cmp bx, searchLimit
-
-    je .error ;; If nothing is found within the size limit, cancel the search
-
-    mov al, [ds:si+bx]
-
-    cmp al, ']'
-    jne .searchBetweenDelimiters ;; The initial limiter has been found
-
-;; BX now points to the first character of the codename retrieved from the file
-
-    push ds
-    pop es
-
-    mov di, codeObtained ;; The code name will be copied to ES:DI
-
-    mov si, appFileBuffer
-
-    add si, bx ;; Move SI to where BX points
-
-    mov bx, 0 ;; Start at 0
-
-.getCode:
-
-    inc bx
-
-    cmp bx, 64
-    je .error ;; If greater than 64, it is invalid
-
-    mov al, [ds:si+bx]
-
-    cmp al, '"' ;; If another delimiter is found, the code name
-    je .codeObtained ;; has been completely recovered
-
-;; If not ready, store the obtained character
-
-    stosb
-
-    jmp .getCode
-
-.codeObtained:
-
-    pop es
-
-    popa
-
-    jmp getUpdatePackage
-
-    ret
-
-.error:
-
-    pop es
-
-    popa
-
-    mov eax, 02h
-
-    stc
+    pop ecx
+    pop ebx
+    pop eax
 
     ret
 
 ;;************************************************************************************
 
-getUpdatePackage:
+;; Copies the value of one key into a field, reading the file already sitting
+;; in verUtils.buffer
+;;
+;; Input:
+;;
+;; ESI - Key to look for, terminated by a 0
+;; EDI - Field to fill, of VERUTILS_FIELD bytes
+;;
+;; Output:
+;;
+;; CF - Set if the file carries no such key, leaving the field empty
 
-    pusha
+verUtils.readKey:
 
-    push es
+    push eax
+    push ebx
+    push ecx
+    push edx
+    push esi
+    push edi
+    push ebp
 
-    push ds
-    pop es
+    mov ebp, esi ;; The key itself, since ESI walks it once per line
+    mov edx, dword[verUtils.buffer] ;; Start of the line being looked at
 
-    mov esi, versionFileVerUtils
-    mov edi, appFileBuffer
+.lineLoop:
 
-    xor ecx, ecx
+    mov al, byte[edx]
 
-    hx.syscall hx.open
-
-    jc .error
-
-    mov si, appFileBuffer     ;; Points to the buffer with the file contents
-    mov bx, word [positionBXVerUtils] ;; Continue where the previous option left off
-
-    dec bx
-
-.searchBetweenDelimiters:
-
-    inc bx
-
-    mov word[positionBXVerUtils], bx
-
-    cmp bx, searchLimit
-
-    je .error ;; If nothing is found within the size limit, cancel the search
-
-    mov al, [ds:si+bx]
-
-    cmp al, '"'
-    jne .searchBetweenDelimiters ;; The initial limiter has been found
-
-;; BX now points to the first character of the system update package
-
-    push ds
-    pop es
-
-    mov di, updatePackage ;; The package will be copied to ES:DI
-
-    mov si, appFileBuffer
-
-    add si, bx ;; Move SI to where BX points
-
-    mov bx, 0 ;; Start at 0
-
-.getPackage:
-
-    inc bx
-
-    cmp bx, 64
-    je .error ;; If greater than 64, it is invalid
-
-    mov al, [ds:si+bx]
-
-    cmp al, '#' ;; If it finds another delimiter, it has been loaded successfully
-    je .packageObtained
-
-;; If not ready, store the obtained character
-
-    stosb
-
-    jmp .getPackage
-
-.packageObtained:
-
-    pop es
-
-    popa
-
-    jmp getDistributionRelease
-
-.error:
-
-    pop es
-
-    popa
-
-    mov eax, 03h
-
-    stc
-
-    ret
-
-;;************************************************************************************
-
-getDistributionRelease:
-
-    pusha
-
-    push es
-
-    push ds
-    pop es
-
-    mov esi, versionFileVerUtils
-    mov edi, appFileBuffer
-
-    xor ecx, ecx
-
-    hx.syscall hx.open
-
-    jc .error
-
-    mov si, appFileBuffer     ;; Points to the buffer with the file contents
-    mov bx, word [positionBXVerUtils] ;; Continue where the previous option left off
-
-    dec bx
-
-.searchBetweenDelimiters:
-
-    inc bx
-
-    mov word[positionBXVerUtils], bx
-
-    cmp bx, searchLimit
-
-    je .error ;; If nothing is found within the size limit, cancel the search
-
-    mov al, [ds:si+bx]
+    cmp al, 0
+    je .noSuchKey
 
     cmp al, '#'
-    jne .searchBetweenDelimiters ;; The initial limiter has been found
+    je .nextLine
 
-;; BX now points to the first character of the release
+    cmp al, 13
+    je .nextLine
 
-    push ds
-    pop es
+    cmp al, 10
+    je .nextLine
 
-    mov di, release ;; It will be copied to ES:DI
+    mov esi, ebp
+    mov ebx, edx
 
-    mov si, appFileBuffer
+.compareKey:
 
-    add si, bx ;; Move SI to where BX points
+    mov al, byte[esi]
 
-    mov bx, 0 ;; Start at 0
+    cmp al, 0
+    je .keyMatched
 
-.getRelease:
+    mov ah, byte[ebx]
 
-    inc bx
+    cmp al, ah
+    jne .nextLine
 
-    cmp bx, 64
-    je .error ;; If greater than 64, it is invalid
+    inc esi
+    inc ebx
 
-    mov al, [ds:si+bx]
+    jmp .compareKey
 
-    cmp al, '!' ;; If it finds another delimiter, it has been loaded successfully
-    je .releaseObtained
+.keyMatched:
 
-;; If not ready, store the obtained character
+;; The line has to carry the whole key and nothing else before the '=', so a
+;; longer key starting with this one is not taken for it
 
-    stosb
+    cmp byte[ebx], '='
+    jne .nextLine
 
-    jmp .getRelease
+    inc ebx
 
-.releaseObtained:
+    mov ecx, VERUTILS_FIELD - 1
 
-    pop es
+.copyValue:
 
-    popa
+    cmp ecx, 0
+    je .valueCopied
 
-    jmp getDistributionBuild
+    mov al, byte[ebx]
+
+    cmp al, 0
+    je .valueCopied
+
+    cmp al, 13
+    je .valueCopied
+
+    cmp al, 10
+    je .valueCopied
+
+    mov byte[edi], al
+
+    inc ebx
+    inc edi
+
+    dec ecx
+
+    jmp .copyValue
+
+.valueCopied:
+
+    mov byte[edi], 0
+
+    pop ebp
+    pop edi
+    pop esi
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+
+    clc
 
     ret
 
-.error:
+.nextLine:
 
-    pop es
+    mov al, byte[edx]
 
-    popa
+    cmp al, 0
+    je .noSuchKey
 
-    mov eax, 04h
+    inc edx
+
+    cmp al, 10
+    jne .nextLine
+
+    jmp .lineLoop
+
+.noSuchKey:
+
+    mov byte[edi], 0
+
+    pop ebp
+    pop edi
+    pop esi
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
 
     stc
 
@@ -462,108 +425,30 @@ getDistributionRelease:
 
 ;;************************************************************************************
 
-getDistributionBuild:
+verUtils.versionFile:
+db "/etc/hexgnix.cfg", 0
+verUtils.keyVersion:
+db "version", 0
+verUtils.keyCodename:
+db "codename", 0
+verUtils.keyUpdatePack:
+db "updatePack", 0
+verUtils.keyBranch:
+db "branch", 0
+verUtils.keyBuildId:
+db "buildId", 0
 
-    pusha
+verUtils.buffer:    dd 0
+verUtils.fileSize:  dd 0
+verUtils.allocated: dd 0
 
-    push es
-
-    push ds
-    pop es
-
-    mov esi, versionFileVerUtils
-    mov edi, appFileBuffer
-
-    xor ecx, ecx
-
-    hx.syscall hx.open
-
-    jc .error
-
-    mov si, appFileBuffer     ;; Points to the buffer with the file contents
-    mov bx, word [positionBXVerUtils] ;; Continue where the previous option left off
-
-    dec bx
-
-.searchBetweenDelimiters:
-
-    inc bx
-
-    mov word[positionBXVerUtils], bx
-
-    cmp bx, searchLimit
-
-    je .error ;; If nothing is found within the size limit, cancel the search
-
-    mov al, [ds:si+bx]
-
-    cmp al, '!'
-    jne .searchBetweenDelimiters ;; The initial limiter has been found
-
-;; BX now points to the first character of the system build
-
-    push ds
-    pop es
-
-    mov di, buildObtained ;; ES:DI will be copied
-
-    mov si, appFileBuffer
-
-    add si, bx ;; Move SI to where BX points
-
-    mov bx, 0 ;; Start at 0
-
-.getBuild:
-
-    inc bx
-
-    cmp bx, 64
-    je .error ;; If file name greater than 64, it is invalid
-
-    mov al, [ds:si+bx]
-
-    cmp al, '>' ;; If it finds another delimiter, it has been loaded successfully
-    je .buildObtained
-
-;; If not ready, store the obtained character
-
-    stosb
-
-    jmp .getBuild
-
-.buildObtained:
-
-    pop es
-
-    popa
-
-    ret
-
-.error:
-
-    pop es
-
-    popa
-
-    mov eax, 04h
-
-    stc
-
-    ret
-
-;;************************************************************************************
-
-versionFileVerUtils:
-db "/etc/hexgnix.ocl", 0
 versionObtained:
-times 64 db 0
+times VERUTILS_FIELD db 0
 codeObtained:
-times 64 db 0
+times VERUTILS_FIELD db 0
 updatePackage:
-times 64 db 0
+times VERUTILS_FIELD db 0
 release:
-times 64 db 0
+times VERUTILS_FIELD db 0
 buildObtained:
-times 64 db 0
-positionBXVerUtils:
-dw 0
+times VERUTILS_FIELD db 0
