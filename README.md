@@ -50,9 +50,15 @@ As bibliotecas `Hexagonix` compreendem vários componentes que permitem ao aplic
 * `hexagonix.s`: macros e dados comuns aos componentes do Hexagonix;
 * `log.s`: macros e dados para enviar mensagens pelo sistema de mensagens do Hexagon;
 * `macros.s`: macros úteis para uso global ao realizar chamadas de sistema em assembly, como open();
+* `malloc.s`: alocação dinâmica de memória em modo usuário, sobre as páginas que o Hexagon concede ao processo;
 * `memory.s`: macros para manipulação de valores de memória;
+* `mount.s`: leiaute dos registros devolvidos pela consulta aos pontos de montagem;
 * `passwdHash.s`: hash de senhas e consulta ao `/shadow`, compartilhados pelos utilitários login, su, adduser, passwd e deluser;
-* `verUtils.s`: funções para processar arquivos no formato OCL e obter dados de versão e atualização do sistema de forma dinâmica pelos utilitários compatíveis.
+* `process.s`: leiaute dos registros devolvidos pela consulta à tabela de processos;
+* `shell.s`: rotinas compartilhadas pelos interpretadores de comando (busca no PATH, o comando interno set, leitura do `/etc/shrc` e execução de scripts);
+* `string.s`: manipulação de strings em modo usuário, com as rotinas que antes eram chamadas de sistema do Hexagon;
+* `sysctl.s`: códigos das funções de diagnóstico expostas pelo Hexagon;
+* `verUtils.s`: funções para processar o arquivo de versão do sistema, em pares chave=valor, e obter dados de versão e atualização de forma dinâmica pelos utilitários compatíveis.
 
 > Uma lista de chamadas de sistema disponíveis está disponível [aqui](https://github.com/hexagonix/Doc/blob/main/Hexagon/SYSCALL.pt.md).
 
@@ -109,9 +115,15 @@ The `Hexagonix` libraries comprise several components that allow the application
 * `hexagonix.s`: macros and data shared by Hexagonix components;
 * `log.s`: macros and data for sending messages through the Hexagon messaging system;
 * `macros.s`: useful macros for global use when making assembly system calls, such as open();
+* `malloc.s`: dynamic memory allocation in user mode, on top of the pages Hexagon grants the process;
 * `memory.s`: macros for manipulating memory values;
+* `mount.s`: layout of the records returned when querying the mount points;
 * `passwdHash.s`: password hashing and `/shadow` lookup, shared by the login, su, adduser, passwd and deluser utilities;
-* `verUtils.s`: functions to process files in OCL format and dynamically obtain system version and update data from supported utilities.
+* `process.s`: layout of the records returned when querying the process table;
+* `shell.s`: routines shared by the command interpreters (PATH lookup, the set builtin, reading `/etc/shrc` and running scripts);
+* `string.s`: string handling in user mode, with the routines that used to be Hexagon system calls;
+* `sysctl.s`: codes of the diagnostic functions Hexagon exposes;
+* `verUtils.s`: functions to process the system version file, in key=value pairs, and dynamically obtain system version and update data from supported utilities.
 
 > A list of available system calls is available [here](https://github.com/hexagonix/Doc/blob/main/Hexagon/SYSCALL.en.md).
 

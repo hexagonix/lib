@@ -70,11 +70,11 @@
 ;;
 ;; Header of Hexagonix Macros, Functions and System Calls
 ;;
-;; Compatibility: Hexagonix Mineru or higher
-;;                Hexagon 1.7.0 or newer (kernel version required)
-;;                Version: 9.0 rev 0 13/08/2026
+;; Compatibility: Hexagonix 1.1 or higher
+;;                Hexagon 1.8.0 or newer (kernel version required)
+;;                Version: 9.1.0 13/09/2026
 ;;
-;; Total calls: 77 (at 13/08/2026)
+;; Total calls: 70 (at 13/09/2026)
 ;;
 ;;************************************************************************************
 
@@ -117,47 +117,47 @@ hx.touch                  = 19 ;; Hexagon File System and Volume Management Serv
 hx.unlink                 = 20 ;; Hexagon File System and Volume Management Services
 hx.rename                 = 21 ;; Hexagon File System and Volume Management Services
 hx.listFiles              = 22 ;; Hexagon File System and Volume Management Services
-hx.fileExists             = 23 ;; Hexagon File System and Volume Management Services
-hx.getVolume              = 24 ;; Hexagon File System and Volume Management Services
-hx.mkdir                  = 25 ;; Hexagon File System and Volume Management Services
-hx.rmdir                  = 26 ;; Hexagon File System and Volume Management Services
-hx.changeDirectory        = 27 ;; Hexagon File System and Volume Management Services
+hx.stat                   = 23 ;; Hexagon File System and Volume Management Services
+hx.mkdir                  = 24 ;; Hexagon File System and Volume Management Services
+hx.rmdir                  = 25 ;; Hexagon File System and Volume Management Services
+hx.changeDirectory        = 26 ;; Hexagon File System and Volume Management Services
+hx.getCurrentDirectory    = 27 ;; Hexagon File System and Volume Management Services
+hx.mount                  = 28 ;; Hexagon File System and Volume Management Services
+hx.unmount                = 29 ;; Hexagon File System and Volume Management Services
+hx.getMounts              = 30 ;; Hexagon File System and Volume Management Services
 
 ;; User management
 
-hx.lock                   = 28 ;; Hexagon User Management Services
-hx.unlock                 = 29 ;; Hexagon User Management Services
-hx.setUser                = 30 ;; Hexagon User Management Services
-hx.getUser                = 31 ;; Hexagon User Management Services
+hx.lock                   = 31 ;; Hexagon User Management Services
+hx.unlock                 = 32 ;; Hexagon User Management Services
+hx.setUser                = 33 ;; Hexagon User Management Services
+hx.getUser                = 34 ;; Hexagon User Management Services
 
 ;; Services offered by Hexagon
 
-hx.uname                  = 32 ;; Services offered by Hexagon
-hx.getRandom              = 33 ;; Services offered by Hexagon
-hx.feedRandom             = 34 ;; Services offered by Hexagon
-hx.sleep                  = 35 ;; Services offered by Hexagon
-hx.installISR             = 36 ;; Services offered by Hexagon
+hx.uname                  = 35 ;; Services offered by Hexagon
+hx.sleep                  = 36 ;; Services offered by Hexagon
+hx.installISR             = 37 ;; Services offered by Hexagon
 
 ;; Hexagon Power Management Services
 
-hx.restart                = 37 ;; Hexagon Power Management Services
-hx.shutdown               = 38 ;; Hexagon Power Management Services
+hx.restart                = 38 ;; Hexagon Power Management Services
+hx.shutdown               = 39 ;; Hexagon Power Management Services
 
 ;; Hexagon Graphics and Video Output Services
 
-hx.print                  = 39 ;; Hexagon Graphics and Video Output Services
-hx.clearConsole           = 40 ;; Hexagon Graphics and Video Output Services
-hx.clearLine              = 41 ;; Hexagon Graphics and Video Output Services
-hx.scrollConsole          = 42 ;; Hexagon Graphics and Video Output Services
-hx.setCursor              = 43 ;; Hexagon Graphics and Video Output Services
-hx.drawCharacter          = 44 ;; Hexagon Graphics and Video Output Services
-hx.drawBlock              = 45 ;; Hexagon Graphics and Video Output Services
-hx.printCharacter         = 46 ;; Hexagon Graphics and Video Output Services
-hx.setColor               = 47 ;; Hexagon Graphics and Video Output Services
-hx.getColor               = 48 ;; Hexagon Graphics and Video Output Services
-hx.getConsoleInfo         = 49 ;; Hexagon Graphics and Video Output Services
-hx.updateScreen           = 50 ;; Hexagon Graphics and Video Output Services
-hx.setResolution          = 51 ;; Hexagon Graphics and Video Output Services
+hx.print                  = 40 ;; Hexagon Graphics and Video Output Services
+hx.clearConsole           = 41 ;; Hexagon Graphics and Video Output Services
+hx.clearLine              = 42 ;; Hexagon Graphics and Video Output Services
+hx.scrollConsole          = 43 ;; Hexagon Graphics and Video Output Services
+hx.setCursor              = 44 ;; Hexagon Graphics and Video Output Services
+hx.drawCharacter          = 45 ;; Hexagon Graphics and Video Output Services
+hx.drawBlock              = 46 ;; Hexagon Graphics and Video Output Services
+hx.printCharacter         = 47 ;; Hexagon Graphics and Video Output Services
+hx.setColor               = 48 ;; Hexagon Graphics and Video Output Services
+hx.getColor               = 49 ;; Hexagon Graphics and Video Output Services
+hx.getConsoleInfo         = 50 ;; Hexagon Graphics and Video Output Services
+hx.updateScreen           = 51 ;; Hexagon Graphics and Video Output Services
 hx.getResolution          = 52 ;; Hexagon Graphics and Video Output Services
 hx.getCursor              = 53 ;; Hexagon Graphics and Video Output Services
 
@@ -177,31 +177,33 @@ hx.setMouse               = 61 ;; Hexagon PS/2 Mouse Handling Services
 
 ;; Hexagon data manipulation and conversion services
 
-hx.compareWordsString     = 62 ;; Hexagon data manipulation and conversion services
-hx.removeCharacterString  = 63 ;; Hexagon data manipulation and conversion services
-hx.insertCharacter        = 64 ;; Hexagon data manipulation and conversion services
-hx.stringSize             = 65 ;; Hexagon data manipulation and conversion services
-hx.compareString          = 66 ;; Hexagon data manipulation and conversion services
-hx.stringToUppercase      = 67 ;; Hexagon data manipulation and conversion services
-hx.stringToLowercase      = 68 ;; Hexagon data manipulation and conversion services
-hx.trimString             = 69 ;; Hexagon data manipulation and conversion services
-hx.findCharacter          = 70 ;; Hexagon data manipulation and conversion services
-hx.stringToInt            = 71 ;; Hexagon data manipulation and conversion services
-hx.toString               = 72 ;; Hexagon data manipulation and conversion services
 
 ;; Hexagon Sound Output Services
 
-hx.emitSound              = 73 ;; Hexagon Sound Output Services
-hx.turnOffSound           = 74 ;; Hexagon Sound Output Services
+hx.emitSound              = 62 ;; Hexagon Sound Output Services
+hx.turnOffSound           = 63 ;; Hexagon Sound Output Services
 
 ;; Hexagon Messaging Services
 
-hx.sendMessageHexagon     = 75 ;; Hexagon Messaging Services
+hx.sendMessageHexagon     = 64 ;; Hexagon Messaging Services
 
 ;; Hexagon Real Time Clock Service
 
-hx.date                   = 76 ;; Hexagon Real Time Clock Service
-hx.time                   = 77 ;; Hexagon Real Time Clock Service
+hx.date                   = 65 ;; Hexagon Real Time Clock Service
+hx.time                   = 66 ;; Hexagon Real Time Clock Service
+
+;; Hexagon Device Control Service
+
+hx.ioctl                  = 67 ;; Hexagon Device Control Service
+
+;; Hexagon File System and Volume Management Services
+
+hx.chown                  = 68 ;; Hexagon File System and Volume Management Services
+
+;; Hexagon Process Management Service
+
+hx.getTTY                 = 69 ;; Hexagon Process Management Service
+hx.sysctl                 = 70 ;; Hexagon Kernel Diagnostics Service
 
 ;;************************************************************************************
 

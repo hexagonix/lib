@@ -70,13 +70,12 @@
 ;;
 ;; Shared routines for Hexagonix's shells (sh, hash, ash, dossh): PATH
 ;; lookup, the "set" builtin, /etc/shrc parsing and script/shebang
-;; dispatch. Every shell including this file is expected to already
-;; declare its own "appFileBuffer" label, the same scratch buffer
-;; convention each of them already uses for hx.open
+;; dispatch. loadRc and runScriptFile ask the allocator for the room they need
+;; and give it back, so a shell including this file has to include malloc.s.
 ;;
-;; Compatibility: Hexagonix Mineru or higher
-;;                Hexagon 1.7.0 or newer (kernel version required)
-;;                Version: 1.1 rev 0 08/08/2026
+;; Compatibility: Hexagonix 1.1 or higher
+;;                Hexagon 1.8.0 or newer (kernel version required)
+;;                Version: 1.1 rev 0 13/09/2026
 ;;
 ;;************************************************************************************
 
@@ -100,7 +99,6 @@ Shell.resolveCommandPath:
     push edi
 
     mov [Shell.resolveCommandPath.original], esi
-
     mov edi, esi
 
 .checkSlash:
@@ -119,7 +117,7 @@ Shell.resolveCommandPath:
 
 .tryAsGiven:
 
-    hx.syscall hx.fileExists
+    hx.syscall hx.stat
 
     jnc .useOriginal ;; Found relative to the current directory
 
@@ -193,7 +191,6 @@ Shell.resolveCommandPath:
 .copyName:
 
     mov al, byte[esi]
-
     mov byte[edi], al
 
     inc esi
@@ -206,7 +203,7 @@ Shell.resolveCommandPath:
 
     mov esi, Shell.resolveCommandPath.candidate
 
-    hx.syscall hx.fileExists
+    hx.syscall hx.stat
 
     jc .tryNextDir
 
@@ -229,7 +226,8 @@ Shell.resolveCommandPath:
 Shell.resolveCommandPath.original:  dd 0
 Shell.resolveCommandPath.cursor:    dd 0
 Shell.resolveCommandPath.pathName:  db "PATH", 0
-Shell.resolveCommandPath.candidate: times 64 db 0
+Shell.resolveCommandPath.candidate: 
+times 64 db 0
 
 ;;************************************************************************************
 
@@ -313,27 +311,49 @@ Shell.handleSet:
 
 ;;************************************************************************************
 
-;; Reads /etc/shrc at startup, into the including shell's own
-;; "appFileBuffer". A line shaped like NAME=VALUE becomes hx.setenv;
-;; anything else is just printed, the same plain banner text /etc/shrc
-;; has always had
+;; Reads /etc/shrc at startup into room allocated for it. A line shaped like
+;; NAME=VALUE becomes hx.setenv; anything else is just printed, the same plain
+;; banner text /etc/shrc has always had
 
 Shell.loadRc:
 
     push eax
+    push ebx
+    push ecx
     push esi
     push edi
 
+    mov dword[Shell.loadRc.buffer], 0
     mov esi, Shell.loadRc.path
-    mov edi, appFileBuffer
 
-    xor ecx, ecx
-
-    hx.syscall hx.open
+    hx.syscall hx.stat ;; EAX = size
 
     jc .end ;; No /etc/shrc, nothing to do
 
-    mov esi, appFileBuffer
+;; Room for exactly this file, and not for whatever happens to sit past
+;; the end of whichever shell included this
+
+    mov dword[Shell.loadRc.size], eax
+
+    inc eax ;; The terminator, in memory the kernel hands over already zeroed
+
+    mov ebx, eax
+
+    call malloc
+
+    cmp eax, 0
+    je .end
+
+    mov dword[Shell.loadRc.buffer], ebx
+    mov esi, Shell.loadRc.path
+    mov edi, ebx
+    mov ecx, dword[Shell.loadRc.size] ;; Never past what was asked for
+
+    hx.syscall hx.open
+
+    jc .end
+
+    mov esi, dword[Shell.loadRc.buffer]
 
 .lineLoop:
 
@@ -342,7 +362,6 @@ Shell.loadRc:
 
     mov [Shell.loadRc.lineStart], esi
     mov dword[Shell.loadRc.equalsPos], 0
-
     mov edi, esi
 
 .scanLine:
@@ -372,10 +391,8 @@ Shell.loadRc:
 .lineEnd:
 
     mov [Shell.loadRc.terminatorPos], edi
-
     mov al, byte[edi]
     mov [Shell.loadRc.terminatorChar], al
-
     mov byte[edi], 0 ;; Cut the buffer here so this line stands alone
 
     cmp dword[Shell.loadRc.equalsPos], 0
@@ -384,7 +401,6 @@ Shell.loadRc:
 ;; NAME=VALUE line
 
     mov edi, dword[Shell.loadRc.equalsPos]
-
     mov byte[edi], 0 ;; Split NAME\0VALUE
 
     inc edi
@@ -400,14 +416,13 @@ Shell.loadRc:
     mov esi, dword[Shell.loadRc.lineStart]
 
     printString
+
     putNewLine
 
 .nextLine:
 
     mov edi, dword[Shell.loadRc.terminatorPos]
-
     mov al, byte[Shell.loadRc.terminatorChar]
-
     mov byte[edi], al ;; Restore, in case the line is ever scanned again
 
     cmp al, 0
@@ -421,8 +436,21 @@ Shell.loadRc:
 
 .end:
 
+    cmp dword[Shell.loadRc.buffer], 0
+    je .nothingToFree
+
+    mov ebx, dword[Shell.loadRc.buffer]
+
+    call free
+
+    mov dword[Shell.loadRc.buffer], 0
+
+.nothingToFree:
+
     pop edi
     pop esi
+    pop ecx
+    pop ebx
     pop eax
 
     ret
@@ -432,6 +460,15 @@ Shell.loadRc.lineStart:      dd 0
 Shell.loadRc.equalsPos:      dd 0
 Shell.loadRc.terminatorPos:  dd 0
 Shell.loadRc.terminatorChar: dd 0
+Shell.loadRc.buffer:         dd 0
+Shell.loadRc.size:           dd 0
+
+Shell.checkShebang.lineSize = 512
+Shell.checkShebang.line: 
+times Shell.checkShebang.lineSize + 1 db 0
+
+Shell.runScriptFile.buffer:  dd 0
+Shell.runScriptFile.size:    dd 0
 
 ;;************************************************************************************
 
@@ -452,19 +489,12 @@ Shell.checkShebang:
     push edi
     push ecx
 
-;; appFileBuffer has no reserved space of its own, it relies on whatever
-;; free slack happens to sit past this shell's own compiled image, per the
-;; convention documented alongside Hexagon.Kern.Proc.allocateAndLoadImage.
-;; A shebang line only ever needs the first handful of bytes, so cap the
-;; read well under that slack instead of pulling in the resolved command's
-;; entire file. For a large executable (fasmX, ~110 KB, being the one that
-;; actually exposed this) hx.open's old unconditional full read overflowed
-;; straight past this process's own allocated block and crashed the VM,
-;; every time, before hx.exec was ever reached
+;; A shebang line needs no more than the first handful of bytes, so the read is
+;; capped, and the buffer holds one byte more than the cap for the terminator
+;; hx.open leaves behind it
 
-    mov edi, appFileBuffer
-
-    mov ecx, 512
+    mov edi, Shell.checkShebang.line
+    mov ecx, Shell.checkShebang.lineSize
 
     hx.syscall hx.open
 
@@ -472,7 +502,7 @@ Shell.checkShebang:
 
     jc .notShebang
 
-    mov esi, appFileBuffer
+    mov esi, Shell.checkShebang.line
 
     cmp byte[esi], '#'
     jne .notShebang
@@ -483,7 +513,6 @@ Shell.checkShebang:
     add esi, 2
 
     mov [Shell.checkShebang.nameStart], esi
-
     mov edi, esi
 
 .findEnd:
@@ -506,7 +535,6 @@ Shell.checkShebang:
 .terminate:
 
     mov byte[edi], 0
-
     mov esi, dword[Shell.checkShebang.nameStart]
 
     cmp byte[esi], 0
@@ -532,12 +560,11 @@ Shell.checkShebang.nameStart: dd 0
 ;;************************************************************************************
 
 ;; Copies a command's argument string to a private buffer before
-;; Shell.checkShebang runs. Shell.checkShebang opens the resolved
-;; command's own file into the caller's shared appFileBuffer to look at
-;; its first line, which is also where the caller's getArguments-style
-;; split already stashed the typed arguments, so calling it between
-;; splitting the arguments and actually using them would silently
-;; replace those arguments with the command's own file content instead
+;; Shell.checkShebang runs. That mattered while checkShebang read into the
+;; caller's own shared buffer, which is also where a getArguments-style split
+;; stashed the typed arguments: calling it in between silently replaced those
+;; arguments with the command's own file content. checkShebang has a buffer of
+;; its own now, and this stays because the shells still split that way
 ;;
 ;; Input:
 ;;
@@ -596,18 +623,44 @@ times 512 db 0
 Shell.runScriptFile:
 
     push eax
+    push ebx
+    push ecx
     push esi
     push edi
 
-    mov edi, appFileBuffer
+    mov dword[Shell.runScriptFile.buffer], 0
 
-    xor ecx, ecx
+    push esi ;; The script's own name, across the sizing below
 
-    hx.syscall hx.open
+    hx.syscall hx.stat ;; EAX = size
+
+    pop esi
 
     jc .end ;; Script not found, nothing to run
 
-    mov esi, appFileBuffer
+;; Room for exactly this script, and not for whatever happens to sit past
+;; the end of whichever shell included this
+
+    mov dword[Shell.runScriptFile.size], eax
+
+    inc eax ;; The terminator, in memory the kernel hands over already zeroed
+
+    mov ebx, eax
+
+    call malloc
+
+    cmp eax, 0
+    je .end
+
+    mov dword[Shell.runScriptFile.buffer], ebx
+    mov edi, ebx
+    mov ecx, dword[Shell.runScriptFile.size] ;; Never past what was asked for
+
+    hx.syscall hx.open
+
+    jc .end
+
+    mov esi, dword[Shell.runScriptFile.buffer]
 
 .lineLoop:
 
@@ -641,10 +694,8 @@ Shell.runScriptFile:
 .gotRealEnd:
 
     mov [Shell.runScriptFile.lineEnd], edi
-
     mov al, byte[edi]
     mov [Shell.runScriptFile.savedChar], al
-
     mov byte[edi], 0 ;; Cut the buffer here so this line stands alone
 
 ;; Split command name from arguments at the first space, if any
@@ -725,7 +776,6 @@ Shell.runScriptFile:
 .restoreAndNext:
 
     mov edi, dword[Shell.runScriptFile.lineEnd]
-
     mov al, byte[Shell.runScriptFile.savedChar]
     mov byte[edi], al
 
@@ -740,8 +790,21 @@ Shell.runScriptFile:
 
 .end:
 
+    cmp dword[Shell.runScriptFile.buffer], 0
+    je .nothingToFree
+
+    mov ebx, dword[Shell.runScriptFile.buffer]
+
+    call free
+
+    mov dword[Shell.runScriptFile.buffer], 0
+
+.nothingToFree:
+
     pop edi
     pop esi
+    pop ecx
+    pop ebx
     pop eax
 
     ret

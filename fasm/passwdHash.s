@@ -71,9 +71,9 @@
 ;; Shared password hashing and /etc/shadow lookup, used by login, su, adduser,
 ;; passwd and deluser
 ;;
-;; Compatibility: Hexagonix Mineru or higher
-;;                Hexagon 1.7.0 or newer (kernel version required)
-;;                Version: 1.1 rev 0 07/08/2026
+;; Compatibility: Hexagonix 1.1 or higher
+;;                Hexagon 1.8.0 or newer (kernel version required)
+;;                Version: 1.2 rev 0 13/09/2026
 ;;
 ;;************************************************************************************
 
@@ -88,7 +88,7 @@ Hexagon.LibASM.PasswdHash.lineBufferSize  = 128
 ;; Computes a DJB2 hash of a plaintext string and writes it as an 8-digit
 ;; lowercase hex string to Hexagon.LibASM.PasswdHash.hashBuffer. Not a
 ;; cryptographic hash. No salt, reversible by brute force, but the password
-;; is no longer sitting in /etc/shadow as plain readable text.
+;; is no longer sitting in /etc/shadow as plain readable text
 ;;
 ;; Input:
 ;;
@@ -116,7 +116,6 @@ Hexagon.LibASM.PasswdHash.hash:
     shl eax, 5
 
     add eax, ecx
-
     add eax, ebx
 
     inc esi
@@ -126,7 +125,6 @@ Hexagon.LibASM.PasswdHash.hash:
 .toHex:
 
     mov edi, Hexagon.LibASM.PasswdHash.hashBuffer
-
     mov ecx, 8
 
 .hexDigit:
@@ -138,7 +136,6 @@ Hexagon.LibASM.PasswdHash.hash:
     and ebx, 0Fh
 
     mov dl, byte[.hexDigits + ebx]
-
     mov byte[edi], dl
 
     inc edi
@@ -184,13 +181,12 @@ Hexagon.LibASM.PasswdHash.findUser:
 
     mov ebx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.malloc
+    call malloc
 
     cmp eax, 0
     je .mallocFailed
 
     mov [.fileBufferPtr], ebx
-
     mov esi, Hexagon.LibASM.PasswdHash.file
     mov edi, ebx
 
@@ -201,7 +197,6 @@ Hexagon.LibASM.PasswdHash.findUser:
     jc .cleanupNotFound
 
     mov esi, [.fileBufferPtr]
-
     mov dword[.readPos], 0
 
 .lineLoop:
@@ -267,7 +262,7 @@ Hexagon.LibASM.PasswdHash.findUser:
     mov ebx, [.fileBufferPtr]
     mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.free
+    call free
 
     pop es
 
@@ -280,7 +275,7 @@ Hexagon.LibASM.PasswdHash.findUser:
     mov ebx, [.fileBufferPtr]
     mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.free
+    call free
 
 .mallocFailed:
 
@@ -300,7 +295,6 @@ Hexagon.LibASM.PasswdHash.findUser:
 .tryLine:
 
     mov dword[.cursor], Hexagon.LibASM.PasswdHash.lineBuffer
-
     mov edi, .fieldBuffer
 
     call .copyField ;; Field 1: username
@@ -308,7 +302,7 @@ Hexagon.LibASM.PasswdHash.findUser:
     mov edi, .fieldBuffer
     mov esi, [.wantedUser]
 
-    hx.syscall hx.compareWordsString
+    call compareWordsInString
 
     jnc .noMatch
 
@@ -325,10 +319,9 @@ Hexagon.LibASM.PasswdHash.findUser:
 
     mov esi, .fieldBuffer
 
-    hx.syscall hx.stringToInt
+    call stringToInteger
 
     mov [Hexagon.LibASM.PasswdHash.codeFound], eax
-
     mov edi, Hexagon.LibASM.PasswdHash.shellFound
 
     call .copyField ;; Field 4: shell
@@ -445,13 +438,12 @@ Hexagon.LibASM.PasswdHash.findUserById:
 
     mov ebx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.malloc
+    call malloc
 
     cmp eax, 0
     je .mallocFailed
 
     mov [.fileBufferPtr], ebx
-
     mov esi, Hexagon.LibASM.PasswdHash.file
     mov edi, ebx
 
@@ -462,7 +454,6 @@ Hexagon.LibASM.PasswdHash.findUserById:
     jc .cleanupNotFound
 
     mov esi, [.fileBufferPtr]
-
     mov dword[.readPos], 0
 
 .lineLoop:
@@ -525,7 +516,7 @@ Hexagon.LibASM.PasswdHash.findUserById:
     mov ebx, [.fileBufferPtr]
     mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.free
+    call free
 
     pop es
 
@@ -538,7 +529,7 @@ Hexagon.LibASM.PasswdHash.findUserById:
     mov ebx, [.fileBufferPtr]
     mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.free
+    call free
 
 .mallocFailed:
 
@@ -560,7 +551,6 @@ Hexagon.LibASM.PasswdHash.findUserById:
 .tryLine:
 
     mov dword[.cursor], Hexagon.LibASM.PasswdHash.lineBuffer
-
     mov edi, .userBuffer
 
     call .copyField ;; Field 1: username, held until the code is known
@@ -575,7 +565,7 @@ Hexagon.LibASM.PasswdHash.findUserById:
 
     mov esi, .fieldBuffer
 
-    hx.syscall hx.stringToInt
+    call stringToInteger
 
     cmp eax, [.wantedId]
     jne .noMatch
@@ -642,7 +632,6 @@ Hexagon.LibASM.PasswdHash.findUserById:
 .copyFieldColon:
 
     mov byte[edi], 0
-
     mov [.cursor], esi
 
     ret
@@ -687,7 +676,7 @@ Hexagon.LibASM.PasswdHash.copyString:
     push esi
     push edi
 
-    hx.syscall hx.stringSize
+    call stringSize
 
     pop edi
     pop esi
@@ -717,7 +706,7 @@ Hexagon.LibASM.PasswdHash.appendString:
 
     push esi
 
-    hx.syscall hx.stringSize
+    call stringSize
 
     pop esi
 
@@ -755,25 +744,22 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
     mov [.rwReplacement], edi
 
     mov dword[.rwFound], 0
-
     mov ebx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.malloc
+    call malloc
 
     cmp eax, 0
     je .rwMallocFailed
 
     mov [.fileBufferPtr], ebx
-
     mov ebx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.malloc
+    call malloc
 
     cmp eax, 0
     je .rwSecondMallocFailed
 
     mov [.rwOutputPtr], ebx
-
     mov esi, Hexagon.LibASM.PasswdHash.file
     mov edi, [.fileBufferPtr]
 
@@ -784,7 +770,6 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
     jc .rwFailed
 
     mov dword[.readPos], 0
-
     mov eax, [.rwOutputPtr]
     mov [.rwOutPos], eax
 
@@ -841,7 +826,6 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
 .rwFinish:
 
     mov edi, [.rwOutPos]
-
     mov byte[edi], 0
 
     cmp dword[.rwFound], 0
@@ -853,7 +837,7 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
 
     mov esi, [.rwOutputPtr]
 
-    hx.syscall hx.stringSize
+    call stringSize
 
     mov esi, Hexagon.LibASM.PasswdHash.file
     mov edi, [.rwOutputPtr]
@@ -865,12 +849,12 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
     mov ebx, [.fileBufferPtr]
     mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.free
+    call free
 
     mov ebx, [.rwOutputPtr]
     mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.free
+    call free
 
     pop es
 
@@ -887,12 +871,12 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
     mov ebx, [.fileBufferPtr]
     mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.free
+    call free
 
     mov ebx, [.rwOutputPtr]
     mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.free
+    call free
 
     jmp .rwMallocFailed
 
@@ -901,7 +885,7 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
     mov ebx, [.fileBufferPtr]
     mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.free
+    call free
 
 .rwMallocFailed:
 
@@ -942,11 +926,10 @@ Hexagon.LibASM.PasswdHash.rewriteUser:
 .rwUserExtracted:
 
     mov byte[edi], 0
-
     mov edi, .rwLineUser
     mov esi, [.rwWantedUser]
 
-    hx.syscall hx.compareWordsString
+    call compareWordsInString
 
     jnc .rwCopyThrough
 
@@ -1016,16 +999,14 @@ Hexagon.LibASM.PasswdHash.nextCode:
     pop es
 
     mov dword[.highestCode], 0
-
     mov ebx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.malloc
+    call malloc
 
     cmp eax, 0
     je .ncNoBuffer
 
     mov [.fileBufferPtr], ebx
-
     mov esi, Hexagon.LibASM.PasswdHash.file
     mov edi, ebx
 
@@ -1036,7 +1017,6 @@ Hexagon.LibASM.PasswdHash.nextCode:
     jc .ncDone
 
     mov esi, [.fileBufferPtr]
-
     mov dword[.readPos], 0
 
 .ncLineLoop:
@@ -1096,7 +1076,7 @@ Hexagon.LibASM.PasswdHash.nextCode:
     mov ebx, [.fileBufferPtr]
     mov ecx, Hexagon.LibASM.PasswdHash.searchSizeLimit
 
-    hx.syscall hx.free
+    call free
 
 .ncNoBuffer:
 
@@ -1139,10 +1119,9 @@ Hexagon.LibASM.PasswdHash.nextCode:
 .ncCodeExtracted:
 
     mov byte[edi], 0
-
     mov esi, .ncCodeText
 
-    hx.syscall hx.stringToInt
+    call stringToInteger
 
     cmp eax, [.highestCode]
     jbe .ncTrackDone

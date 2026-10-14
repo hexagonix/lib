@@ -70,9 +70,9 @@
 ;;
 ;; Macros for console manipulation
 ;;
-;; Compatibility: Hexagonix System I or higher
-;;                Hexagon 1.01 or newer (kernel version required)
-;;                Version: 1.0 rev 2 29/08/2024
+;; Compatibility: Hexagonix 1.1 or higher
+;;                Hexagon 1.8.0 or newer (kernel version required)
+;;                Version: 1.1 rev 0 13/09/2026
 ;;
 ;;************************************************************************************
 
@@ -106,10 +106,6 @@ macro restoreConsole
     mov ebx, dword[Lib.Console.backgroundColor]
 
     hx.syscall hx.setColor
-
-    mov eax, dword[Lib.Console.resolution]
-
-    hx.syscall hx.setResolution
 
 }
 
@@ -202,6 +198,15 @@ macro printString
 {
 
     mov ebx, 04h
+
+    hx.syscall hx.print
+
+}
+
+macro printBitmap
+{
+
+    mov ebx, 05h
 
     hx.syscall hx.print
 

@@ -90,7 +90,7 @@ use32
 
 headerHAPP:
 
-;; HAPP2 specification (HAPP 2.0 rev 0)
+;; HAPP2 specification (HAPP 2.0 rev 1)
 
 signature:     db "HAPP" ;; Image signature
 architecture:  db 01h    ;; Image architecture (i386 = 01h)
@@ -98,7 +98,7 @@ minVer:        db 1      ;; Minimum version of Hexagon(R)
 minMinorVer:   db 7      ;; Minimal subversion of Hexagon(R)
 entryPoint:    dd applicationStart ;; Image entry point
 imageType:     db 01h ;; Image type
-reserved0:     dd 0 ;; Reserved (Dword)
+bssSize:       dd 0 ;; BSS size (Dword)
 reserved1:     db 0 ;; Reserved (Byte)
 reserved2:     db 0 ;; Reserved (Byte)
 reserved3:     db 0 ;; Reserved (Byte)
@@ -119,7 +119,7 @@ include "/lib/asm/estelar.s" ;; Includes interface creation library
 
 ;; Variables and constants
 
-VERSION equ "3.4" ;; Application version
+VERSION equ "3.5.0" ;; Application version
 
 gapp:
 
@@ -142,8 +142,8 @@ applicationStart:
 
 ;; Let's define that we want direct output to tty0 (similar to tty0 in Linux).
 ;; This is not always necessary. If the shell was used to call the app, tty0 is already open.
-;; Unless it is called by an app that is using, for example, tty1.
-;; tty0 is the main console while tty1-ttyn are virtual consoles.
+;; Unless it is called by an app that left the console switched to its secondary
+;; (double buffering) buffer via hx.ioctl
 
     mov esi, gapp.tty0
 

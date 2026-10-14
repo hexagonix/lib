@@ -70,9 +70,9 @@
 ;;
 ;; List of devices that can be accessed by the user
 ;;
-;; Compatibility: Hexagonix System I or higher
-;;                Hexagon 1.01 or newer (kernel version required)
-;;                Version: 1.0.2 rev 4 29/08/2024
+;; Compatibility: Hexagonix 1.1 or higher
+;;                Hexagon 1.8.0 or newer (kernel version required)
+;;                Version: 1.1.0 13/09/2026
 ;;
 ;;************************************************************************************
 
@@ -123,12 +123,24 @@ Hexagon.LibASM.Dev.video:
 
 ;; Output devices
 
+.tty: ;; Whatever VT the calling process already has, like Unix's /dev/tty
+db "tty", 0
 .tty0: ;; Default console
 db "tty0", 0
-.tty1: ;; First virtual console
+.tty1: ;; VT1
 db "tty1", 0
-.tty2: ;; Kernel data dump Console
+.tty2: ;; VT2
 db "tty2", 0
+.tty3: ;; VT3
+db "tty3", 0
+.tty4: ;; VT4
+db "tty4", 0
+.tty5: ;; VT5
+db "tty5", 0
+.tty6: ;; VT6
+db "tty6", 0
+.tty7: ;; VT7
+db "tty7", 0
 
 Hexagon.LibASM.Dev.audio:
 
@@ -137,7 +149,7 @@ db "au0", 0
 
 Hexagon.LibASM.Dev.processors:
 
-.proc0: ;; First processor
-db "proc0", 0
+.cpu0: ;; First processor
+db "/dev/cpu0", 0
 .proc1: ;; Auxiliary processor, if any
 db "proc1", 0
