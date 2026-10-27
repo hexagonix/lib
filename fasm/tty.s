@@ -312,6 +312,8 @@ readLine:
 
     popad
 
+    clc
+
     ret
 
 ;; Takes the byte at the position out of the line, terminator included
