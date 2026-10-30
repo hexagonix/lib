@@ -164,7 +164,6 @@ hx.getCursor              = 53 ;; Hexagon Graphics and Video Output Services
 ;; Hexagon PS/2 Keyboard Handling Services
 
 hx.waitKeyboard           = 54 ;; Hexagon PS/2 Keyboard Handling Services
-hx.getString              = 55 ;; Hexagon PS/2 Keyboard Handling Services
 hx.getKeyState            = 56 ;; Hexagon PS/2 Keyboard Handling Services
 hx.changeConsoleFont      = 57 ;; Hexagon PS/2 Keyboard Handling Services
 hx.changeLayout           = 58 ;; Hexagon PS/2 Keyboard Handling Services
