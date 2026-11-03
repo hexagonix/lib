@@ -207,6 +207,7 @@ hx.sysctl                 = 70 ;; Hexagon Kernel Diagnostics Service
 ;; Hexagon File and Device Management Services
 
 hx.read                   = 71 ;; Hexagon File and Device Management Services
+hx.dup2                   = 72 ;; Hexagon File and Device Management Services
 
 ;;************************************************************************************
 
