@@ -80,6 +80,7 @@
 
 Lib.TTY.Modes.canonical = 01h ;; Whole lines, edited by the kernel
 Lib.TTY.Modes.echo      = 02h ;; Typed bytes shown
+Lib.TTY.Modes.isig      = 04h ;; Ctrl+C ends what runs on the terminal
 
 ;; EAX - Mode of the terminal
 
@@ -108,7 +109,8 @@ macro ttySetMode mode
 
 ;; Reads a line from the terminal, with insertion anywhere in it, Backspace,
 ;; Delete, Home, End and the arrows. Only bytes and escape sequences are used,
-;; so it works on any terminal. Every register is preserved
+;; so it works on any terminal. Ctrl+C drops the line, as the shells of BSD do
+;; at their prompt, and reads as an empty one. Every register is preserved
 ;;
 ;; Input:
 ;;
@@ -166,6 +168,10 @@ readLine:
     cmp al, 27
 
     je .escape
+
+    cmp al, 03h ;; Ctrl+C
+
+    je .interrupt
 
 .plainByte:
 
@@ -303,6 +309,21 @@ readLine:
     call .redraw
 
     jmp .nextKey
+
+.interrupt:
+
+    mov cl, byte[Lib.TTY.length]
+    mov byte[Lib.TTY.position], cl
+
+    call .redraw ;; The cursor goes past the end of the line
+
+    mov esi, Lib.TTY.interrupted
+    mov ecx, 2
+
+    call Lib.TTY.write
+
+    mov edi, dword[Lib.TTY.buffer]
+    mov byte[edi], 0
 
 .done:
 
@@ -499,3 +520,5 @@ Lib.TTY:
 
 .showCursor: db 27, "[C", 27, "[D"
 .showCursor.size = $ - .showCursor
+
+.interrupted: db "^C"
