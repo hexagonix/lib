@@ -105,6 +105,19 @@ macro ttySetMode mode
 
 }
 
+;; EAX - Columns of the terminal
+;; EBX - Rows
+
+macro ttyGetSize
+{
+
+    mov eax, 0
+    mov ebx, 6
+
+    hx.syscall hx.ioctl
+
+}
+
 ;;************************************************************************************
 
 ;; Reads a line from the terminal, with insertion anywhere in it, Backspace,
@@ -505,6 +518,53 @@ end if
 
 ;;************************************************************************************
 
+;; Waits for a key, read from descriptor 0 as it comes and not shown. Ctrl+C
+;; still ends the program, as with hx.waitKeyboard. A key sent as an escape
+;; sequence comes one byte at a time. The mode of the terminal is put back, and
+;; every register but EAX is preserved
+;;
+;; Output:
+;;
+;; EAX - The byte
+
+if used readKey
+
+readKey:
+
+    push ebx
+    push ecx
+    push edx
+    push esi
+    push edi
+
+    ttyGetMode
+
+    mov dword[Lib.TTY.keyMode], eax
+
+    ttySetMode Lib.TTY.Modes.isig
+
+    mov eax, 0
+    mov edi, Lib.TTY.key
+    mov ecx, 1
+
+    hx.syscall hx.read
+
+    ttySetMode [Lib.TTY.keyMode]
+
+    movzx eax, byte[Lib.TTY.key]
+
+    pop edi
+    pop esi
+    pop edx
+    pop ecx
+    pop ebx
+
+    ret
+
+end if
+
+;;************************************************************************************
+
 Lib.TTY:
 
 .maxLength: db 0
@@ -515,6 +575,7 @@ Lib.TTY:
 .buffer:    dd 0
 .savedMode: dd 0
 .key:       dd 0
+.keyMode:   dd 0
 .space:     db ' '
 .sequence:  times 16 db 0
 

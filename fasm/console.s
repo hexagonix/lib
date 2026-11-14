@@ -152,6 +152,17 @@ macro setConsoleColor consoleFontColor, consoleBackgroundColor
 
 }
 
+;; Changes only the font color
+
+macro setConsoleForeground consoleFontColor
+{
+
+    mov eax, consoleFontColor
+
+    call Lib.Console.setForeground
+
+}
+
 ;; Restore the console color set
 
 macro restoreConsoleColor
@@ -172,6 +183,15 @@ macro restoreAndClearConsole
     restoreConsole
 
     call Lib.Console.clear
+
+}
+
+;; Prints the character in AL
+
+macro putCharacter
+{
+
+    call Lib.Console.writeCharacter
 
 }
 
@@ -283,6 +303,72 @@ macro xyfputs x, y, string ;; Macro used to print content on the console
 
 }
 
+;; To a column of the row the cursor is on, counted from 0
+
+macro gotoColumn x
+{
+
+    mov dl, x
+
+    call Lib.Console.gotoColumn
+
+}
+
+;; Terminal control with no text of its own, as escape sequences
+
+macro cursorUp
+{
+
+    fputs Lib.Console.Sequences.up
+
+}
+
+macro drawCursor
+{
+
+    fputs Lib.Console.Sequences.drawCursor
+
+}
+
+macro saveCursor
+{
+
+    fputs Lib.Console.Sequences.saveCursor
+
+}
+
+macro restoreCursor
+{
+
+    fputs Lib.Console.Sequences.restoreCursor
+
+}
+
+macro clearConsoleLine
+{
+
+    fputs Lib.Console.Sequences.clearLine
+
+}
+
+;; Back to the colors of the terminal's theme
+
+macro resetConsoleColor
+{
+
+    fputs Lib.Console.Sequences.resetColor
+
+}
+
+;; The colors swapped, until resetConsoleColor
+
+macro reverseConsoleColor
+{
+
+    fputs Lib.Console.Sequences.reverseColor
+
+}
+
 ;;************************************************************************************
 ;;
 ;; Console output written to descriptor 1, as escape sequences where it is not
@@ -314,6 +400,28 @@ Lib.Console.writeString:
 
 .write:
 
+    mov eax, 1
+
+    hx.syscall hx.write
+
+    popad
+
+    ret
+
+end if
+
+;;************************************************************************************
+
+if used Lib.Console.writeCharacter
+
+Lib.Console.writeCharacter:
+
+    pushad
+
+    mov byte[Lib.Console.character], al
+
+    mov esi, Lib.Console.character
+    mov ecx, 1
     mov eax, 1
 
     hx.syscall hx.write
@@ -489,10 +597,58 @@ end if
 
 ;; Input:
 ;;
-;; EAX - Font color, as 0RRGGBBh
-;; EBX - Background color, the same way
+;; DL - Column
 
-if used Lib.Console.setColor
+if used Lib.Console.gotoColumn
+
+Lib.Console.gotoColumn:
+
+    pushad
+
+    mov edi, Lib.Console.sequence
+
+    mov byte[edi], 27
+    mov byte[edi + 1], '['
+
+    add edi, 2
+
+    movzx eax, dl
+    inc eax
+
+    call Lib.Console.appendDecimal
+
+    mov byte[edi], 'G'
+
+    inc edi
+
+    call Lib.Console.writeSequence
+
+    popad
+
+    ret
+
+end if
+
+;;************************************************************************************
+
+;; Input:
+;;
+;; EAX - Font color, as 0RRGGBBh
+;; EBX - Background color, the same way, for setColor only
+
+if used Lib.Console.setColor | used Lib.Console.setForeground
+
+Lib.Console.setForeground:
+
+    pushad
+
+    mov ecx, '3'
+
+    call Lib.Console.setColor.component
+
+    popad
+
+    ret
 
 Lib.Console.setColor:
 
@@ -864,10 +1020,21 @@ Lib.Console:
 .fontColor:       dd 0
 .resolution:      dd 0
 .newLine:         db 10
+.character:       db 0
 .sequence:        times 40 db 0
 
 .clearSequence:   db 27, "[2J", 27, "[H"
 .clearSequence.size = $ - .clearSequence
+
+Lib.Console.Sequences:
+
+.up:            db 27, "[A", 0
+.drawCursor:    db 27, "[C", 27, "[D", 0 ;; A move that lands where it started
+.saveCursor:    db 27, "7", 0
+.restoreCursor: db 27, "8", 0
+.clearLine:     db 27, "[2K", 13, 0 ;; And back to its start
+.resetColor:    db 27, "[0m", 0
+.reverseColor:  db 27, "[7m", 0
 
 ;; A quick guide to the resolution field, responsible for storing the code related to the resolution in
 ;; use or to be implemented. Options can be:
