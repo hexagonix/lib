@@ -209,6 +209,10 @@ hx.sysctl                 = 70 ;; Hexagon Kernel Diagnostics Service
 hx.read                   = 71 ;; Hexagon File and Device Management Services
 hx.dup2                   = 72 ;; Hexagon File and Device Management Services
 
+;; hx.ioctl commands every descriptor takes, whatever device it names
+
+hx.ioctl.nonBlocking = 100h ;; ECX = 1 for reads and writes that return instead of waiting
+
 ;;************************************************************************************
 
 ;;************************************************************************************
@@ -224,6 +228,20 @@ macro hx.syscall syscallHexagon ;; Macro used to request a service from Hexagon
     push syscallHexagon
 
     int 80h
+
+}
+
+;; With state 1, hx.read and hx.write on the descriptor return IO.wouldBlock
+;; with CF set instead of waiting. State 0 lets them wait again
+
+macro hx.setNonBlocking descriptor, state
+{
+
+    mov eax, descriptor
+    mov ebx, hx.ioctl.nonBlocking
+    mov ecx, state
+
+    hx.syscall hx.ioctl
 
 }
 

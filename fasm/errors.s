@@ -90,6 +90,7 @@ IO:
 .directoryNotEmpty  = 8
 .badDescriptor      = 9
 .tooManyDescriptors = 10
+.wouldBlock         = 11 ;; A descriptor that may not wait had nothing to give or no room
 
 VFS:
 
