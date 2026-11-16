@@ -211,7 +211,8 @@ hx.dup2                   = 72 ;; Hexagon File and Device Management Services
 
 ;; hx.ioctl commands every descriptor takes, whatever device it names
 
-hx.ioctl.nonBlocking = 100h ;; ECX = 1 for reads and writes that return instead of waiting
+hx.ioctl.nonBlocking  = 100h ;; ECX = 1 for reads and writes that return instead of waiting
+hx.ioctl.closeOnSpawn = 101h ;; ECX = 1 to keep the descriptor from new processes
 
 ;;************************************************************************************
 
@@ -239,6 +240,20 @@ macro hx.setNonBlocking descriptor, state
 
     mov eax, descriptor
     mov ebx, hx.ioctl.nonBlocking
+    mov ecx, state
+
+    hx.syscall hx.ioctl
+
+}
+
+;; With state 1, a process created by hx.spawn or hx.exec gets the descriptor
+;; free instead of a copy, as FD_CLOEXEC in BSD. State 0 hands it on again
+
+macro hx.setCloseOnSpawn descriptor, state
+{
+
+    mov eax, descriptor
+    mov ebx, hx.ioctl.closeOnSpawn
     mov ecx, state
 
     hx.syscall hx.ioctl
