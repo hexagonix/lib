@@ -125,6 +125,9 @@ macro ttyGetSize
 ;; so it works on any terminal. Ctrl+C drops the line, as the shells of BSD do
 ;; at their prompt, and reads as an empty one. Every register is preserved
 ;;
+;; The end of the input, once whatever plays the terminal is gone, ends a line
+;; with something typed as Enter would, and the next call reports it
+;;
 ;; Input:
 ;;
 ;; AL  - Maximum length of the line
@@ -134,6 +137,7 @@ macro ttyGetSize
 ;; Output:
 ;;
 ;; The line at EDI, NUL terminated
+;; CF set at the end of the input, with an empty line
 
 if used readLine
 
@@ -169,6 +173,8 @@ readLine:
 .nextKey:
 
     call .readByte
+
+    jc .endOfInput
 
     cmp al, 10
 
@@ -246,11 +252,15 @@ readLine:
 
     call .readByte
 
+    jc .endOfInput
+
     cmp al, '['
 
     jne .plainByte ;; A lone Esc, the byte after it is a key of its own
 
     call .readByte
+
+    jc .endOfInput
 
     cmp al, 'C'
 
@@ -273,6 +283,8 @@ readLine:
     jne .edited
 
     call .readByte ;; The ~ of ESC [ 3 ~
+
+    jc .endOfInput
 
     mov cl, byte[Lib.TTY.position]
 
@@ -350,6 +362,22 @@ readLine:
 
     ret
 
+.endOfInput:
+
+    cmp byte[Lib.TTY.length], 0
+
+    jne .done
+
+    mov eax, dword[Lib.TTY.savedMode]
+
+    ttySetMode eax
+
+    popad
+
+    stc
+
+    ret
+
 ;; Takes the byte at the position out of the line, terminator included
 
 .removeAtPosition:
@@ -409,6 +437,8 @@ readLine:
 
     ret
 
+;; Output: AL - The byte, CF set at the end of the input instead
+
 .readByte:
 
     mov eax, 0
@@ -417,7 +447,21 @@ readLine:
 
     hx.syscall hx.read
 
+    jc .noByte
+
+    cmp eax, 0
+
+    je .noByte
+
     mov al, byte[Lib.TTY.key]
+
+    clc
+
+    ret
+
+.noByte:
+
+    stc
 
     ret
 
