@@ -219,7 +219,7 @@ end if
 ;;
 ;; EDI - Terminal
 
-if used termFree | used termInit
+if used termFree | used termInit | used termResize
 
 termFree:
 
@@ -257,6 +257,247 @@ end if
 
 ;;************************************************************************************
 
+;; Changes the size of a terminal. What fits stays where it was, and when the
+;; cursor's row would fall out, the rows above it go first, so the line being
+;; typed stays in view. Every row is marked as changed
+;;
+;; Input:
+;;
+;; EDI - Terminal
+;; EAX - Columns
+;; EBX - Rows
+;;
+;; Output:
+;;
+;; CF set if there was no memory, the terminal as it was
+
+if used termResize
+
+termResize:
+
+    pushad
+    push es
+
+    push ds
+    pop es
+
+    mov ebp, edi
+
+    mov [Lib.Term.Resize.columns], eax
+    mov [Lib.Term.Resize.rows], ebx
+    mov dword[Lib.Term.Resize.cells], 0
+
+    mul ebx
+
+    imul ebx, eax, Lib.Term.Cell.size
+
+    call malloc
+
+    cmp eax, 0
+
+    je .noMemory
+
+    mov [Lib.Term.Resize.cells], ebx
+
+    mov ebx, [Lib.Term.Resize.rows]
+
+    call malloc
+
+    cmp eax, 0
+
+    je .noMemory
+
+    mov [Lib.Term.Resize.dirty], ebx
+
+;; Every new cell blank first, in the colors being written with
+
+    mov edi, [Lib.Term.Resize.cells]
+    mov ecx, [Lib.Term.Resize.columns]
+    imul ecx, [Lib.Term.Resize.rows]
+
+    call Lib.Term.blankCells
+
+;; Rows left out at the top, so the cursor's row fits
+
+    xor eax, eax
+
+    mov edx, dword[ebp + Lib.Term.y]
+
+    cmp edx, [Lib.Term.Resize.rows]
+
+    jb .shiftKnown
+
+    mov eax, edx
+    sub eax, [Lib.Term.Resize.rows]
+    inc eax
+
+.shiftKnown:
+
+    mov [Lib.Term.Resize.shift], eax
+
+;; Rows and columns both terminals have
+
+    mov ecx, dword[ebp + Lib.Term.rows]
+    sub ecx, eax
+
+    cmp ecx, [Lib.Term.Resize.rows]
+
+    jbe .rowsKnown
+
+    mov ecx, [Lib.Term.Resize.rows]
+
+.rowsKnown:
+
+    mov edx, dword[ebp + Lib.Term.columns]
+
+    cmp edx, [Lib.Term.Resize.columns]
+
+    jbe .columnsKnown
+
+    mov edx, [Lib.Term.Resize.columns]
+
+.columnsKnown:
+
+    imul edx, edx, Lib.Term.Cell.size ;; Bytes of each row copied
+
+    xor ebx, ebx ;; Row of the new terminal
+
+.copyRow:
+
+    cmp ebx, ecx
+
+    jae .copied
+
+    push ecx
+
+    mov eax, ebx
+    add eax, [Lib.Term.Resize.shift]
+    imul eax, dword[ebp + Lib.Term.columns]
+    imul esi, eax, Lib.Term.Cell.size
+    add esi, dword[ebp + Lib.Term.cells]
+
+    mov eax, ebx
+    imul eax, [Lib.Term.Resize.columns]
+    imul edi, eax, Lib.Term.Cell.size
+    add edi, [Lib.Term.Resize.cells]
+
+    mov ecx, edx
+
+    cld
+
+    rep movsb
+
+    pop ecx
+
+    inc ebx
+
+    jmp .copyRow
+
+.copied:
+
+    mov edi, ebp
+
+    call termFree ;; The old cells and marks
+
+    mov eax, [Lib.Term.Resize.columns]
+    mov dword[ebp + Lib.Term.columns], eax
+
+    mov eax, [Lib.Term.Resize.rows]
+    mov dword[ebp + Lib.Term.rows], eax
+
+    mov eax, [Lib.Term.Resize.cells]
+    mov dword[ebp + Lib.Term.cells], eax
+
+    mov eax, [Lib.Term.Resize.dirty]
+    mov dword[ebp + Lib.Term.dirty], eax
+
+;; The cursors, moved up with the rows and kept inside
+
+    mov eax, [Lib.Term.Resize.shift]
+
+    sub dword[ebp + Lib.Term.y], eax
+    sub dword[ebp + Lib.Term.savedY], eax
+
+    jns .savedInside
+
+    mov dword[ebp + Lib.Term.savedY], 0
+
+.savedInside:
+
+    mov eax, [Lib.Term.Resize.rows]
+
+    dec eax
+
+    cmp dword[ebp + Lib.Term.savedY], eax
+
+    jbe .savedRowFits
+
+    mov dword[ebp + Lib.Term.savedY], eax
+
+.savedRowFits:
+
+    mov eax, [Lib.Term.Resize.columns]
+
+    cmp dword[ebp + Lib.Term.x], eax
+
+    jbe .xFits
+
+    mov dword[ebp + Lib.Term.x], eax
+
+.xFits:
+
+    cmp dword[ebp + Lib.Term.savedX], eax
+
+    jbe .savedXFits
+
+    mov dword[ebp + Lib.Term.savedX], eax
+
+.savedXFits:
+
+    mov edi, dword[ebp + Lib.Term.dirty]
+    mov ecx, [Lib.Term.Resize.rows]
+    mov al, 1
+
+    rep stosb
+
+    pop es
+    popad
+
+    clc
+
+    ret
+
+.noMemory:
+
+    mov ebx, [Lib.Term.Resize.cells]
+
+    cmp ebx, 0
+
+    je .nothingTaken
+
+    call free
+
+.nothingTaken:
+
+    pop es
+    popad
+
+    stc
+
+    ret
+
+Lib.Term.Resize:
+
+.columns: dd 0
+.rows:    dd 0
+.cells:   dd 0
+.dirty:   dd 0
+.shift:   dd 0
+
+end if
+
+;;************************************************************************************
+
 ;; Writes bytes to a terminal, as hx.write does to a VT. A sequence split
 ;; between two writes is still understood. Every register is preserved
 ;;
@@ -269,7 +510,7 @@ end if
 ;; ESI - Bytes
 ;; ECX - How many
 
-if used termWrite
+if used termWrite | used termInit | used termResize
 
 termWrite:
 
