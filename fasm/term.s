@@ -68,11 +68,9 @@
 
 ;;************************************************************************************
 ;;
-;; A terminal kept in memory, for a program that plays one, as an emulator does.
-;; Bytes written to it are interpreted as the console terminal of Hexagon does,
-;; so a program shows the same here and on a VT, and the result is a grid of
-;; cells for the program to draw however it draws. Its memory comes from
-;; malloc.s, which the program includes as well
+;; A terminal kept in memory as a grid of cells, for a program that plays one.
+;; Bytes written to it are interpreted as the console terminal of Hexagon does.
+;; Its memory comes from malloc.s
 ;;
 ;; Compatibility: Hexagonix 1.1 or higher
 ;;                Hexagon 1.8.0 or newer (kernel version required)
@@ -397,7 +395,7 @@ termResize:
 
     mov edi, ebp
 
-    call termFree ;; The old cells and marks
+    call termFree ;; The grid being replaced
 
     mov eax, [Lib.Term.Resize.columns]
     mov dword[ebp + Lib.Term.columns], eax
