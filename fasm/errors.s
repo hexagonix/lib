@@ -71,7 +71,7 @@
 ;; List of errors thrown by Hexagon or other Hexagonix components
 ;;
 ;; Compatibility: Hexagonix Dormin development branch or higher
-;;                Hexagon 1.5.0 or newer (kernel version required)
+;;                Hexagon 1.9.0 or newer (kernel version required)
 ;;                Version: 8.0 rev 0 30/07/2026
 ;;
 ;;************************************************************************************

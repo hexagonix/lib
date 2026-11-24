@@ -71,7 +71,7 @@
 ;; The terminal of the process, descriptor 0, and line editing over it
 ;;
 ;; Compatibility: Hexagonix 1.1 or higher
-;;                Hexagon 1.8.0 or newer (kernel version required)
+;;                Hexagon 1.9.0 or newer (kernel version required)
 ;;                Version: 1.0 rev 0 20/10/2026
 ;;
 ;;************************************************************************************

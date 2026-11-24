@@ -71,7 +71,7 @@
 ;; Header of Hexagonix Macros, Functions and System Calls
 ;;
 ;; Compatibility: Hexagonix 1.1 or higher
-;;                Hexagon 1.8.0 or newer (kernel version required)
+;;                Hexagon 1.9.0 or newer (kernel version required)
 ;;                Version: 9.1.0 13/09/2026
 ;;
 ;; Total calls: 70 (at 13/09/2026)

@@ -73,7 +73,7 @@
 ;; Its memory comes from malloc.s
 ;;
 ;; Compatibility: Hexagonix 1.1 or higher
-;;                Hexagon 1.8.0 or newer (kernel version required)
+;;                Hexagon 1.9.0 or newer (kernel version required)
 ;;                Version: 1.0 rev 0 21/11/2026
 ;;
 ;;************************************************************************************
