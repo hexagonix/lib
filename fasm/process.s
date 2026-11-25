@@ -71,8 +71,8 @@
 ;; Header of Hexagonix macros, functions and system calls
 ;;
 ;; Compatibility: Hexagonix 1.1 or higher
-;;                Hexagon 1.8.0 or newer (kernel version required)
-;;                Version: 1.0 13/09/2026
+;;                Hexagon 1.10.0 or newer (kernel version required)
+;;                Version: 1.1 27/11/2026
 ;;
 ;;************************************************************************************
 
@@ -89,10 +89,28 @@
 ;;                  +8  State
 ;;                  +9  Name, NUL-terminated (kernel-resolved absolute path)
 ;;                  +73 VT index
+;;                  +74 Bytes the process holds
+;;                  +78 Ticks of the timer in its own code
+;;                  +82 Ticks of the timer in the kernel for it
+;;                  +86 Bytes of its image: code, data and stack
+;;                  +90 Bytes of the tables that map it and of its kernel stack
+;;                  +94 Bytes of its arguments and environment
+;;                  +98 Bytes it took through hx.malloc
+;;                  +102 Bytes it shares with other processes
+;;                  A field past the record size a kernel gives is not there
 
-hx.process.record.pid       = 0
-hx.process.record.parentPID = 4
-hx.process.record.state     = 8
-hx.process.record.name      = 9
-hx.process.record.tty       = 73
-hx.process.record.memory    = 74
+hx.process.record.pid         = 0
+hx.process.record.parentPID   = 4
+hx.process.record.state       = 8
+hx.process.record.name        = 9
+hx.process.record.tty         = 73
+hx.process.record.memory      = 74
+hx.process.record.userTicks   = 78
+hx.process.record.systemTicks = 82
+hx.process.record.withTicks   = 86 ;; Smallest record size that has both
+hx.process.record.image       = 86
+hx.process.record.paging      = 90
+hx.process.record.arguments   = 94
+hx.process.record.heap        = 98
+hx.process.record.shared      = 102
+hx.process.record.withKinds   = 106 ;; Smallest record size that has the five
