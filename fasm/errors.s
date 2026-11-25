@@ -71,7 +71,7 @@
 ;; List of errors thrown by Hexagon or other Hexagonix components
 ;;
 ;; Compatibility: Hexagonix Dormin development branch or higher
-;;                Hexagon 1.5.0 or newer (kernel version required)
+;;                Hexagon 1.9.0 or newer (kernel version required)
 ;;                Version: 8.0 rev 0 30/07/2026
 ;;
 ;;************************************************************************************
@@ -80,14 +80,17 @@
 
 IO:
 
-.writingDenied     = 1
-.readingDenied     = 2
-.readingError      = 3
-.writingError      = 4
-.operationDenied   = 5
-.notFound          = 6
-.pathNotFound      = 7
-.directoryNotEmpty = 8
+.writingDenied      = 1
+.readingDenied      = 2
+.readingError       = 3
+.writingError       = 4
+.operationDenied    = 5
+.notFound           = 6
+.pathNotFound       = 7
+.directoryNotEmpty  = 8
+.badDescriptor      = 9
+.tooManyDescriptors = 10
+.wouldBlock         = 11 ;; A descriptor that may not wait had nothing to give or no room
 
 VFS:
 

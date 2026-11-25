@@ -71,7 +71,7 @@
 ;; Header of Hexagonix Macros, Functions and System Calls
 ;;
 ;; Compatibility: Hexagonix 1.1 or higher
-;;                Hexagon 1.8.0 or newer (kernel version required)
+;;                Hexagon 1.9.0 or newer (kernel version required)
 ;;                Version: 9.1.0 13/09/2026
 ;;
 ;; Total calls: 70 (at 13/09/2026)
@@ -164,7 +164,6 @@ hx.getCursor              = 53 ;; Hexagon Graphics and Video Output Services
 ;; Hexagon PS/2 Keyboard Handling Services
 
 hx.waitKeyboard           = 54 ;; Hexagon PS/2 Keyboard Handling Services
-hx.getString              = 55 ;; Hexagon PS/2 Keyboard Handling Services
 hx.getKeyState            = 56 ;; Hexagon PS/2 Keyboard Handling Services
 hx.changeConsoleFont      = 57 ;; Hexagon PS/2 Keyboard Handling Services
 hx.changeLayout           = 58 ;; Hexagon PS/2 Keyboard Handling Services
@@ -205,6 +204,16 @@ hx.chown                  = 68 ;; Hexagon File System and Volume Management Serv
 hx.getTTY                 = 69 ;; Hexagon Process Management Service
 hx.sysctl                 = 70 ;; Hexagon Kernel Diagnostics Service
 
+;; Hexagon File and Device Management Services
+
+hx.read                   = 71 ;; Hexagon File and Device Management Services
+hx.dup2                   = 72 ;; Hexagon File and Device Management Services
+
+;; hx.ioctl commands every descriptor takes, whatever device it names
+
+hx.ioctl.nonBlocking  = 100h ;; ECX = 1 for reads and writes that return instead of waiting
+hx.ioctl.closeOnSpawn = 101h ;; ECX = 1 to keep the descriptor from new processes
+
 ;;************************************************************************************
 
 ;;************************************************************************************
@@ -220,6 +229,34 @@ macro hx.syscall syscallHexagon ;; Macro used to request a service from Hexagon
     push syscallHexagon
 
     int 80h
+
+}
+
+;; With state 1, hx.read and hx.write on the descriptor return IO.wouldBlock
+;; with CF set instead of waiting. State 0 lets them wait again
+
+macro hx.setNonBlocking descriptor, state
+{
+
+    mov eax, descriptor
+    mov ebx, hx.ioctl.nonBlocking
+    mov ecx, state
+
+    hx.syscall hx.ioctl
+
+}
+
+;; With state 1, a process created by hx.spawn or hx.exec gets the descriptor
+;; free instead of a copy, as FD_CLOEXEC in BSD. State 0 hands it on again
+
+macro hx.setCloseOnSpawn descriptor, state
+{
+
+    mov eax, descriptor
+    mov ebx, hx.ioctl.closeOnSpawn
+    mov ecx, state
+
+    hx.syscall hx.ioctl
 
 }
 
